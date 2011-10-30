@@ -1,0 +1,7 @@
+Server
+
+$ gem install sinatra
+$ ruby server/server.rb
+
+Now, you have a small http server running through port 4567. 
+Browse to http://localhost:4567/v1/messages
