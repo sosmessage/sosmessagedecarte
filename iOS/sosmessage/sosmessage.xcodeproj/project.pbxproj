@@ -1,0 +1,293 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515C8145DEA4000CF6C45 /* UIKit.framework */; };
+		516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CA145DEA4000CF6C45 /* Foundation.framework */; };
+		516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CC145DEA4000CF6C45 /* CoreGraphics.framework */; };
+		516515D3145DEA4000CF6C45 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 516515D1145DEA4000CF6C45 /* InfoPlist.strings */; };
+		516515D5145DEA4000CF6C45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515D4145DEA4000CF6C45 /* main.m */; };
+		516515D9145DEA4100CF6C45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515D8145DEA4100CF6C45 /* AppDelegate.m */; };
+		516515DC145DEA4100CF6C45 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515DB145DEA4100CF6C45 /* ViewController.m */; };
+		516515DF145DEA4100CF6C45 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515DD145DEA4100CF6C45 /* ViewController_iPhone.xib */; };
+		516515E2145DEA4100CF6C45 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515E0145DEA4100CF6C45 /* ViewController_iPad.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		516515C4145DEA4000CF6C45 /* sosmessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sosmessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		516515C8145DEA4000CF6C45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		516515CA145DEA4000CF6C45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		516515CC145DEA4000CF6C45 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		516515D0145DEA4000CF6C45 /* sosmessage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sosmessage-Info.plist"; sourceTree = "<group>"; };
+		516515D2145DEA4000CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		516515D4145DEA4000CF6C45 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		516515D6145DEA4100CF6C45 /* sosmessage-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sosmessage-Prefix.pch"; sourceTree = "<group>"; };
+		516515D7145DEA4100CF6C45 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		516515D8145DEA4100CF6C45 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		516515DA145DEA4100CF6C45 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		516515DB145DEA4100CF6C45 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		516515DE145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		516515E1145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		516515C1145DEA4000CF6C45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */,
+				516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */,
+				516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		516515B9145DEA4000CF6C45 = {
+			isa = PBXGroup;
+			children = (
+				516515CE145DEA4000CF6C45 /* sosmessage */,
+				516515C7145DEA4000CF6C45 /* Frameworks */,
+				516515C5145DEA4000CF6C45 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		516515C5145DEA4000CF6C45 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				516515C4145DEA4000CF6C45 /* sosmessage.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		516515C7145DEA4000CF6C45 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				516515C8145DEA4000CF6C45 /* UIKit.framework */,
+				516515CA145DEA4000CF6C45 /* Foundation.framework */,
+				516515CC145DEA4000CF6C45 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		516515CE145DEA4000CF6C45 /* sosmessage */ = {
+			isa = PBXGroup;
+			children = (
+				516515D7145DEA4100CF6C45 /* AppDelegate.h */,
+				516515D8145DEA4100CF6C45 /* AppDelegate.m */,
+				516515DA145DEA4100CF6C45 /* ViewController.h */,
+				516515DB145DEA4100CF6C45 /* ViewController.m */,
+				516515DD145DEA4100CF6C45 /* ViewController_iPhone.xib */,
+				516515E0145DEA4100CF6C45 /* ViewController_iPad.xib */,
+				516515CF145DEA4000CF6C45 /* Supporting Files */,
+			);
+			path = sosmessage;
+			sourceTree = "<group>";
+		};
+		516515CF145DEA4000CF6C45 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				516515D0145DEA4000CF6C45 /* sosmessage-Info.plist */,
+				516515D1145DEA4000CF6C45 /* InfoPlist.strings */,
+				516515D4145DEA4000CF6C45 /* main.m */,
+				516515D6145DEA4100CF6C45 /* sosmessage-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		516515C3145DEA4000CF6C45 /* sosmessage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 516515E5145DEA4100CF6C45 /* Build configuration list for PBXNativeTarget "sosmessage" */;
+			buildPhases = (
+				516515C0145DEA4000CF6C45 /* Sources */,
+				516515C1145DEA4000CF6C45 /* Frameworks */,
+				516515C2145DEA4000CF6C45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = sosmessage;
+			productName = sosmessage;
+			productReference = 516515C4145DEA4000CF6C45 /* sosmessage.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		516515BB145DEA4000CF6C45 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 516515BE145DEA4000CF6C45 /* Build configuration list for PBXProject "sosmessage" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 516515B9145DEA4000CF6C45;
+			productRefGroup = 516515C5145DEA4000CF6C45 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				516515C3145DEA4000CF6C45 /* sosmessage */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		516515C2145DEA4000CF6C45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516515D3145DEA4000CF6C45 /* InfoPlist.strings in Resources */,
+				516515DF145DEA4100CF6C45 /* ViewController_iPhone.xib in Resources */,
+				516515E2145DEA4100CF6C45 /* ViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		516515C0145DEA4000CF6C45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516515D5145DEA4000CF6C45 /* main.m in Sources */,
+				516515D9145DEA4100CF6C45 /* AppDelegate.m in Sources */,
+				516515DC145DEA4100CF6C45 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		516515D1145DEA4000CF6C45 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				516515D2145DEA4000CF6C45 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		516515DD145DEA4100CF6C45 /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				516515DE145DEA4100CF6C45 /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		516515E0145DEA4100CF6C45 /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				516515E1145DEA4100CF6C45 /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		516515E3145DEA4100CF6C45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		516515E4145DEA4100CF6C45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		516515E6145DEA4100CF6C45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "sosmessage/sosmessage-Prefix.pch";
+				INFOPLIST_FILE = "sosmessage/sosmessage-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		516515E7145DEA4100CF6C45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "sosmessage/sosmessage-Prefix.pch";
+				INFOPLIST_FILE = "sosmessage/sosmessage-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		516515BE145DEA4000CF6C45 /* Build configuration list for PBXProject "sosmessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				516515E3145DEA4100CF6C45 /* Debug */,
+				516515E4145DEA4100CF6C45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		516515E5145DEA4100CF6C45 /* Build configuration list for PBXNativeTarget "sosmessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				516515E6145DEA4100CF6C45 /* Debug */,
+				516515E7145DEA4100CF6C45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 516515BB145DEA4000CF6C45 /* Project object */;
+}
