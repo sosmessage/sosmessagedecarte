@@ -42,6 +42,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self becomeFirstResponder];
     [super viewDidAppear:animated];
 }
 
@@ -68,6 +69,10 @@
     }*/
 }
 
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 #pragma mark NSURLConnection delegate
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     [self.activityIndicator stopAnimating];
@@ -91,6 +96,12 @@
         [messageReceiving appendData:data];
     } else {
         messageReceiving = [[NSMutableData alloc] initWithData:data];
+    }
+}
+
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake) {
+        [self fetchAnotherMessage];
     }
 }
 
