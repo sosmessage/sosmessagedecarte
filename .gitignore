@@ -5,6 +5,10 @@
 # Sparkle distribution Private Key (Don't check me in!)
 dsa_priv.pem
 
+# Eclipse
+.classpath
+.project
+
 
 # XCode (and ancestors) per-user config (very noisy, and not relevant)
 *.mode1
