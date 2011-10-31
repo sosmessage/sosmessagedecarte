@@ -81,7 +81,7 @@
         id message = [NSJSONSerialization JSONObjectWithData:messageReceiving options:0 error:&error];
         if (message) {
             NSLog(@"%@", message);
-            self.messageLabel.text = [[message objectAtIndex:0] objectForKey:@"message"];
+            self.messageLabel.text = [message objectForKey:@"message"];
         }
     }
 }
