@@ -1,0 +1,11 @@
+require 'rubygems'
+
+task :default => [:server]
+
+task :server do
+  system "shotgun server.rb"
+end
+
+task :test do
+  puts "Need more tests ..."
+end

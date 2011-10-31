@@ -1,7 +1,7 @@
 Server
 
-$ gem install sinatra
-$ ruby server/server.rb
+$ gem install sinatra shotgun
+$ cd server && rake 
 
-Now, you have a small http server running through port 4567. 
-Browse to http://localhost:4567/v1/messages
+Now, you have WEBrick running through port 9393. 
+Browse to http://127.0.0.1:9393/v1/messages 
