@@ -4,16 +4,38 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    
-    <TextView android:id="@+id/text"
+    <ImageView android:id="@+acountcreation/title"
+    	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="40dp"
+		android:layout_gravity="right"
+		android:src="@drawable/logo" />
+ 
+ 	<RelativeLayout 
+        android:id="@+id/InnerRelativeLayout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
-	
-    <Button android:id="@+id/myButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Autre proposition"/>
-        
+        android:layout_height="fill_parent" 
+        android:orientation="vertical">
+        <!-- android:layout_alignParentBottom="true" -->
+ 	
+	    <TextView android:id="@+id/text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="20dp"
+	        android:textColor="#000000"
+	        android:layout_gravity="center"
+	        android:text="@string/hello" />
+		
+	    <Button android:id="@+id/myButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:layout_marginBottom="10dp"
+	        android:layout_gravity="center"
+	        android:layout_alignParentBottom="true"
+	        android:text="Autre proposition"/>
+	        
+	</RelativeLayout>        
 </LinearLayout>
