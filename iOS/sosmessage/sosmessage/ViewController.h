@@ -13,14 +13,21 @@
     @private
     NSMutableData* messageReceiving;
 }
+@property (retain, nonatomic) IBOutlet UIButton *generateButton;
+@property (retain, nonatomic) IBOutlet UIButton *categoryButton;
 @property (retain, nonatomic) IBOutlet UILabel *messageLabel;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (retain, nonatomic) NSURLConnection* currentConnection;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
 
 - (IBAction)generateButtonPressed:(id)sender;
+- (IBAction)categoryBurronPressed:(id)sender;
+- (IBAction)categoryButtonPressed:(id)sender;
 - (void)fetchAnotherMessage;
+- (void)stopActivity;
+- (void)startActivity;
 
 @end

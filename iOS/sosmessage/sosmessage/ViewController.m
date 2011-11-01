@@ -9,8 +9,11 @@
 #import "ViewController.h"
 
 @implementation ViewController
+@synthesize generateButton;
+@synthesize categoryButton;
 @synthesize messageLabel;
 @synthesize activityIndicator;
+@synthesize currentConnection;
 
 - (void)didReceiveMemoryWarning
 {
@@ -30,6 +33,8 @@
 {
     [self setActivityIndicator:nil];
     [self setMessageLabel:nil];
+    [self setGenerateButton:nil];
+    [self setCategoryButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -48,6 +53,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [self.currentConnection cancel];
+    [self.currentConnection release];
 	[super viewWillDisappear:animated];
 }
 
@@ -58,6 +65,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    self.categoryButton.hidden = self.generateButton.hidden = interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationLandscapeLeft;
     return YES;
     
     /*
@@ -75,24 +83,19 @@
 
 #pragma mark NSURLConnection delegate
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self.activityIndicator stopAnimating];
+    [self stopActivity];
     self.messageLabel.text = error.description;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [self.activityIndicator stopAnimating];
+    [self stopActivity];
     if (messageReceiving) {
         NSError* error;
         id response = [NSJSONSerialization JSONObjectWithData:messageReceiving options:0 error:&error];
         if (response) {
+            // TODO should handle other request
             NSLog(@"%@", response);
-            self.messageLabel.text = [response objectForKey:@"message"];
-            id announce = [response objectForKey:@"announce"];
-            if (announce) { 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Announce" message:[announce objectForKey:@"content"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                [alert show];
-                [alert release];
-            }
+            self.messageLabel.text = [response objectForKey:@"content"];
         }
     }
 }
@@ -114,18 +117,34 @@
 
 #pragma mark Custom methods
 
+-(void)startActivity {
+    [self.activityIndicator startAnimating];
+    self.categoryButton.enabled = NO;
+    self.generateButton.enabled = NO;
+}
+
+-(void)stopActivity {
+    [self.activityIndicator stopAnimating];
+    self.categoryButton.enabled = YES;
+    self.generateButton.enabled = YES;    
+}
+
 - (IBAction)generateButtonPressed:(id)sender {
     [self fetchAnotherMessage];
 }
 
+- (IBAction)categoryButtonPressed:(id)sender {
+    //TODO
+}
+
 -(void)fetchAnotherMessage {
-    [self.activityIndicator startAnimating];
+    [self startActivity];
     
-    NSURL* url = [[NSURL alloc] initWithString:@"http://localhost:9393/v1/messages"];
+    NSURL* url = [[NSURL alloc] initWithString:@"http://localhost:9393/v1/categories/test/random"];
     NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
     messageReceiving = nil;
     
-    [NSURLConnection connectionWithRequest:request delegate:self];
+    self.currentConnection = [NSURLConnection connectionWithRequest:request delegate:self];
     
     [request release];
     [url release];
@@ -133,6 +152,8 @@
 - (void)dealloc {
     [activityIndicator release];
     [messageLabel release];
+    [generateButton release];
+    [categoryButton release];
     [super dealloc];
 }
 @end
