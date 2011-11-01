@@ -9,9 +9,15 @@ Elle est disponible sur les deux principales plateformes mobiles que sont iPhone
 ![screen android](https://github.com/ccouturi/sosmessagedecarte/raw/master/android/screenshots/mariage.png)
 ![screen android](https://github.com/ccouturi/sosmessagedecarte/raw/master/android/screenshots/merci.png)
 
-## Server
+## Running the server
 	$ gem install sinatra shotgun
 	$ cd server && rake 
 
-Now, you have WEBrick running through port 9393. 
-Browse to http://127.0.0.1:9393/v1/messages 
+  Now, you have WEBrick running through port 9393. 
+  Browse to http://127.0.0.1:9393/v1/messages
+  
+	
+## Testing
+	$ gem install rspec rack rack-test data_mapper dm-sqlite-adapter
+	$ cd server && rake test
+
