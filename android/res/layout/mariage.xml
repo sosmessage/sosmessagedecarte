@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-	android:background="#91459f"
+	android:background="#72c1bf"
     android:orientation="vertical" >
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +18,7 @@
 			android:layout_marginRight="10dp"
 			android:layout_marginBottom="30dp"
 			android:layout_gravity="right"
-			android:src="@drawable/logo_pot" />
+			android:src="@drawable/logo_mariage" />
 	</LinearLayout>
  
  	<RelativeLayout 

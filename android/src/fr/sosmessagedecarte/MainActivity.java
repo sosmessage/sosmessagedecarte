@@ -15,15 +15,21 @@ public class MainActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		Intent intent = new Intent(this, SosActivity.class);
 		tabHost = getTabHost();
-		tabSpec = tabHost.newTabSpec("pot").setIndicator("Pot").setContent(intent);
+		tabSpec = tabHost.newTabSpec("pot").setIndicator("Pot")
+				.setContent(new Intent(this, PotActivity.class));
 		tabHost.addTab(tabSpec);
 
-		tabSpec = tabHost.newTabSpec("anniv").setIndicator("Anniversaire").setContent(intent);
+		tabSpec = tabHost.newTabSpec("anniv").setIndicator("Anniversaire")
+				.setContent(new Intent(this, AnnivActivity.class));
 		tabHost.addTab(tabSpec);
 
-		tabSpec = tabHost.newTabSpec("mariage").setIndicator("Mariage").setContent(intent);
+		tabSpec = tabHost.newTabSpec("mariage").setIndicator("Mariage")
+				.setContent(new Intent(this, MariageActivity.class));
+		tabHost.addTab(tabSpec);
+
+		tabSpec = tabHost.newTabSpec("remerciement").setIndicator("Remerciement")
+				.setContent(new Intent(this, RemerciementActivity.class));
 		tabHost.addTab(tabSpec);
 	}
 }

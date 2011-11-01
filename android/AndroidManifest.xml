@@ -20,9 +20,10 @@
             </intent-filter>
         </activity>
         
-        <activity
-            android:name=".SosActivity" >
-        </activity>
+        <activity android:name=".PotActivity" />
+        <activity android:name=".AnnivActivity" />
+        <activity android:name=".MariageActivity" />
+        <activity android:name=".RemerciementActivity" />
     </application>
 
 </manifest>
