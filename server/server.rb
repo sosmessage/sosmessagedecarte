@@ -4,10 +4,33 @@ require "json"
 
 messages = ["Mon premier texte de bienvenu", "Mon deuxieme texte un peu funny", "Mon troisieme texte ou l'on se marre"]
 
-get "/v1/messages" do
-  response = {"message" => messages[rand(messages.size)]}
-  if (rand(2) % 2 == 0) 
-    response["announce"] = {"content" => "Do not forget to give your feedback !"}
+get "/v1/categories" do
+  content_type 'application/json', :charset => 'utf-8'
+  
+  categories = []
+  categories.push({"id" => "cat1", "label" => "Category 1"})
+  categories.push({"id" => "cat2", "label" => "Category 2"})
+  categories.push({"id" => "cat3", "label" => "Category 3"})
+  categories.to_json
+end
+
+get "/v1/categories/:category/random" do |category|
+  content_type 'application/json', :charset => 'utf-8'
+  {
+    "content"  => "#{category}: " + messages[rand(messages.size)],
+    "category" => "#{category}",
+    "id"       => "id1"
+  }.to_json
+end
+
+get "/v1/announce" do
+  if (rand(2) % 2 == 0)
+    content_type 'application/json', :charset => 'utf-8'
+    {
+      "content" => "Do not forget to give your feedback !",
+      "id" => "pub1-demo"
+    }.to_json
+  else
+    nil
   end
-  response.to_json
 end
