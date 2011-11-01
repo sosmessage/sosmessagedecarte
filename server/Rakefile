@@ -7,5 +7,5 @@ task :server do
 end
 
 task :test do
-  system "rspec -c -f d spec/*_spec.rb"
+  system "rspec -O spec/spec.opts spec/*_spec.rb"
 end
