@@ -24,13 +24,9 @@ get "/v1/categories/:category/random" do |category|
 end
 
 get "/v1/announce" do
-  if (rand(2) % 2 == 0)
-    content_type 'application/json', :charset => 'utf-8'
-    {
-      "content" => "Do not forget to give your feedback !",
-      "id" => "pub1-demo"
-    }.to_json
-  else
-    nil
-  end
+  content_type 'application/json', :charset => 'utf-8'
+  {
+    "content" => "Do not forget to give your feedback !",
+    "id" => "pub1-demo"
+  }.to_json
 end
