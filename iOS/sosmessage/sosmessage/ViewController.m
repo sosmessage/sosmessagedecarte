@@ -83,10 +83,16 @@
     [self.activityIndicator stopAnimating];
     if (messageReceiving) {
         NSError* error;
-        id message = [NSJSONSerialization JSONObjectWithData:messageReceiving options:0 error:&error];
-        if (message) {
-            NSLog(@"%@", message);
-            self.messageLabel.text = [message objectForKey:@"message"];
+        id response = [NSJSONSerialization JSONObjectWithData:messageReceiving options:0 error:&error];
+        if (response) {
+            NSLog(@"%@", response);
+            self.messageLabel.text = [response objectForKey:@"message"];
+            id announce = [response objectForKey:@"announce"];
+            if (announce) { 
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Announce" message:[announce objectForKey:@"content"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                [alert show];
+                [alert release];
+            }
         }
     }
 }
