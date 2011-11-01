@@ -10,8 +10,11 @@ import android.widget.TextView;
 public class SosActivity extends Activity {
 	/** Called when the activity is first created. */
 
-	private static String[] tmpMessages = { "Adieu", "Et encore merci pour le poisson.",
-			"Salut, et à la revoyure." };
+	private static String[] tmpMessages = {
+			"Adieu",
+			"Et encore merci pour le poisson.",
+			"Salut, et à la revoyure.",
+			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged." };
 
 	private TextView text;
 	private Button myButton;
@@ -28,7 +31,7 @@ public class SosActivity extends Activity {
 
 		myButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				text.setText(tmpMessages[new Double(Math.random() * 3).intValue()]);
+				text.setText(tmpMessages[new Double(Math.random() * tmpMessages.length).intValue()]);
 			}
 		});
 
