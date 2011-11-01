@@ -12,13 +12,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
-public class SosActivity extends Activity {
+public abstract class SosActivity extends Activity {
+
+	private static final String SERVER_URL = "http://127.0.0.1:9393";
+
+	private static final String ERROR_MESSAGE = "Ooops ! Il semblerait qu'il soit impossible de récuper de message.\nPeut-être pourriez-vous réessayer plus tard.";
 
 	private static String[] tmpMessages = {
 			"Tu perds un ami un fois, c'est de sa faute; Tu perds un ami deux fois, c'est de la tienne.",
@@ -26,31 +27,22 @@ public class SosActivity extends Activity {
 			"Salut, et à la revoyure.",
 			"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged." };
 
-	private static final String MESSAGE_URL = "http://www.google.com";
-	private TextView text;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.pot);
-
-		Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Bodoni SvtyTwo OS ITC TT.dfont");
-		text = (TextView) findViewById(R.id.text);
-		text.setTypeface(tf);
-
-		Button myButton = (Button) findViewById(R.id.myButton);
-		myButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				text.setText(getRandomMessage());
+	protected void alert(String message) {
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setMessage(message);
+		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				return;
 			}
 		});
+		alertDialog.show();
 	}
 
-	private String getRandomMessage() {
+	protected String getRandomMessage(String category) {
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpResponse response;
-			response = httpclient.execute(new HttpGet(MESSAGE_URL));
+			String url = String.format("%s/v1/categories/%s/random", SERVER_URL, category);
+			HttpResponse response = httpclient.execute(new HttpGet(url));
 			StatusLine statusLine = response.getStatusLine();
 			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -58,17 +50,15 @@ public class SosActivity extends Activity {
 				out.close();
 				String responseString = out.toString();
 				return responseString;
-				// ..more logic
 			} else {
-				// Closes the connection.
-				response.getEntity().getContent().close();
-				return "ERREUR1";
+				alert(ERROR_MESSAGE);
+				return "HTTP status code " + statusLine.getStatusCode();
 			}
 		} catch (ClientProtocolException e) {
-			return "ERREUR2";
+			alert(ERROR_MESSAGE);
+			return e.getMessage();
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			alert(ERROR_MESSAGE);
 			return e.getMessage();
 		}
 	}
