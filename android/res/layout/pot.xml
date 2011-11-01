@@ -30,11 +30,11 @@
 	    <TextView android:id="@+id/text"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_margin="20dp"
+	        android:layout_margin="18dp"
 	        android:textColor="#000000"
-	        android:textSize="20sp"
+	        android:textSize="18sp"
 			android:layout_centerHorizontal="true"
-	        android:text="@string/hello" />
+	        android:text="@string/mock_pot" />
 		
 	    <Button android:id="@+id/myButton"
 	        android:layout_width="wrap_content"

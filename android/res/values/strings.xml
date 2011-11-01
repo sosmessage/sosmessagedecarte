@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World!</string>
+    <string name="mock_mariage">Que ce grand jour marque le début d\'une suite ininterrompue de moments heureux dont vous ferez partage tous les deux.\n\nFélicitations!</string>
+    <string name="mock_remerciement">Les mots me manquent pour exprimer combien ta gentillesse me touche.\n\nMerci.</string>
+    <string name="mock_pot">Mais tu faisais quoi en fait, j\’ai jamais compris.</string>
+    <string name="mock_anniv">Une pensée bien spéciale pour l\'anniversaire d\'une personne exceptionnelle qui fête son anniversaire.\nJoyeux anniversaire.</string>
     <string name="app_name">Sosmessagedecarte</string>
 
 </resources>
