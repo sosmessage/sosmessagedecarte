@@ -7,5 +7,5 @@ task :server do
 end
 
 task :test do
-  puts "Need more tests ..."
+  system "rspec -c -f d spec/*_spec.rb"
 end
