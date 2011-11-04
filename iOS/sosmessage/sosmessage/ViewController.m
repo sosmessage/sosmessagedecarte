@@ -9,8 +9,6 @@
 #import "ViewController.h"
 
 @implementation ViewController
-@synthesize generateButton;
-@synthesize categoryButton;
 @synthesize messageLabel;
 @synthesize activityIndicator;
 @synthesize currentConnection;
@@ -33,8 +31,6 @@
 {
     [self setActivityIndicator:nil];
     [self setMessageLabel:nil];
-    [self setGenerateButton:nil];
-    [self setCategoryButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -65,7 +61,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    self.categoryButton.hidden = self.generateButton.hidden = interfaceOrientation == UIDeviceOrientationLandscapeRight || interfaceOrientation == UIDeviceOrientationLandscapeLeft;
     return YES;
     
     /*
@@ -95,7 +90,7 @@
         if (response) {
             // TODO should handle other request
             NSLog(@"%@", response);
-            self.messageLabel.text = [response objectForKey:@"content"];
+            self.messageLabel.text = [[response objectAtIndex:(random() % [response count])] objectForKey:@"label"];
         }
     }
 }
@@ -119,28 +114,16 @@
 
 -(void)startActivity {
     [self.activityIndicator startAnimating];
-    self.categoryButton.enabled = NO;
-    self.generateButton.enabled = NO;
 }
 
 -(void)stopActivity {
     [self.activityIndicator stopAnimating];
-    self.categoryButton.enabled = YES;
-    self.generateButton.enabled = YES;    
-}
-
-- (IBAction)generateButtonPressed:(id)sender {
-    [self fetchAnotherMessage];
-}
-
-- (IBAction)categoryButtonPressed:(id)sender {
-    //TODO
 }
 
 -(void)fetchAnotherMessage {
     [self startActivity];
     
-    NSURL* url = [[NSURL alloc] initWithString:@"http://localhost:9393/v1/categories/test/random"];
+    NSURL* url = [[NSURL alloc] initWithString:@"http://kervern.me/v1/categories"];
     NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
     messageReceiving = nil;
     
@@ -152,8 +135,6 @@
 - (void)dealloc {
     [activityIndicator release];
     [messageLabel release];
-    [generateButton release];
-    [categoryButton release];
     [super dealloc];
 }
 @end
