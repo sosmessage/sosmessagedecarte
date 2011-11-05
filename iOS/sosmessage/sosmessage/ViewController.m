@@ -47,7 +47,7 @@
     [self becomeFirstResponder];
     [super viewDidAppear:animated];
     
-    NSMutableArray* categories = [NSMutableArray arrayWithObjects:@"Test1 Remember",@"Test2",@"Test3 Remember",@"Test4 Remember",@"Test5",@"Test6",@"Test7",@"Test8",@"Test9", nil];
+    NSMutableArray* categories = [NSMutableArray arrayWithObjects:@"Test1 Remember",@"Test2",@"Test3 Remember",@"Test4 Remember",@"Test5",@"Test6",@"Test7 Remember",@"Test8",@"Test9",@"Test10 Remember", nil];
     [self placeCategories:categories];
 }
 
