@@ -80,7 +80,7 @@
         if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
             return 3;
         } else {
-            return 4;
+            return 5;
         }
     } else {
         if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
