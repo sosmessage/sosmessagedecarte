@@ -128,7 +128,8 @@
     NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
     
     UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
-    uiLabel.backgroundColor = [UIColor orangeColor];
+    float hue = (rand()%10) / 10.0;
+    uiLabel.backgroundColor = [UIColor colorWithHue:hue saturation:0.4 brightness:0.9 alpha:1.0];
     uiLabel.text = label;
     uiLabel.font = SOSFONT;
     uiLabel.textAlignment = UITextAlignmentCenter;
@@ -141,6 +142,23 @@
     [self.view addSubview:uiLabel];
 }
 
+- (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY {
+    float blockSize = self.view.frame.size.width / NB_BLOCKS;
+    int labelHeight = 60;
+    
+    float rectX = floorf(blockSize * posX);
+    float rectY = labelHeight * posY;
+    float rectWidth = blockSize * nb;
+    float rectHeight = labelHeight;
+    
+    NSLog(@"Fill %d blocks at (%.2f;%.2f) with size (%.2f;%.2f)", nb, rectX, rectY, rectWidth, rectHeight);
+    UILabel* emptyBlocks = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
+    float hue = (rand()%10) / 10.0;
+    emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];
+    
+    [self.view addSubview:emptyBlocks];
+}
+
 - (void)placeCategories:(NSMutableArray*)categories {
     int x = 0;
     int y = 0;
@@ -148,6 +166,7 @@
         NSString* category = [categories objectAtIndex:0];
         int blockSize = [category blocksCount:self.view];
         if ((NB_BLOCKS - x < blockSize)) {
+            [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];
             x = 0;
             y += 1;
         }
@@ -161,6 +180,10 @@
         }
         
         [categories removeObjectAtIndex:0];
+    }
+    
+    if (x < NB_BLOCKS) {
+        [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];        
     }
 }
 

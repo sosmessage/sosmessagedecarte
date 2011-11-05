@@ -26,6 +26,7 @@
 - (void)startActivity;
 
 - (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY;
+- (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY;
 - (void)placeCategories:(NSMutableArray*)categories;
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
 
