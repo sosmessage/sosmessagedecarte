@@ -10,9 +10,10 @@
 #import <Foundation/Foundation.h>
 
 #import "NSString+SOSMessage.h"
+#import "AppDelegate.h"
 
-#define SOSFONT [UIFont systemFontOfSize:24]
-#define NB_BLOCKS 3
+#define SOSFONT [(AppDelegate*)[[UIApplication sharedApplication] delegate] deviceSpecificSOSFont]
+#define NB_BLOCKS [(AppDelegate*)[[UIApplication sharedApplication] delegate] deviceSpecificNumberOfBlocks]
 
 @protocol SOSMessageConstant <NSObject>
 
