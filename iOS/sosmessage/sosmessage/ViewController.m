@@ -11,6 +11,7 @@
 @implementation ViewController
 @synthesize messageLabel;
 @synthesize activityIndicator;
+@synthesize currentConnection;
 
 - (void)didReceiveMemoryWarning
 {
@@ -37,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    labels = [[NSMutableArray alloc] initWithObjects:@"Remerciements", @"Calques", nil];
     [super viewWillAppear:animated];
 }
 
@@ -44,10 +46,16 @@
 {
     [self becomeFirstResponder];
     [super viewDidAppear:animated];
+    
+    NSMutableArray* categories = [NSMutableArray arrayWithObjects:@"Test1 Remember",@"Test2",@"Test3 Remember",@"Test4 Remember",@"Test5",@"Test6",@"Test7",@"Test8",@"Test9", nil];
+    [self placeCategories:categories];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [labels release];
+    [self.currentConnection cancel];
+    [self.currentConnection release];
 	[super viewWillDisappear:animated];
 }
 
@@ -75,24 +83,19 @@
 
 #pragma mark NSURLConnection delegate
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self.activityIndicator stopAnimating];
+    [self stopActivity];
     self.messageLabel.text = error.description;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [self.activityIndicator stopAnimating];
+    [self stopActivity];
     if (messageReceiving) {
         NSError* error;
         id response = [NSJSONSerialization JSONObjectWithData:messageReceiving options:0 error:&error];
         if (response) {
+            // TODO should handle other request
             NSLog(@"%@", response);
-            self.messageLabel.text = [response objectForKey:@"message"];
-            id announce = [response objectForKey:@"announce"];
-            if (announce) { 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Announce" message:[announce objectForKey:@"content"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                [alert show];
-                [alert release];
-            }
+            self.messageLabel.text = [[response objectAtIndex:(random() % [response count])] objectForKey:@"label"];
         }
     }
 }
@@ -111,21 +114,79 @@
     }
 }
 
+#pragma mark Category handling
+
+- (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY {
+    float blockSize = self.view.frame.size.width / NB_BLOCKS;
+    int labelHeight = 60;
+    
+    float rectX = floorf(blockSize * posX);
+    float rectY = labelHeight * posY;
+    float rectWidth = ceilf([label sizeForBlocksForView:self.view]);
+    float rectHeight = labelHeight;
+    
+    NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
+    
+    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
+    uiLabel.backgroundColor = [UIColor orangeColor];
+    uiLabel.text = label;
+    uiLabel.font = SOSFONT;
+    uiLabel.textAlignment = UITextAlignmentCenter;
+    uiLabel.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *categoryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCategoryTapping:)];
+    [uiLabel addGestureRecognizer:categoryTap];
+    [categoryTap release];
+    
+    [self.view addSubview:uiLabel];
+}
+
+- (void)placeCategories:(NSMutableArray*)categories {
+    int x = 0;
+    int y = 0;
+    while (categories.count > 0) {
+        NSString* category = [categories objectAtIndex:0];
+        int blockSize = [category blocksCount:self.view];
+        if ((NB_BLOCKS - x < blockSize)) {
+            x = 0;
+            y += 1;
+        }
+        
+        [self addSOSCategory:category inPosX:x andPosY:y];
+        
+        x += blockSize;
+        if (x >= NB_BLOCKS) {
+            y += 1;
+            x = 0;
+        }
+        
+        [categories removeObjectAtIndex:0];
+    }
+}
+
+- (void)handleCategoryTapping:(UIGestureRecognizer *)sender {
+    UILabel* category = (UILabel*)sender.view;
+    NSLog(@"Category is tapped! (%@)", category.text);
+}
 
 #pragma mark Custom methods
 
-- (IBAction)generateButtonPressed:(id)sender {
-    [self fetchAnotherMessage];
+-(void)startActivity {
+    [self.activityIndicator startAnimating];
+}
+
+-(void)stopActivity {
+    [self.activityIndicator stopAnimating];
 }
 
 -(void)fetchAnotherMessage {
-    [self.activityIndicator startAnimating];
+    [self startActivity];
     
-    NSURL* url = [[NSURL alloc] initWithString:@"http://localhost:9393/v1/messages"];
+    NSURL* url = [[NSURL alloc] initWithString:@"http://kervern.me/v1/categories"];
     NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
     messageReceiving = nil;
     
-    [NSURLConnection connectionWithRequest:request delegate:self];
+    self.currentConnection = [NSURLConnection connectionWithRequest:request delegate:self];
     
     [request release];
     [url release];
