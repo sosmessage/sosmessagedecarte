@@ -38,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    labels = [[NSMutableArray alloc] initWithObjects:@"Remerciements", @"Calques", nil];
     [super viewWillAppear:animated];
 }
 
@@ -45,10 +46,14 @@
 {
     [self becomeFirstResponder];
     [super viewDidAppear:animated];
+    
+    NSString* tmp = @"Remember";
+    [self addSOSCategory:tmp];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [labels release];
     [self.currentConnection cancel];
     [self.currentConnection release];
 	[super viewWillDisappear:animated];
@@ -109,6 +114,31 @@
     }
 }
 
+#pragma mark Category handling
+
+- (void)addSOSCategory:(NSString*)label {
+    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(40, 40, [label sizeForBlocksForView:self.view], 60)] autorelease];
+    uiLabel.backgroundColor = [UIColor orangeColor];
+    uiLabel.text = label;
+    uiLabel.font = SOSFONT;
+    uiLabel.textAlignment = UITextAlignmentCenter;
+    uiLabel.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *categoryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCategoryTapping:)];
+    [uiLabel addGestureRecognizer:categoryTap];
+    [categoryTap release];
+    
+    [self.view addSubview:uiLabel];
+}
+
+- (void)placeCategories:(NSArray*)categories {
+    
+}
+
+- (void)handleCategoryTapping:(UIGestureRecognizer *)sender {
+    UILabel* category = (UILabel*)sender.view;
+    NSLog(@"Category is tapped! (%@)", category.text);
+}
 
 #pragma mark Custom methods
 

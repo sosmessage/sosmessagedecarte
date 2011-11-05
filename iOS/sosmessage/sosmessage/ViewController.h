@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
+#import "SOSMessageConstant.h"
 
 @interface ViewController : UIViewController <NSURLConnectionDelegate> {
     @private
     NSMutableData* messageReceiving;
+    NSMutableArray* labels;
 }
 @property (retain, nonatomic) IBOutlet UILabel *messageLabel;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -24,5 +24,9 @@
 - (void)fetchAnotherMessage;
 - (void)stopActivity;
 - (void)startActivity;
+
+- (void)addSOSCategory:(NSString*)label;
+- (void)placeCategories:(NSArray*)categories;
+- (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
 
 @end
