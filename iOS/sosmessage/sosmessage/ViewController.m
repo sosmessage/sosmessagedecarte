@@ -131,6 +131,7 @@
     float hue = (rand()%10) / 10.0;
     uiLabel.backgroundColor = [UIColor colorWithHue:hue saturation:0.4 brightness:0.9 alpha:1.0];
     uiLabel.text = label;
+    uiLabel.shadowColor = [UIColor whiteColor];
     uiLabel.font = SOSFONT;
     uiLabel.textAlignment = UITextAlignmentCenter;
     uiLabel.userInteractionEnabled = YES;
