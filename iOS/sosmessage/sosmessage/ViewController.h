@@ -25,8 +25,8 @@
 - (void)stopActivity;
 - (void)startActivity;
 
-- (void)addSOSCategory:(NSString*)label;
-- (void)placeCategories:(NSArray*)categories;
+- (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY;
+- (void)placeCategories:(NSMutableArray*)categories;
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
 
 @end

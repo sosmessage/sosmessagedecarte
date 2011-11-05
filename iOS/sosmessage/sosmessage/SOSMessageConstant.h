@@ -12,6 +12,7 @@
 #import "NSString+SOSMessage.h"
 
 #define SOSFONT [UIFont systemFontOfSize:24]
+#define NB_BLOCKS 3
 
 @protocol SOSMessageConstant <NSObject>
 

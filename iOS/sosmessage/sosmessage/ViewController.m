@@ -47,8 +47,8 @@
     [self becomeFirstResponder];
     [super viewDidAppear:animated];
     
-    NSString* tmp = @"Remember";
-    [self addSOSCategory:tmp];
+    NSMutableArray* categories = [NSMutableArray arrayWithObjects:@"Test1 Remember",@"Test2",@"Test3 Remember",@"Test4 Remember",@"Test5",@"Test6",@"Test7",@"Test8",@"Test9", nil];
+    [self placeCategories:categories];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -116,8 +116,18 @@
 
 #pragma mark Category handling
 
-- (void)addSOSCategory:(NSString*)label {
-    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(40, 40, [label sizeForBlocksForView:self.view], 60)] autorelease];
+- (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY {
+    float blockSize = self.view.frame.size.width / NB_BLOCKS;
+    int labelHeight = 60;
+    
+    float rectX = floorf(blockSize * posX);
+    float rectY = labelHeight * posY;
+    float rectWidth = ceilf([label sizeForBlocksForView:self.view]);
+    float rectHeight = labelHeight;
+    
+    NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
+    
+    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
     uiLabel.backgroundColor = [UIColor orangeColor];
     uiLabel.text = label;
     uiLabel.font = SOSFONT;
@@ -131,8 +141,27 @@
     [self.view addSubview:uiLabel];
 }
 
-- (void)placeCategories:(NSArray*)categories {
-    
+- (void)placeCategories:(NSMutableArray*)categories {
+    int x = 0;
+    int y = 0;
+    while (categories.count > 0) {
+        NSString* category = [categories objectAtIndex:0];
+        int blockSize = [category blocksCount:self.view];
+        if ((NB_BLOCKS - x < blockSize)) {
+            x = 0;
+            y += 1;
+        }
+        
+        [self addSOSCategory:category inPosX:x andPosY:y];
+        
+        x += blockSize;
+        if (x >= NB_BLOCKS) {
+            y += 1;
+            x = 0;
+        }
+        
+        [categories removeObjectAtIndex:0];
+    }
 }
 
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender {
