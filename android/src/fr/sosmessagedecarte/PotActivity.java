@@ -2,6 +2,7 @@ package fr.sosmessagedecarte;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class PotActivity extends SosActivity {
 
 		Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Bodoni SvtyTwo OS ITC TT.dfont");
 		text = (TextView) findViewById(R.id.text);
+		text.setMovementMethod(ScrollingMovementMethod.getInstance());
 		text.setTypeface(tf);
 
 		Button myButton = (Button) findViewById(R.id.myButton);
@@ -28,5 +30,4 @@ public class PotActivity extends SosActivity {
 			}
 		});
 	}
-
 }
