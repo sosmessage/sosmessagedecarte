@@ -16,6 +16,9 @@
 		516515DC145DEA4100CF6C45 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515DB145DEA4100CF6C45 /* ViewController.m */; };
 		516515DF145DEA4100CF6C45 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515DD145DEA4100CF6C45 /* ViewController.xib */; };
 		51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE051465221400B274B3 /* NSString+SOSMessage.m */; };
+		51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */; };
+		51A5CE0D1466768A00B274B3 /* SMDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */; };
+		51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A5CE131466E24200B274B3 /* CoreText.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,10 @@
 		51A5CE041465221400B274B3 /* NSString+SOSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SOSMessage.h"; sourceTree = "<group>"; };
 		51A5CE051465221400B274B3 /* NSString+SOSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SOSMessage.m"; sourceTree = "<group>"; };
 		51A5CE081465227C00B274B3 /* SOSMessageConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSMessageConstant.h; sourceTree = "<group>"; };
+		51A5CE091466768900B274B3 /* SMDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMDetailViewController.h; sourceTree = "<group>"; };
+		51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMDetailViewController.m; sourceTree = "<group>"; };
+		51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMDetailViewController.xib; sourceTree = "<group>"; };
+		51A5CE131466E24200B274B3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */,
 				516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */,
 				516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */,
 				516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */,
@@ -71,6 +79,7 @@
 		516515C7145DEA4000CF6C45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				51A5CE131466E24200B274B3 /* CoreText.framework */,
 				516515C8145DEA4000CF6C45 /* UIKit.framework */,
 				516515CA145DEA4000CF6C45 /* Foundation.framework */,
 				516515CC145DEA4000CF6C45 /* CoreGraphics.framework */,
@@ -82,13 +91,14 @@
 			isa = PBXGroup;
 			children = (
 				51A5CE081465227C00B274B3 /* SOSMessageConstant.h */,
-				51A5CE041465221400B274B3 /* NSString+SOSMessage.h */,
-				51A5CE051465221400B274B3 /* NSString+SOSMessage.m */,
+				51A5CE0E146677DE00B274B3 /* Category */,
 				516515D7145DEA4100CF6C45 /* AppDelegate.h */,
 				516515D8145DEA4100CF6C45 /* AppDelegate.m */,
 				516515DA145DEA4100CF6C45 /* ViewController.h */,
 				516515DB145DEA4100CF6C45 /* ViewController.m */,
-				516515DD145DEA4100CF6C45 /* ViewController.xib */,
+				51A5CE091466768900B274B3 /* SMDetailViewController.h */,
+				51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */,
+				51A5CE0F146677F200B274B3 /* Nibs */,
 				516515CF145DEA4000CF6C45 /* Supporting Files */,
 			);
 			path = sosmessage;
@@ -103,6 +113,24 @@
 				516515D6145DEA4100CF6C45 /* sosmessage-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		51A5CE0E146677DE00B274B3 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				51A5CE041465221400B274B3 /* NSString+SOSMessage.h */,
+				51A5CE051465221400B274B3 /* NSString+SOSMessage.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		51A5CE0F146677F200B274B3 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				516515DD145DEA4100CF6C45 /* ViewController.xib */,
+				51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */,
+			);
+			name = Nibs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +185,7 @@
 			files = (
 				516515D3145DEA4000CF6C45 /* InfoPlist.strings in Resources */,
 				516515DF145DEA4100CF6C45 /* ViewController.xib in Resources */,
+				51A5CE0D1466768A00B274B3 /* SMDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +200,7 @@
 				516515D9145DEA4100CF6C45 /* AppDelegate.m in Sources */,
 				516515DC145DEA4100CF6C45 /* ViewController.m in Sources */,
 				51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */,
+				51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

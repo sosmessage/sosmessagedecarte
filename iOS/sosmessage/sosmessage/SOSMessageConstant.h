@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 
 #import "NSString+SOSMessage.h"
+
 #import "AppDelegate.h"
 
 #define SOSFONT [(AppDelegate*)[[UIApplication sharedApplication] delegate] deviceSpecificSOSFont]
