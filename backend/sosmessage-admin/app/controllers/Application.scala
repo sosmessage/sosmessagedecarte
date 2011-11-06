@@ -6,6 +6,7 @@ import play.api.mvc._
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.MongoConnection
 import org.bson.types.ObjectId
+import java.util.Date
 
 object Application extends Controller {
 
@@ -38,6 +39,7 @@ object Application extends Controller {
         val builder = MongoDBObject.newBuilder
         builder += "category" -> v._1
         builder += "text" -> v._2
+        builder += "creationDate" -> new Date()
         messagesCollection += builder.result
 
         Redirect(routes.Application.index)

@@ -18,6 +18,7 @@
         <tr>
           <th>Message Text</th>
           <th>Category</th>
+          <th>Creation Date</th>
           <th class="delete-message-col"></th>
         </tr>
       </thead>
@@ -31,6 +32,12 @@
             </td>
             <td>
               @message.get("category")
+            </td>
+            <td>
+              @{
+                val df = java.text.DateFormat.getDateTimeInstance
+                df.format(message.get("creationDate"))
+              }
             </td>
             <td class="delete-message-col">
               <form action="@routes.Application.delete(message.get("_id").toString)" method="POST"
