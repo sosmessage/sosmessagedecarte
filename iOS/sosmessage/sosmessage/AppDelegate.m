@@ -72,4 +72,31 @@
      */
 }
 
+#pragma mark Custom methods
+
+- (int)deviceSpecificNumberOfBlocks {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
+            return 3;
+        } else {
+            return 5;
+        }
+    } else {
+        if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
+            return 6;
+        } else {
+            return 10;
+        }
+    }
+}
+
+- (UIFont *)deviceSpecificSOSFont {
+    int fontSize = 36;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        fontSize = 24;
+    }
+    return [UIFont systemFontOfSize:fontSize];
+}
+
 @end

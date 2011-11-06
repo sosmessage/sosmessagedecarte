@@ -16,6 +16,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *messageLabel;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (retain, nonatomic) NSURLConnection* currentConnection;
+@property (retain, nonatomic) NSMutableArray* categories;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
@@ -26,7 +27,10 @@
 - (void)startActivity;
 
 - (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY;
-- (void)placeCategories:(NSMutableArray*)categories;
+- (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY;
+
+- (void)refreshCategories;
+- (void)removeCategoriesLabel;
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
 
 @end
