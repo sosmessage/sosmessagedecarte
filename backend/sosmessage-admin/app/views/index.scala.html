@@ -1,0 +1,82 @@
+@(messages: com.mongodb.casbah.MongoCollection, newMessageForm:play.api.data.Form[(String, String)])
+
+@main {
+
+  <section>
+
+    <p>
+      <a class="btn large primary"
+         data-controls-modal="new-message-modal"
+         data-backdrop="static"
+         data-keyboard="true">Add message</a>
+    </p>
+
+    <h2>List of existing messages</h2>
+
+    <table class="zebra-striped">
+      <thead>
+        <tr>
+          <th>Message Text</th>
+          <th>Category</th>
+          <th class="delete-message-col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @messages.map { message =>
+          <tr>
+            <td>
+              <pre>
+@message.get("text")
+              </pre>
+            </td>
+            <td>
+              @message.get("category")
+            </td>
+            <td class="delete-message-col">
+              <form action="@routes.Application.delete(message.get("_id").toString)" method="POST"
+                style="margin-bottom:0">
+                <button class="btn small danger delete-message" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </section>
+
+  <div id="new-message-modal" class="modal hide">
+
+      <div class="modal-header">
+        <a href="#" class="close">x</a>
+        <h3>New Message</h3>
+      </div>
+      <div class="modal-body">
+        <form action="@routes.Application.save" method="POST" class="form-stacked" accept-charset="UTF-8">
+          <fieldset>
+            <div class="clearfix">
+              @newMessageForm.forField("category") { field =>
+                <label for="@field.name">Category</label>
+                <div class="input">
+                  <input class="xxlarge" id="@field.name" name="@field.name" type="text" value="@field.value" />
+                </div>
+              }
+            </div>
+            <div class="clearfix">
+              @newMessageForm.forField("text") { field =>
+                <label for="@field.name">Text</label>
+                <div class="input">
+                  <textarea class="xxlarge" id="@field.name" name="@field.name" value="@field.value" rows="6"></textarea>
+                </div>
+              }
+            </div>
+          </fieldset>
+          <div class="actions">
+            <button class="btn small primary" type="submit">Add</button>
+            <button type="reset" class="btn small"  onclick="$('#new-message-modal').modal('hide'); return false;">Cancel</button>
+          </div>
+        </form>
+      </div>
+  </div>
+
+}

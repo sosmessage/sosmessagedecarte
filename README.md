@@ -20,4 +20,29 @@ Elle est disponible sur les deux principales plateformes mobiles que sont iPhone
 ## Testing
 	$ gem install rspec rack rack-test data_mapper dm-sqlite-adapter
 	$ cd server && rake test
+	
 
+## Backend
+
+The messages are stored in a mongoDB database.
+
+The administration interface is done using [Play 2.0](http://www.playframework.org/2.0).
+
+The Web services used by the mobile applications are exposed through [BlueEyes](https://github.com/jdegoes/blueeyes).
+
+### Install mongoDB
+
+To install it on your system, see [here](http://www.mongodb.org/display/DOCS/Quickstart).
+
+### Install Play 2.0
+
+See the **Building from sources** section [here](https://github.com/playframework/Play20/wiki/Installing).
+
+### Install BlueEyes
+
+### Launch the administration application
+
+	$ cd backend/sosmessage-admin
+	$ play run
+
+The application will be accessible at `http://localhost:9000/`.

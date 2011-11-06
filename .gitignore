@@ -47,3 +47,12 @@ CVS
 Backup[ ]of[ ]*.pages/
 Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
+
+
+# play app
+logs
+project/project
+project/target
+target
+tmp
+dist
