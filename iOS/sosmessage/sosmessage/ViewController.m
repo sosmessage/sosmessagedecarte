@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "SMDetailViewController.h"
 
 @implementation ViewController
 @synthesize messageLabel;
@@ -133,7 +134,7 @@
     NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
     
     UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
-    float hue = (rand()%10) / 10.0;
+    float hue = (rand()%24) / 24.0;
     uiLabel.backgroundColor = [UIColor colorWithHue:hue saturation:0.4 brightness:0.9 alpha:1.0];
     uiLabel.text = label;
     uiLabel.shadowColor = [UIColor whiteColor];
@@ -159,7 +160,7 @@
     
     NSLog(@"Fill %d blocks at (%.2f;%.2f) with size (%.2f;%.2f)", nb, rectX, rectY, rectWidth, rectHeight);
     UILabel* emptyBlocks = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
-    float hue = (rand()%10) / 10.0;
+    float hue = (rand()%24) / 24.0;
     emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];
     
     [self.view addSubview:emptyBlocks];
@@ -210,7 +211,15 @@
 
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender {
     UILabel* category = (UILabel*)sender.view;
-    NSLog(@"Category is tapped! (%@)", category.text);
+    
+    CGFloat hue;
+    [category.backgroundColor getHue:&hue saturation:nil brightness:nil alpha:nil];
+    
+    NSLog(@"Hue color: %.3f", hue);
+    SMDetailViewController* detail = [[SMDetailViewController alloc] initWithHue:hue category:category.text];
+    detail.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:detail animated:true];
+    [detail release];
 }
 
 #pragma mark Custom methods
