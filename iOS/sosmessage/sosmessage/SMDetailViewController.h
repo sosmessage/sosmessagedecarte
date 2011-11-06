@@ -11,6 +11,7 @@
 @interface SMDetailViewController : UIViewController {
     
 }
+@property (retain, nonatomic) IBOutlet UIImageView *messageImage;
 
 - (id)initWithHue:(float)hue category:(NSString*)category;
 - (IBAction)dismissButtonPressed:(id)sender;

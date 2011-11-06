@@ -18,6 +18,7 @@
 		51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE051465221400B274B3 /* NSString+SOSMessage.m */; };
 		51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */; };
 		51A5CE0D1466768A00B274B3 /* SMDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */; };
+		51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A5CE131466E24200B274B3 /* CoreText.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		51A5CE091466768900B274B3 /* SMDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMDetailViewController.h; sourceTree = "<group>"; };
 		51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMDetailViewController.m; sourceTree = "<group>"; };
 		51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMDetailViewController.xib; sourceTree = "<group>"; };
+		51A5CE131466E24200B274B3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */,
 				516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */,
 				516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */,
 				516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */,
@@ -76,6 +79,7 @@
 		516515C7145DEA4000CF6C45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				51A5CE131466E24200B274B3 /* CoreText.framework */,
 				516515C8145DEA4000CF6C45 /* UIKit.framework */,
 				516515CA145DEA4000CF6C45 /* Foundation.framework */,
 				516515CC145DEA4000CF6C45 /* CoreGraphics.framework */,
