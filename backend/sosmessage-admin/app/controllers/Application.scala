@@ -39,7 +39,7 @@ object Application extends Controller {
         val builder = MongoDBObject.newBuilder
         builder += "category" -> v._1
         builder += "text" -> v._2
-        builder += "creationDate" -> new Date()
+        builder += "createdAt" -> new Date()
         messagesCollection += builder.result
 
         Redirect(routes.Application.index)
