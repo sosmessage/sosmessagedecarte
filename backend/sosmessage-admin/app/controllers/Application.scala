@@ -29,13 +29,11 @@ object Application extends Controller {
   }
 
   def save = Action { implicit request =>
-    //Logger.info(request.body.)
     messageForm.bindFromRequest().fold(
       f => {
         BadRequest(views.html.index(messagesCollection, f))
       },
       v => {
-        Logger.info("Saving object: {category: " + v._1 + ", text: " + v._2 + "}")
         val builder = MongoDBObject.newBuilder
         builder += "category" -> v._1
         builder += "text" -> v._2
