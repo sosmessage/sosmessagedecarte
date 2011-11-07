@@ -134,8 +134,7 @@
     NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
     
     UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
-    float hue = (rand()%24) / 24.0;
-    uiLabel.backgroundColor = [UIColor colorWithHue:hue saturation:0.4 brightness:0.9 alpha:1.0];
+    uiLabel.backgroundColor = [UIColor colorWithHue:label.hue saturation:0.4 brightness:0.9 alpha:1.0];
     uiLabel.text = label;
     uiLabel.shadowColor = [UIColor whiteColor];
     uiLabel.font = SOSFONT;
