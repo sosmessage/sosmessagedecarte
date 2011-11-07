@@ -11,11 +11,17 @@ import java.util.Date
 object Application extends Controller {
 
   val DataBaseName = "sosmessage"
-  val MessagesCollection = "messages"
+  val MessagesCollectionName = "messages"
+  val CategoriesCollectionName = "categories"
 
   val mongo = MongoConnection()
 
-  val messagesCollection = mongo(DataBaseName)(MessagesCollection)
+  val messagesCollection = mongo(DataBaseName)(MessagesCollectionName)
+  val categoriesCollection = mongo(DataBaseName)(CategoriesCollectionName)
+
+  val categoryForm = Form(
+      "name" -> text(minLength = 1)
+  )
 
   val messageForm = Form(
     of(
@@ -25,17 +31,22 @@ object Application extends Controller {
   )
 
   def index = Action {
-    Ok(views.html.index(messagesCollection, messageForm))
+    Ok(views.html.index(categoriesCollection, messagesCollection, categoryForm, messageForm))
   }
 
-  def save = Action { implicit request =>
+  def saveMessage = Action { implicit request =>
     messageForm.bindFromRequest().fold(
       f => {
-        BadRequest(views.html.index(messagesCollection, f))
+        BadRequest(views.html.index(categoriesCollection, messagesCollection, categoryForm, messageForm))
       },
       v => {
+        val oid = new ObjectId(v._1)
+        val o = MongoDBObject("_id" -> oid)
+        val category = categoriesCollection.findOne(o).get
+
         val builder = MongoDBObject.newBuilder
-        builder += "category" -> v._1
+        builder += "categoryId" -> category.get("_id")
+        builder += "category" -> category.get("name")
         builder += "text" -> v._2
         builder += "createdAt" -> new Date()
         messagesCollection += builder.result
@@ -45,10 +56,35 @@ object Application extends Controller {
     )
   }
 
-  def delete(id: String) = Action {
+  def deleteMessage(id: String) = Action {
     val oid = new ObjectId(id)
     val o = MongoDBObject("_id" -> oid)
     messagesCollection.remove(o)
+    Redirect(routes.Application.index)
+  }
+
+  def saveCategory = Action { implicit request =>
+    categoryForm.bindFromRequest().fold(
+      f => {
+        Logger.info("baaad?" + f)
+        BadRequest(views.html.index(categoriesCollection, messagesCollection, categoryForm, messageForm))
+      },
+      v => {
+        Logger.info("saving cate?")
+        val builder = MongoDBObject.newBuilder
+        builder += "name" -> v
+        builder += "createdAt" -> new Date()
+        categoriesCollection += builder.result
+
+        Redirect(routes.Application.index)
+      }
+    )
+  }
+
+  def deleteCategory(id: String) = Action {
+    val oid = new ObjectId(id)
+    val o = MongoDBObject("_id" -> oid)
+    categoriesCollection.remove(o)
     Redirect(routes.Application.index)
   }
 

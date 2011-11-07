@@ -1,89 +1,175 @@
-@(messages: com.mongodb.casbah.MongoCollection, newMessageForm:play.api.data.Form[(String, String)])
+@(
+  categories: com.mongodb.casbah.MongoCollection,
+  messages: com.mongodb.casbah.MongoCollection,
+  newCategoryForm:play.api.data.Form[String],
+  newMessageForm:play.api.data.Form[(String, String)]
+)
 
 @main {
 
-  <section>
+  <section id="categories">
 
-    <p>
-      <a class="btn large primary"
-         data-controls-modal="new-message-modal"
+    <div class="categories-container">
+      <div class="page-header">
+        <h1>Categories</h1>
+      </div>
+
+      <p>
+        <a class="btn primary"
+         data-controls-modal="new-category-modal"
          data-backdrop="static"
-         data-keyboard="true">Add message</a>
-    </p>
+         data-keyboard="true">Add category</a>
+      </p>
 
-    <h2>List of existing messages</h2>
-
-    <table class="zebra-striped">
-      <thead>
-        <tr>
-          <th>Message Text</th>
-          <th>Category</th>
-          <th>Creation Date</th>
-          <th class="delete-message-col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @messages.map { message =>
+      <table class="zebra-striped">
+        <thead>
           <tr>
-            <td>
-              <pre>
-@message.get("text")
-              </pre>
-            </td>
-            <td>
-              @message.get("category")
-            </td>
-            <td>
-              @{
-                val df = java.text.DateFormat.getDateTimeInstance
-                df.format(message.get("createdAt"))
-              }
-            </td>
-            <td class="delete-message-col">
-              <form action="@routes.Application.delete(message.get("_id").toString)" method="POST"
-                style="margin-bottom:0">
-                <button class="btn small danger delete-message" type="submit">Delete</button>
-              </form>
-            </td>
+            <th>Name</th>
+            <th>Created At</th>
+            <th class="delete-message-col"></th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @categories.map { category =>
+            <tr>
+              <td>
+                @category.get("name")
+              </td>
+              <td>
+                @{
+                  val df = java.text.DateFormat.getDateTimeInstance
+                  df.format(category.get("createdAt"))
+                }
+              </td>
+              <td class="delete-category-col">
+                <form action="@routes.Application.deleteCategory(category.get("_id").toString)" method="POST"
+                  style="margin-bottom:0">
+                  <button class="btn small danger delete-category" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
 
-  </section>
-
-  <div id="new-message-modal" class="modal hide">
-
+    <div id="new-category-modal" class="modal hide">
       <div class="modal-header">
         <a href="#" class="close">x</a>
-        <h3>New Message</h3>
+        <h3>New Category</h3>
       </div>
       <div class="modal-body">
-        <form action="@routes.Application.save" method="POST" class="form-stacked" accept-charset="UTF-8">
+        <form action="@routes.Application.saveCategory" method="POST" class="form-stacked" accept-charset="UTF-8">
           <fieldset>
             <div class="clearfix">
-              @newMessageForm.forField("category") { field =>
-                <label for="@field.name">Category</label>
+              @newCategoryForm.forField("name") { field =>
+                <label for="@field.name">Name</label>
                 <div class="input">
-                  <input class="xxlarge" id="@field.name" name="@field.name" type="text" value="@field.value" />
-                </div>
-              }
-            </div>
-            <div class="clearfix">
-              @newMessageForm.forField("text") { field =>
-                <label for="@field.name">Text</label>
-                <div class="input">
-                  <textarea class="xxlarge" id="@field.name" name="@field.name" value="@field.value" rows="6"></textarea>
+                  <input class="xlarge" id="@field.name" name="@field.name" type="text" value="@field.value" />
                 </div>
               }
             </div>
           </fieldset>
           <div class="actions">
             <button class="btn small primary" type="submit">Add</button>
-            <button type="reset" class="btn small"  onclick="$('#new-message-modal').modal('hide'); return false;">Cancel</button>
+            <button type="reset" class="btn small"  onclick="$('#new-category-modal').modal('hide'); return false;">Cancel</button>
           </div>
         </form>
       </div>
+    </div>
+
+  </section>
+
+  <section id="messages">
+
+    <div class="messages-container">
+      <div class="page-header">
+        <h1>Messages</h1>
+      </div>
+
+      <p>
+        <a class="btn primary"
+           data-controls-modal="new-message-modal"
+           data-backdrop="static"
+           data-keyboard="true">Add message</a>
+      </p>
+
+      <table class="zebra-striped">
+        <thead>
+          <tr>
+            <th>Message Text</th>
+            <th>Category</th>
+            <th>Created At</th>
+            <th class="delete-message-col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @messages.map { message =>
+            <tr>
+              <td>
+                <pre>
+@message.get("text")
+                </pre>
+              </td>
+              <td>
+                @message.get("category")
+              </td>
+              <td>
+                @{
+                  val df = java.text.DateFormat.getDateTimeInstance
+                  df.format(message.get("createdAt"))
+                }
+              </td>
+              <td class="delete-message-col">
+                <form action="@routes.Application.deleteMessage(message.get("_id").toString)" method="POST"
+                  style="margin-bottom:0">
+                  <button class="btn small danger delete-message" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+  <div id="new-message-modal" class="modal hide">
+    <div class="modal-header">
+      <a href="#" class="close">x</a>
+      <h3>New Message</h3>
+    </div>
+    <div class="modal-body">
+      <form action="@routes.Application.saveMessage" method="POST" class="form-stacked" accept-charset="UTF-8">
+        <fieldset>
+          <div class="clearfix">
+            @newMessageForm.forField("category") { field =>
+              <label for="@field.name">Category</label>
+              <div class="input">
+                <select name="@field.name" id="@field.name">
+                  <option value="">Select a category</option>
+                  @categories.map { category =>
+                    <option value="@category.get("_id")">@category.get("name")</option>
+                  }
+                </select>
+              </div>
+            }
+          </div>
+          <div class="clearfix">
+            @newMessageForm.forField("text") { field =>
+              <label for="@field.name">Text</label>
+              <div class="input">
+                <textarea class="xxlarge" id="@field.name" name="@field.name" value="@field.value" rows="6"></textarea>
+              </div>
+            }
+          </div>
+        </fieldset>
+        <div class="actions">
+          <button class="btn small primary" type="submit">Add</button>
+          <button type="reset" class="btn small"  onclick="$('#new-message-modal').modal('hide'); return false;">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 
 }
