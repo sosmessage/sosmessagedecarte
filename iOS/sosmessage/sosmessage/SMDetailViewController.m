@@ -57,7 +57,7 @@ float baseHue;
     CFAttributedStringReplaceString (attrString,CFRangeMake(0, 0), string);
     
     CGColorRef _black=[UIColor blackColor].CGColor;
-    CGColorRef _hue=[UIColor colorWithHue:baseHue saturation:0.8 brightness:0.9 alpha:1].CGColor;
+    CGColorRef _hue=[UIColor colorWithHue:baseHue saturation:0.9 brightness:0.7 alpha:1].CGColor;
     
     CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 3),kCTForegroundColorAttributeName, _black);
     CFAttributedStringSetAttribute(attrString, CFRangeMake(3, 7),kCTForegroundColorAttributeName, _hue);
@@ -68,6 +68,12 @@ float baseHue;
     
     CTFontRef font = CTFontCreateWithName((CFStringRef)@"Helvetica", 20, nil);
     CFAttributedStringSetAttribute(attrString,CFRangeMake(0, _stringLength),kCTFontAttributeName,font);
+    
+    CTTextAlignment alignement = kCTRightTextAlignment;
+    CTParagraphStyleSetting settings[] = {kCTParagraphStyleSpecifierAlignment, sizeof(alignement), &alignement};
+    CTParagraphStyleRef paragraph = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
+    CFAttributedStringSetAttribute(attrString, CFRangeMake(0, _stringLength), kCTParagraphStyleAttributeName, paragraph);
+    CFRelease(paragraph);
     
     // Create the framesetter with the attributed string.
     CTFramesetterRef framesetter =
