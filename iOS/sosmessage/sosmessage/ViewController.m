@@ -124,19 +124,17 @@
 
 - (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY {
     float blockSize = self.view.bounds.size.width / NB_BLOCKS;
-    int labelHeight = 60;
     
     float rectX = floorf(blockSize * posX);
-    float rectY = labelHeight * posY;
+    float rectY = posY; //origin y will be re-calculate after views are generated
     float rectWidth = ceilf([label sizeForBlocksForView:self.view]);
-    float rectHeight = labelHeight;
+    float rectHeight = 1; //arbitrary set to 1
     
     NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
     
-    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
+    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, posY, rectWidth, rectHeight)] autorelease];
     uiLabel.backgroundColor = [UIColor colorWithHue:label.hue saturation:0.4 brightness:0.9 alpha:1.0];
     uiLabel.text = label;
-    uiLabel.shadowColor = [UIColor whiteColor];
     uiLabel.font = SOSFONT;
     uiLabel.textAlignment = UITextAlignmentCenter;
     uiLabel.userInteractionEnabled = YES;
@@ -150,15 +148,15 @@
 
 - (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY {
     float blockSize = self.view.bounds.size.width / NB_BLOCKS;
-    int labelHeight = 60;
     
     float rectX = floorf(blockSize * posX);
-    float rectY = labelHeight * posY;
+    float rectY = posY; //origin y will be re-calculate after views are generated
     float rectWidth = blockSize * nb;
-    float rectHeight = labelHeight;
+    float rectHeight = 1; //arbitrary set to 1
     
     NSLog(@"Fill %d blocks at (%.2f;%.2f) with size (%.2f;%.2f)", nb, rectX, rectY, rectWidth, rectHeight);
-    UILabel* emptyBlocks = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, rectY, rectWidth, rectHeight)] autorelease];
+    UILabel* emptyBlocks = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, posY, rectWidth, rectHeight)] autorelease];
+    
     float hue = (rand()%24) / 24.0;
     emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];
     
@@ -196,6 +194,16 @@
         [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];        
     }
     [workingCategories release];
+    
+    if (x == 0) {
+        y -= 1;
+    }
+    float fitHeight =  self.view.bounds.size.height / y;
+    for (UIView* subView in self.view.subviews) {
+        if ([subView isKindOfClass:[UILabel class]] && subView.tag == 0) {
+            subView.frame = CGRectMake(subView.frame.origin.x, subView.frame.origin.y * fitHeight, subView.frame.size.width, fitHeight);
+        }
+    }
 }
 
 -(void)removeCategoriesLabel {
