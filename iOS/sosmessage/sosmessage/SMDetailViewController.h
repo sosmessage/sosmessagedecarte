@@ -17,5 +17,8 @@
 - (id)initWithHue:(float)hue category:(NSString*)category;
 - (IBAction)dismissButtonPressed:(id)sender;
 - (void)fetchAMessage;
+- (void)renderTitle;
+- (void)renderMessage;
+
 
 @end

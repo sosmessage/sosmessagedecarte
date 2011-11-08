@@ -42,6 +42,42 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 
 -(void)viewWillAppear:(BOOL)animated 
 {
+    [self renderTitle];
+    [self fetchAMessage];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidUnload
+{
+    [self setTitleImage:nil];
+    [self setMessageImage:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return YES;
+}
+
+- (void)dealloc {
+    [titleImage release];
+    [messageImage release];
+    [super dealloc];
+}
+
+#pragma mark Custom methods
+
+- (void)renderTitle {
     UIGraphicsBeginImageContext(self.titleImage.bounds.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -93,42 +129,9 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     UIGraphicsEndImageContext();
     
     self.titleImage.image = result;
-    
-    [self fetchAMessage];
-    
-    [super viewWillAppear:animated];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
-
-- (void)viewDidUnload
-{
-    [self setTitleImage:nil];
-    [self setMessageImage:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return YES;
-}
-
-- (void)dealloc {
-    [titleImage release];
-    [messageImage release];
-    [super dealloc];
-}
-
-#pragma mark Custom methods
-
--(void)fetchAMessage {
+- (void)renderMessage {
     UIGraphicsBeginImageContext(self.messageImage.bounds.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -144,13 +147,13 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     
     CGColorRef _hue=[UIColor colorWithHue:baseHue saturation:0.9 brightness:0.7 alpha:1].CGColor;
     CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 1),kCTForegroundColorAttributeName, _hue);
-
+    
     CTFontRef font = CTFontCreateWithName((CFStringRef)@"Helvetica", 16, nil);
     CFAttributedStringSetAttribute(attrString,CFRangeMake(0, _stringLength),kCTFontAttributeName,font);
     
     /** TODO find a way to reduce the leading
-    font = CTFontCreateWithName((CFStringRef)@"Helvetica", 35, nil);
-    CFAttributedStringSetAttribute(attrString,CFRangeMake(0, 1),kCTFontAttributeName,font);
+     font = CTFontCreateWithName((CFStringRef)@"Helvetica", 35, nil);
+     CFAttributedStringSetAttribute(attrString,CFRangeMake(0, 1),kCTFontAttributeName,font);
      */
     
     CGFloat indent = 25.0f;
@@ -176,6 +179,10 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     UIGraphicsEndImageContext();
     
     self.messageImage.image = result;
+}
+
+-(void)fetchAMessage {
+    [self renderMessage];
 }
 
 @end
