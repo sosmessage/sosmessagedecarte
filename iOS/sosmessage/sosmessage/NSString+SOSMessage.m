@@ -19,9 +19,9 @@ float sizeInBlocks;
 
 -(float)blocksCount:(UIView*)view {
     float widthWithFont = [self sizeWithFont:SOSFONT].width;
-    NSLog(@"Width with font for %@ : %.2f", self, widthWithFont);
+    //NSLog(@"Width with font for %@ : %.2f", self, widthWithFont);
     float blockSize = view.bounds.size.width / NB_BLOCKS;
-    NSLog(@"Frame width: %.2f and a block: %.2f", view.frame.size.width, blockSize);
+    //NSLog(@"Frame width: %.2f and a block: %.2f", view.frame.size.width, blockSize);
     return ceilf(widthWithFont / blockSize);    
 }
 
