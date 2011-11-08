@@ -29,7 +29,6 @@
 - (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY;
 - (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY;
 
-- (void)refreshCategoriesWithNotification:(NSNotification*)notification;
 - (void)refreshCategories;
 - (void)removeCategoriesLabel;
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender;

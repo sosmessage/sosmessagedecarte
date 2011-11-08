@@ -46,7 +46,7 @@
     [super viewWillAppear:animated];
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategoriesWithNotification:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategories) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self refreshCategories];
 }
 
@@ -156,10 +156,6 @@
     emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];
     
     [self.view addSubview:emptyBlocks];
-}
-
-- (void)refreshCategoriesWithNotification:(NSNotification*)notification {
-    [self refreshCategories];
 }
 
 - (void)refreshCategories {
