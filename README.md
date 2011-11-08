@@ -9,6 +9,7 @@ Elle est disponible sur les deux principales plateformes mobiles que sont iPhone
 ![screen android](https://github.com/ccouturi/sosmessagedecarte/raw/master/android/screenshots/mariage.png)
 ![screen android](https://github.com/ccouturi/sosmessagedecarte/raw/master/android/screenshots/merci.png)
 
+TODO
 ## Running the server
 	$ gem install sinatra shotgun
 	$ cd server && rake 
