@@ -57,7 +57,7 @@ See the [install instructions](https://github.com/harrah/xsbt/wiki/Getting-Start
 #### Launch the server
 
 	$ cd backend/sosmessage-api
-	$ sbt run fr.arnk.sosmessage.AppServer
+	$ sbt run
 	
 The SosMessage API will be accessible at `http://localhost:3000/api/v1/...`.
 
