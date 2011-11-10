@@ -1,0 +1,51 @@
+@(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="Content-type" value="text/html; charset=utf-8">
+    <title>SOS Message</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/sosmessage.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    <script src="@routes.Assets.at("javascripts/jquery-1.7.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/bootstrap-modal.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/bootstrap-scrollspy.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/sosmessage.js")" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <div class="topbar" data-scrollspy="scrollspy" >
+      <div class="fill">
+        <div class="container">
+          <h3><a href="#">SOS Message</a></h3>
+          <ul>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#messages">Messages</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+     <div class="container">
+       <div class="content">
+         <div class="page-header">
+           <h1>SOS Message</h1>
+         </div>
+         <div class="row">
+           <div class="span16">
+             @content
+           </div>
+         </div>
+       </div>
+
+       <footer>
+         <p>&copy; 2011</p>
+       </footer>
+
+     </div> <!-- /container -->
+  </body>
+
+</html>

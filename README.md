@@ -21,4 +21,46 @@ TODO
 ## Testing
 	$ gem install rspec rack rack-test data_mapper dm-sqlite-adapter
 	$ cd server && rake test
+	
 
+## Backend
+
+The messages are stored in a mongoDB database.
+
+The administration interface is done using [Play 2.0](http://www.playframework.org/2.0).
+
+The Web services used by the mobile applications are exposed through [Unfiltered](https://github.com/unfiltered/unfiltered).
+
+### Administration
+
+#### Install mongoDB
+
+To install it on your system, see [here](http://www.mongodb.org/display/DOCS/Quickstart).
+
+#### Install Play 2.0
+
+See the **Building from sources** section [here](https://github.com/playframework/Play20/wiki/Installing).
+
+#### Launch the server
+
+	$ cd backend/sosmessage-admin
+	$ play run
+
+The application will be accessible at `http://localhost:9000/`.
+
+### API
+
+#### Install SBT
+
+See the [install instructions](https://github.com/harrah/xsbt/wiki/Getting-Started-Setup).
+
+#### Launch the server
+
+	$ cd backend/sosmessage-api
+	$ sbt run
+	
+The SosMessage API will be accessible at `http://localhost:3000/api/v1/...`.
+
+* `http://localhost:3000/api/v1/categories`: all categories;
+* `http://localhost:3000/api/v1/category/{categoryId}/messages`: all the messages of the given category;
+* `http://localhost:3000/api/v1/category/{categoryId}/message`: one random message of the given category.
