@@ -1,0 +1,14 @@
+section {
+    padding: 60px 0 0 0;
+}
+
+#new-message-modal {
+  width: 600px;
+  margin: -240px 0 0 -300px;
+}
+
+.delete-message-col, .delete-category-col {
+  width: 100px;
+  text-align: center;
+}
+
