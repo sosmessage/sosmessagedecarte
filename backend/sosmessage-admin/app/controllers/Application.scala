@@ -49,6 +49,7 @@ object Application extends Controller {
         builder += "category" -> category.get("name")
         builder += "text" -> v._2
         builder += "createdAt" -> new Date()
+        builder += "random" -> scala.math.random
         messagesCollection += builder.result
 
         Redirect(routes.Application.index)
