@@ -29,10 +29,7 @@ class SosMessage extends unfiltered.filter.Plan {
   def intent = {
     case GET(Path("/api/v1/categories")) =>
       val categories = categoriesCollection.foldLeft(List[JValue]())((l, a) =>
-        ("id", a.get("_id").toString) ~
-        ("type", "category") ~
-        ("name", a.get("name").toString)
-        :: l
+        categoryToJSON(a) :: l
       )
       val json = ("count", categories.size) ~ ("items", categories)
       JsonContent ~> ResponseString(pretty(render(json)))
@@ -40,13 +37,7 @@ class SosMessage extends unfiltered.filter.Plan {
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
       val q = MongoDBObject("categoryId" -> new ObjectId(id))
       val messages = messagesCollection.find(q).foldLeft(List[JValue]())((l, a) =>
-        ("id", a.get("_id").toString) ~
-        ("type", "message") ~
-        ("category", a.get("category").toString) ~
-        ("categoryId", a.get("categoryId").toString) ~
-        ("text", a.get("text").toString) ~
-        ("createdAt", a.get("createdAt").toString)
-        :: l
+        messageToJSON(a) :: l
       )
       val json = ("count", messages.size) ~ ("items", messages)
       JsonContent ~> ResponseString(pretty(render(json)))
@@ -58,38 +49,38 @@ class SosMessage extends unfiltered.filter.Plan {
 
       val message = messagesCollection.find(q).limit(-1).skip(skip).next()
 
-      val json = ("id", message.get("_id").toString) ~
-        ("type", "message") ~
-        ("category", message.get("category").toString) ~
-        ("categoryId", message.get("categoryId").toString) ~
-        ("text", message.get("text").toString) ~
-        ("createdAt", message.get("createdAt").toString)
+      val json = messageToJSON(message)
       JsonContent ~> ResponseString(pretty(render(json)))
 
-    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messageeuh" :: Nil))) =>
-      val random = scala.math.random
-      println(random)
-      val q: DBObject = ("random" $gte random) ++ ("categoryId" -> new ObjectId(id))
-      messagesCollection.findOne(q) match {
-        case None =>
-          val q: DBObject = ("random" $lte random) ++ ("categoryId" -> new ObjectId(id))
-          val message = messagesCollection.findOne(q).get
-          val json = ("id", message.get("_id").toString) ~
-            ("type", "message") ~
-            ("category", message.get("category").toString) ~
-            ("categoryId", message.get("categoryId").toString) ~
-            ("text", message.get("text").toString) ~
-            ("createdAt", message.get("createdAt").toString)
-          JsonContent ~> ResponseString(pretty(render(json)))
-        case Some(o) =>
-          val json = ("id", o.get("_id").toString) ~
-            ("type", "message") ~
-            ("category", o.get("category").toString) ~
-            ("categoryId", o.get("categoryId").toString) ~
-            ("text", o.get("text").toString) ~
-            ("createdAt", o.get("createdAt").toString)
-          JsonContent ~> ResponseString(pretty(render(json)))
-      }
+//    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messageeuh" :: Nil))) =>
+//      val random = scala.math.random
+//      println(random)
+//      val q: DBObject = ("random" $gte random) ++ ("categoryId" -> new ObjectId(id))
+//      messagesCollection.findOne(q) match {
+//        case None =>
+//          val q: DBObject = ("random" $lte random) ++ ("categoryId" -> new ObjectId(id))
+//          val message = messagesCollection.findOne(q).get
+//          val json = messageToJSON(message)
+//          JsonContent ~> ResponseString(pretty(render(json)))
+//        case Some(message) =>
+//          val json = messageToJSON(message)
+//          JsonContent ~> ResponseString(pretty(render(json)))
+//      }
+  }
+
+  private def messageToJSON(o: DBObject) = {
+    ("id", o.get("_id").toString) ~
+    ("type", "message") ~
+    ("category", o.get("category").toString) ~
+    ("categoryId", o.get("categoryId").toString) ~
+    ("text", o.get("text").toString) ~
+    ("createdAt", o.get("createdAt").toString)
+  }
+
+  private def categoryToJSON(o: DBObject) = {
+    ("id", o.get("_id").toString) ~
+    ("type", "category") ~
+    ("name", o.get("name").toString)
   }
 
 }
