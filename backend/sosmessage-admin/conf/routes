@@ -3,11 +3,14 @@
 # ~~~~
 
 # Home page
-GET       /                                     controllers.Application.index()
-POST      /categories                           controllers.Application.saveCategory()
-POST      /categories/:id/delete                controllers.Application.deleteCategory(id: String)
-POST      /messages                             controllers.Application.saveMessage()
-POST      /messages/:id/delete                  controllers.Application.deleteMessage(id: String)
+GET       /                                             controllers.Application.index()
+GET       /categories                                   controllers.Categories.index()
+POST      /categories                                   controllers.Categories.save()
+POST      /categories/:id/delete                        controllers.Categories.delete(id: String)
+GET       /messages                                     controllers.Messages.index(categoryId = "none")
+GET       /category/:categoryId/messages                controllers.Messages.index(categoryId: String)
+POST      /category/:categoryId/messages                controllers.Messages.save(categoryId: String)
+POST      /category/:categoryId/messages/:messageId/delete     controllers.Messages.delete(categoryId: String, messageId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET       /assets/*file                       controllers.Assets.at(path="/public", file)
