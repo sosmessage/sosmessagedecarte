@@ -20,7 +20,11 @@
         <div class="input">
           <select name="select-category" id="select-category">
             @categories.map { category =>
-              <option value="@category.get("_id")" @if(category.get("_id") == selectedCategoryId) {selected="selected"} >@category.get("name")</option>
+              <option value="@category.get("_id")"
+                @if(category.get("_id") == selectedCategoryId) {selected="selected"}
+                sosmessage-redirect-url="@routes.Messages.index(category.get("_id").toString)">
+                @category.get("name")
+              </option>
             }
           </select>
         </div>

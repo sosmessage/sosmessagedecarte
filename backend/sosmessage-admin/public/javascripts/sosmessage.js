@@ -12,7 +12,7 @@ $(document).ready(function() {
 
   $('#select-category').change(function() {
     $('#select-category option:selected').each(function () {
-      window.location.href = '/category/' + $(this).attr("value")  + '/messages';
+      window.location.href = $(this).attr("sosmessage-redirect-url");
     });
   })
 });
