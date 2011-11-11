@@ -11,7 +11,7 @@
 
 @implementation SMDetailViewController
 @synthesize titleImage;
-@synthesize messageImage;
+@synthesize messageText;
 
 float baseHue;
 NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque commodo aliquam semper. Donec volutpat, metus in vulputate mattis, massa massa porttitor nisl, non aliquam nibh elit a enim. Duis ac enim turpis, ut blandit leo. Quisque vulputate blandit dapibus. Suspendisse pretium, felis vel aliquam vestibulum, magna elit eleifend dolor, molestie fermentum lectus massa ut elit. Cras eget neque mauris, ut consequat augue. Donec vel facilisis eros.";
@@ -42,10 +42,20 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 
 -(void)viewWillAppear:(BOOL)animated 
 {
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshRenders) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
     [self renderTitle];
     [self fetchAMessage];
     
     [super viewWillAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidLoad
@@ -57,7 +67,7 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 - (void)viewDidUnload
 {
     [self setTitleImage:nil];
-    [self setMessageImage:nil];
+    [self setMessageText:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -71,17 +81,21 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 
 - (void)dealloc {
     [titleImage release];
-    [messageImage release];
+    [messageText release];
     [super dealloc];
 }
 
 #pragma mark Custom methods
 
+-(void)refreshRenders {
+    [self renderTitle];
+}
+
 - (void)renderTitle {
     UIGraphicsBeginImageContext(self.titleImage.bounds.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGAffineTransform flipTransform = CGAffineTransformMake( 1, 0, 0, -1, 0, self.titleImage.frame.size.height);
+    CGAffineTransform flipTransform = CGAffineTransformMake( 1, 0, 0, -1, 0, self.titleImage.bounds.size.height);
     CGContextConcatCTM(context, flipTransform);
     
     CGMutablePathRef path = CGPathCreateMutable();
@@ -131,58 +145,8 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     self.titleImage.image = result;
 }
 
-- (void)renderMessage {
-    UIGraphicsBeginImageContext(self.messageImage.bounds.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGAffineTransform flipTransform = CGAffineTransformMake( 1, 0, 0, -1, 0, self.messageImage.frame.size.height);
-    CGContextConcatCTM(context, flipTransform);
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, self.messageImage.bounds);
-    NSInteger _stringLength=[tmpMessage length];
-    
-    CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
-    CFAttributedStringReplaceString (attrString,CFRangeMake(0, 0), (CFStringRef)tmpMessage);
-    
-    CGColorRef _hue=[UIColor colorWithHue:baseHue saturation:0.9 brightness:0.7 alpha:1].CGColor;
-    CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 1),kCTForegroundColorAttributeName, _hue);
-    
-    CTFontRef font = CTFontCreateWithName((CFStringRef)@"Helvetica", 16, nil);
-    CFAttributedStringSetAttribute(attrString,CFRangeMake(0, _stringLength),kCTFontAttributeName,font);
-    
-    /** TODO find a way to reduce the leading
-     font = CTFontCreateWithName((CFStringRef)@"Helvetica", 35, nil);
-     CFAttributedStringSetAttribute(attrString,CFRangeMake(0, 1),kCTFontAttributeName,font);
-     */
-    
-    CGFloat indent = 25.0f;
-    CTTextAlignment alignement = kCTJustifiedTextAlignment;
-    CTParagraphStyleSetting settings[] = {kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(indent), &indent, kCTParagraphStyleSpecifierAlignment, sizeof(alignement), &alignement};
-    CTParagraphStyleRef paragraph = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
-    CFAttributedStringSetAttribute(attrString, CFRangeMake(0, _stringLength), kCTParagraphStyleAttributeName, paragraph);
-    CFRelease(paragraph);
-    
-    // Create the framesetter with the attributed string.
-    CTFramesetterRef framesetter =
-    CTFramesetterCreateWithAttributedString(attrString);
-    CFRelease(attrString);
-    
-    // Create the frame and draw it into the graphics context
-    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, NULL);
-    CFRelease(framesetter);
-    CTFrameDraw(frame, context);
-    CFRelease(frame);
-    CFRelease(path);
-    
-    UIImage* result = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    self.messageImage.image = result;
-}
-
 -(void)fetchAMessage {
-    [self renderMessage];
+    self.messageText.text = tmpMessage;
 }
 
 @end

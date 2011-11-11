@@ -12,13 +12,12 @@
     
 }
 @property (retain, nonatomic) IBOutlet UIImageView *titleImage;
-@property (retain, nonatomic) IBOutlet UIImageView *messageImage;
+@property (retain, nonatomic) IBOutlet UITextView *messageText;
 
 - (id)initWithHue:(float)hue category:(NSString*)category;
 - (IBAction)dismissButtonPressed:(id)sender;
 - (void)fetchAMessage;
 - (void)renderTitle;
-- (void)renderMessage;
-
+- (void)refreshRenders;
 
 @end
