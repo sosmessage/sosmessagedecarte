@@ -64,3 +64,12 @@ The SosMessage API will be accessible at `http://localhost:3000/api/v1/...`.
 * `http://localhost:3000/api/v1/categories`: all categories;
 * `http://localhost:3000/api/v1/category/{categoryId}/messages`: all the messages of the given category;
 * `http://localhost:3000/api/v1/category/{categoryId}/message`: one random message of the given category.
+
+#### Build a single executable JAR
+
+	$ cd backend/sosmessage-api
+	$ sbt one-jar
+
+You can then launch the server with:
+
+	$ java -jar sosmessage-api_2.9.1-1.0-SNAPSHOT-one-jar.jar
