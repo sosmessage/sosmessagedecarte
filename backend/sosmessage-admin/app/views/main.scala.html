@@ -1,4 +1,4 @@
-@(content: Html)
+@(selectedTab: String = "none")(content: Html)
 
 <!DOCTYPE html>
 
@@ -17,13 +17,13 @@
   </head>
 
   <body>
-    <div class="topbar" data-scrollspy="scrollspy" >
+    <div class="topbar">
       <div class="fill">
         <div class="container">
-          <h3><a href="#">SOS Message</a></h3>
-          <ul>
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#messages">Messages</a></li>
+          <h3><a href="@routes.Application.index">SOS Message</a></h3>
+          <ul class="nav">
+            <li @if(selectedTab == "categories") {class="active"}><a href="@routes.Categories.index">Categories</a></li>
+            <li @if(selectedTab == "messages") {class="active"}><a href="@routes.Messages.index("none")">Messages</a></li>
           </ul>
         </div>
       </div>
@@ -31,9 +31,6 @@
 
      <div class="container">
        <div class="content">
-         <div class="page-header">
-           <h1>SOS Message</h1>
-         </div>
          <div class="row">
            <div class="span16">
              @content
