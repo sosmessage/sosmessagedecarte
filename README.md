@@ -73,3 +73,13 @@ The SosMessage API will be accessible at `http://localhost:3000/api/v1/...`.
 You can then launch the server with:
 
 	$ java -jar sosmessage-api_2.9.1-1.0-SNAPSHOT-one-jar.jar
+
+#### Logging
+
+Logging is done through [Logback](http://logback.qos.ch/).
+
+To override the default configuration, you can use the one in `conf/` by specifying it as a system property:
+
+	$ java -Dlogback.configurationFile=conf/logback.xml -jar sosmessage-api_2.9.1-1.0-SNAPSHOT-one-jar.jar
+
+See how to configure Logback [here](http://logback.qos.ch/manual/configuration.html).
