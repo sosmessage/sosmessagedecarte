@@ -8,6 +8,7 @@ import com.mongodb.casbah.MongoConnection
 import org.bson.types.ObjectId
 import java.util.Date
 import com.mongodb.DBObject
+import com.mongodb.casbah.Imports._
 
 object Messages extends Controller {
 
@@ -39,7 +40,7 @@ object Messages extends Controller {
       categoryId
     }
 
-    val messageOrder = MongoDBObject("createdAt" -> 1)
+    val messageOrder = MongoDBObject("createdAt" -> -1)
     val q = MongoDBObject("categoryId" -> new ObjectId(selectedCategoryId))
     val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
@@ -65,7 +66,7 @@ object Messages extends Controller {
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
 
-        Redirect(routes.Messages.index(selectedCategoryId))
+        Redirect(routes.Messages.index(category.get("_id").toString))
       }
     )
   }
