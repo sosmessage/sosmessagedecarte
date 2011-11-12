@@ -9,6 +9,12 @@ $(document).ready(function() {
          return confirm("Are you sure you want to delete this category?");
      }) ;
   });
+
+  $('#select-category').change(function() {
+    $('#select-category option:selected').each(function () {
+      window.location.href = $(this).attr("sosmessage-redirect-url");
+    });
+  })
 });
 
 

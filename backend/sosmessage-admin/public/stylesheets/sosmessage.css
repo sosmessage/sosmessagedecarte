@@ -1,5 +1,27 @@
+body {
+  padding-top: 40px;
+}
+
 section {
-    padding: 60px 0 0 0;
+  padding: 60px 0 0 0;
+}
+
+.main-add-button {
+    float: right;
+}
+
+.select-category {
+    float: left;
+}
+
+.select-category label {
+    font-weight: bold;
+    width: 30px;
+    padding-left: 10px;
+}
+
+.select-category .input {
+    margin-left: 100px;
 }
 
 #new-message-modal {
