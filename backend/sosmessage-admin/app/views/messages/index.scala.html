@@ -2,10 +2,10 @@
   categories: List[com.mongodb.DBObject],
   selectedCategoryId: String,
   messages: List[com.mongodb.DBObject],
-  newMessageForm:play.api.data.Form[(String, String)]
-)
+  newMessageForm:play.api.data.Form[(String, String, Option[String])]
+)(implicit flash: play.api.mvc.Flash)
 
-@main(selectedTab = "messages") {
+@main(selectedTab = "messages", actionDone = flash.get("actionDone")) {
 
   <section id="messages">
 
@@ -99,6 +99,14 @@
                   <label for="@field.name">Text</label>
                   <div class="input">
                     <textarea class="xxlarge" id="@field.name" name="@field.name" value="@field.value" rows="6"></textarea>
+                  </div>
+                }
+              </div>
+              <div class="clearfix">
+                @newMessageForm.forField("approved") { field =>
+                  <label for="@field.name">Approved</label>
+                  <div class="input">
+                    <input type="checkbox" checked="checked" class="xxlarge" id="@field.name" name="@field.name"></textarea>
                   </div>
                 }
               </div>

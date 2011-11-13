@@ -28,22 +28,24 @@ class SosMessage extends unfiltered.filter.Plan {
 
   def intent = {
     case GET(Path("/api/v1/categories")) =>
-      val categories = categoriesCollection.foldLeft(List[JValue]())((l, a) =>
+      val categoryOrder = MongoDBObject("name" -> 1)
+      val categories = categoriesCollection.find().sort(categoryOrder).foldLeft(List[JValue]())((l, a) =>
         categoryToJSON(a) :: l
-      )
+      ).reverse
       val json = ("count", categories.size) ~ ("items", categories)
       JsonContent ~> ResponseString(pretty(render(json)))
 
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
-      val q = MongoDBObject("categoryId" -> new ObjectId(id))
-      val messages = messagesCollection.find(q).foldLeft(List[JValue]())((l, a) =>
+      val messageOrder = MongoDBObject("createdAt" -> -1)
+      val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
+      val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[JValue]())((l, a) =>
         messageToJSON(a) :: l
-      )
+      ).reverse
       val json = ("count", messages.size) ~ ("items", messages)
       JsonContent ~> ResponseString(pretty(render(json)))
 
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
-      val q = MongoDBObject("categoryId" -> new ObjectId(id))
+      val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
       val count = messagesCollection.find(q).count
       val skip = random.nextInt(count)
 
@@ -52,7 +54,7 @@ class SosMessage extends unfiltered.filter.Plan {
       val json = messageToJSON(message)
       JsonContent ~> ResponseString(pretty(render(json)))
 
-//    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messageeuh" :: Nil))) =>
+//    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "randomMessage" :: Nil))) =>
 //      val random = scala.math.random
 //      println(random)
 //      val q: DBObject = ("random" $gte random) ++ ("categoryId" -> new ObjectId(id))

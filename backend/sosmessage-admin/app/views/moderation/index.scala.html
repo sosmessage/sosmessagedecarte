@@ -1,0 +1,113 @@
+@(
+  selectedTab: String,
+  messages: List[com.mongodb.DBObject]
+)(implicit flash: play.api.mvc.Flash)
+
+@main(selectedTab = "moderation", actionDone = flash.get("actionDone")) {
+
+  <section id="moderation">
+
+    <div class="page-header">
+      <h1>Moderation</h1>
+    </div>
+
+    @if(selectedTab == "waiting" && !messages.isEmpty) {
+      <div>
+        <form action="@routes.Moderation.deleteAll("waiting")" method="POST"
+          style="margin-bottom:0">
+          <button class="btn danger main-add-button delete-all-waiting" type="submit">Delete all</button>
+        </form>
+        <form action="@routes.Moderation.rejectAll("waiting")" method="POST"
+          style="margin-bottom:0">
+          <button class="btn primary main-add-button reject-all-waiting" type="submit">Reject all</button>
+        </form>
+        <form action="@routes.Moderation.approveAll("waiting")" method="POST"
+          style="margin-bottom:0">
+          <button class="btn primary main-add-button approve-all-waiting" type="submit">Approve all</button>
+        </form>
+      </div>
+    <div style="clear: both;"></div>
+    }
+
+    @if(selectedTab == "rejected" && !messages.isEmpty) {
+      <div>
+        <form action="@routes.Moderation.deleteAll("rejected")" method="POST"
+          style="margin-bottom:0">
+          <button class="btn danger main-add-button delete-all-rejected" type="submit">Delete all</button>
+        </form>
+        <form action="@routes.Moderation.approveAll("rejected")" method="POST"
+          style="margin-bottom:0">
+          <button class="btn primary main-add-button approve-all-rejected" type="submit">Approve all</button>
+        </form>
+      </div>
+    <div style="clear: both;"></div>
+    }
+
+
+    <ul class="tabs" data-tabs="tabs">
+      <li @if(selectedTab == "waiting") {class="active"}>
+        <a href="@routes.Moderation.index("waiting")">Waiting messages</a>
+      </li>
+      <li @if(selectedTab == "rejected") {class="active"}>
+        <a href="@routes.Moderation.index("rejected")">Rejected messages</a>
+      </li>
+    </ul>
+
+    <div class="messages-container">
+      <table class="zebra-striped">
+        <thead>
+          <tr>
+            <th>Text</th>
+            <th>Category</th>
+            <th>Created At</th>
+            <th class="delete-message-col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @messages.map { message =>
+            <tr>
+              <td>
+                <pre>
+@message.get("text")
+                </pre>
+              </td>
+              <td>
+                @message.get("category")
+              </td>
+              <td>
+                @{
+                  val df = java.text.DateFormat.getDateTimeInstance
+                  df.format(message.get("createdAt"))
+                }
+              </td>
+              <td class="moderate-message-col">
+                @if(selectedTab == "waiting") {
+                  <form action="@routes.Moderation.approve(message.get("_id").toString, selectedTab)" method="POST"
+                    style="margin-bottom:0">
+                    <button class="btn small primary approve-button" type="submit">Approve</button>
+                  </form>
+                  <form action="@routes.Moderation.reject(message.get("_id").toString, selectedTab)" method="POST"
+                    style="margin-bottom:0">
+                    <button class="btn small danger reject-button" type="submit">Reject</button>
+                  </form>
+                }
+                @if(selectedTab == "rejected") {
+                  <form action="@routes.Moderation.approve(message.get("_id").toString, selectedTab)" method="POST"
+                    style="margin-bottom:0">
+                    <button class="btn small primary approve-button" type="submit">Approve</button>
+                  </form>
+                  <form action="@routes.Moderation.delete(message.get("_id").toString, selectedTab)" method="POST"
+                    style="margin-bottom:0">
+                    <button class="btn small danger delete-message" type="submit">Delete</button>
+                  </form>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+}

@@ -23,12 +23,13 @@ object Messages extends Controller {
 
   val messageForm = Form(
     of(
-      "category" -> text(minLength = 1),
-      "text" -> text(minLength = 1)
+      "category" -> requiredText,
+      "text" -> requiredText,
+      "approved" -> optional(text)
     )
   )
 
-  def index(categoryId: String = "none") = Action {
+  def index(categoryId: String = "none") = Action { implicit request =>
     val categoryOrder = MongoDBObject("name" -> 1)
     val categories = categoriesCollection.find().sort(categoryOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
@@ -41,7 +42,7 @@ object Messages extends Controller {
     }
 
     val messageOrder = MongoDBObject("createdAt" -> -1)
-    val q = MongoDBObject("categoryId" -> new ObjectId(selectedCategoryId))
+    val q = MongoDBObject("categoryId" -> new ObjectId(selectedCategoryId), "state" -> "approved")
     val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
     ).reverse
@@ -51,6 +52,7 @@ object Messages extends Controller {
   def save(selectedCategoryId: String) = Action { implicit request =>
     messageForm.bindFromRequest().fold(
       f => {
+        println("bad: " + f)
         Redirect(routes.Messages.index(selectedCategoryId))
       },
       v => {
@@ -62,20 +64,28 @@ object Messages extends Controller {
         builder += "categoryId" -> category.get("_id")
         builder += "category" -> category.get("name")
         builder += "text" -> v._2
+        val actionDone = v._3 match {
+          case None =>
+            builder += "state" -> "waiting"
+            "messageWaiting"
+          case Some(s) =>
+            builder += "state" -> "approved"
+            "messageAdded"
+        }
         builder += "createdAt" -> new Date()
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
 
-        Redirect(routes.Messages.index(category.get("_id").toString))
+        Redirect(routes.Messages.index(category.get("_id").toString)).flashing("actionDone" -> actionDone)
       }
     )
   }
 
-  def delete(selectedCategoryId: String, messageId: String) = Action {
+  def delete(selectedCategoryId: String, messageId: String) = Action { implicit request =>
     val oid = new ObjectId(messageId)
     val o = MongoDBObject("_id" -> oid)
     messagesCollection.remove(o)
-    Redirect(routes.Messages.index(selectedCategoryId))
+    Redirect(routes.Messages.index(selectedCategoryId)).flashing("actionDone" -> "messageDeleted")
   }
 
 }
