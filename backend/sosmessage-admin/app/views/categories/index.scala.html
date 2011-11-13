@@ -1,9 +1,9 @@
 @(
   categories: List[com.mongodb.DBObject],
   newCategoryForm:play.api.data.Form[String]
-)
+)(implicit flash: play.api.mvc.Flash)
 
-@main(selectedTab = "categories") {
+@main(selectedTab = "categories", actionDone = flash.get("actionDone")) {
 
   <section id="categories">
 
@@ -13,7 +13,7 @@
       </div>
 
       <p>
-        <a class="btn primary"
+        <a class="btn primary main-add-button"
          data-controls-modal="new-category-modal"
          data-backdrop="static"
          data-keyboard="true">Add category</a>

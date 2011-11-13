@@ -11,6 +11,14 @@ GET       /messages                                     controllers.Messages.ind
 GET       /category/:categoryId/messages                controllers.Messages.index(categoryId: String)
 POST      /category/:categoryId/messages                controllers.Messages.save(categoryId: String)
 POST      /category/:categoryId/messages/:messageId/delete     controllers.Messages.delete(categoryId: String, messageId: String)
+GET       /moderation                                          controllers.Moderation.index(state = "waiting")
+GET       /moderation/:state                                   controllers.Moderation.index(state: String)
+POST      /moderation/message/:messageId/approve                                  controllers.Moderation.approve(messageId: String, selectedTab: String)
+POST      /moderation/message/:messageId/reject                                   controllers.Moderation.reject(messageId: String, selectedTab: String)
+POST      /moderation/message/:messageId/delete                                   controllers.Moderation.delete(messageId: String, selectedTab: String)
+POST      /moderation/messages/:state/delete                                    controllers.Moderation.deleteAll(state: String)
+POST      /moderation/messages/:state/approve                                    controllers.Moderation.approveAll(state: String)
+POST      /moderation/messages/:state/reject                                    controllers.Moderation.rejectAll(state: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET       /assets/*file                       controllers.Assets.at(path="/public", file)

@@ -6,7 +6,12 @@ section {
   padding: 60px 0 0 0;
 }
 
+.alert-banner {
+  margin-top: 20px;
+}
+
 .main-add-button {
+    margin-right: 5px;
     float: right;
 }
 
@@ -32,5 +37,18 @@ section {
 .delete-message-col, .delete-category-col {
   width: 100px;
   text-align: center;
+}
+
+.moderate-message-col {
+  width: 120px;
+  text-align: center;
+}
+
+.approve-button {
+  float: left;
+}
+
+.reject-button {
+  float: right;
 }
 

@@ -22,7 +22,7 @@ object Categories extends Controller {
       "name" -> text(minLength = 1)
   )
 
-  def index = Action {
+  def index = Action { implicit request =>
     val categoryOrder = MongoDBObject("name" -> 1)
     val categories = categoriesCollection.find().sort(categoryOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
@@ -37,22 +37,21 @@ object Categories extends Controller {
         Redirect(routes.Categories.index)
       },
       v => {
-        Logger.info("saving cate?")
         val builder = MongoDBObject.newBuilder
         builder += "name" -> v
         builder += "createdAt" -> new Date()
         categoriesCollection += builder.result
 
-        Redirect(routes.Categories.index)
+        Redirect(routes.Categories.index).flashing("actionDone" -> "categoryAdded")
       }
     )
   }
 
-  def delete (id: String) = Action {
+  def delete (id: String) = Action { implicit request =>
     val oid = new ObjectId(id)
     val o = MongoDBObject("_id" -> oid)
     categoriesCollection.remove(o)
-    Redirect(routes.Categories.index)
+    Redirect(routes.Categories.index).flashing("actionDone" -> "categoryDeleted")
   }
 
 }
