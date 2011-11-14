@@ -12,6 +12,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import org.bson.types.ObjectId
 import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.Implicits._
+import java.util.Date
 
 class SosMessage extends unfiltered.filter.Plan {
 
@@ -20,7 +21,6 @@ class SosMessage extends unfiltered.filter.Plan {
   val CategoriesCollectionName = "categories"
 
   val mongo = MongoConnection()
-
   val messagesCollection = mongo(DataBaseName)(MessagesCollectionName)
   val categoriesCollection = mongo(DataBaseName)(CategoriesCollectionName)
 
@@ -50,9 +50,23 @@ class SosMessage extends unfiltered.filter.Plan {
       val skip = random.nextInt(count)
 
       val message = messagesCollection.find(q).limit(-1).skip(skip).next()
-
       val json = messageToJSON(message)
       JsonContent ~> ResponseString(pretty(render(json)))
+
+    case req @ POST(Path(Seg("api" :: "v1" :: "category" :: categoryId :: "message" :: Nil))) =>
+      categoriesCollection.findOne(MongoDBObject("_id" -> new ObjectId(categoryId))).map { category =>
+        val Params(form) = req
+        val text = form("text")(0)
+        val builder = MongoDBObject.newBuilder
+        builder += "categoryId" -> category.get("_id")
+        builder += "category" -> category.get("name")
+        builder += "text" -> text
+        builder += "state" -> "waiting"
+        builder += "createdAt" -> new Date()
+        builder += "random" -> scala.math.random
+        messagesCollection += builder.result
+      }
+      NoContent
 
 //    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "randomMessage" :: Nil))) =>
 //      val random = scala.math.random
