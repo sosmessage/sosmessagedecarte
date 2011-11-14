@@ -22,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		510CB93D1471A6520039C8A0 /* SMUrlBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMUrlBase.h; sourceTree = "<group>"; };
 		516515C4145DEA4000CF6C45 /* sosmessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sosmessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		516515C8145DEA4000CF6C45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		516515CA145DEA4000CF6C45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -91,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				51A5CE081465227C00B274B3 /* SOSMessageConstant.h */,
+				510CB93D1471A6520039C8A0 /* SMUrlBase.h */,
 				51A5CE0E146677DE00B274B3 /* Category */,
 				516515D7145DEA4100CF6C45 /* AppDelegate.h */,
 				516515D8145DEA4100CF6C45 /* AppDelegate.m */,

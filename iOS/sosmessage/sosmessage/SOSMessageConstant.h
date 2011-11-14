@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 
 #import "NSString+SOSMessage.h"
+#import "SMUrlBase.h"
 
 #import "AppDelegate.h"
 
