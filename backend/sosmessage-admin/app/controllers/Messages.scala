@@ -59,7 +59,6 @@ object Messages extends Controller {
         val oid = new ObjectId(v._1)
         val o = MongoDBObject("_id" -> oid)
         val category = categoriesCollection.findOne(o).get
-
         val builder = MongoDBObject.newBuilder
         builder += "categoryId" -> category.get("_id")
         builder += "category" -> category.get("name")
