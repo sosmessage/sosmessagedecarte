@@ -11,6 +11,7 @@
 
 #import "NSString+SOSMessage.h"
 #import "SMUrlBase.h"
+#import "SMMessagesHandler.h"
 
 #import "AppDelegate.h"
 

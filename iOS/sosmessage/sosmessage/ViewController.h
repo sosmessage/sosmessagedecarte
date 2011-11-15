@@ -8,23 +8,11 @@
 
 #import "SOSMessageConstant.h"
 
-@interface ViewController : UIViewController <NSURLConnectionDelegate> {
-    @private
-    NSMutableData* messageReceiving;
-    NSMutableArray* labels;
-}
-@property (retain, nonatomic) IBOutlet UILabel *messageLabel;
+@interface ViewController : UIViewController<SMMessageDelegate>
+
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (retain, nonatomic) NSURLConnection* currentConnection;
 @property (retain, nonatomic) NSMutableArray* categories;
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection;
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
-
-- (void)fetchAnotherMessage;
-- (void)stopActivity;
-- (void)startActivity;
+@property (retain, nonatomic) SMMessagesHandler* messageHandler;
 
 - (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY;
 - (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY;

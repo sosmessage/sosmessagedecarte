@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */; };
 		516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515C8145DEA4000CF6C45 /* UIKit.framework */; };
 		516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CA145DEA4000CF6C45 /* Foundation.framework */; };
 		516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CC145DEA4000CF6C45 /* CoreGraphics.framework */; };
@@ -23,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		510CB93D1471A6520039C8A0 /* SMUrlBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMUrlBase.h; sourceTree = "<group>"; };
+		510CB93F1471B4A80039C8A0 /* SMMessagesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMMessagesHandler.h; sourceTree = "<group>"; };
+		510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMMessagesHandler.m; sourceTree = "<group>"; };
 		516515C4145DEA4000CF6C45 /* sosmessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sosmessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		516515C8145DEA4000CF6C45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		516515CA145DEA4000CF6C45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -100,6 +103,8 @@
 				516515DB145DEA4100CF6C45 /* ViewController.m */,
 				51A5CE091466768900B274B3 /* SMDetailViewController.h */,
 				51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */,
+				510CB93F1471B4A80039C8A0 /* SMMessagesHandler.h */,
+				510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */,
 				51A5CE0F146677F200B274B3 /* Nibs */,
 				516515CF145DEA4000CF6C45 /* Supporting Files */,
 			);
@@ -203,6 +208,7 @@
 				516515DC145DEA4100CF6C45 /* ViewController.m in Sources */,
 				51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */,
 				51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */,
+				510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,10 +10,9 @@
 #import "SMDetailViewController.h"
 
 @implementation ViewController
-@synthesize messageLabel;
 @synthesize activityIndicator;
-@synthesize currentConnection;
 @synthesize categories;
+@synthesize messageHandler;
 
 - (void)didReceiveMemoryWarning
 {
@@ -26,15 +25,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
-    self.categories = [NSMutableArray arrayWithObjects:@"Test1 Remember",@"Test2",@"Test3 Remember",@"Test4 Remember",@"Test5",@"Test6",@"Test7 Remember",@"Test8",@"Test9",@"Test10 Remember", nil];
+    id iMessageHandler = [[SMMessagesHandler alloc] initWithDelegate:self];
+    self.messageHandler = iMessageHandler;
+    [iMessageHandler release];
 }
 
 - (void)viewDidUnload
 {
     [self setActivityIndicator:nil];
-    [self setMessageLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -42,12 +41,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    labels = [[NSMutableArray alloc] initWithObjects:@"Remerciements", @"Calques", nil];
     [super viewWillAppear:animated];
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategories) name:UIDeviceOrientationDidChangeNotification object:nil];
-    [self refreshCategories];
+    
+    [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -61,9 +60,6 @@
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [labels release];
-    [self.currentConnection cancel];
-    [currentConnection release];
 	[super viewWillDisappear:animated];
 }
 
@@ -77,40 +73,15 @@
     return YES;
 }
 
--(BOOL)canBecomeFirstResponder {
+-(BOOL)canBecomeFirstResponder 
+{
     return YES;
 }
 
-#pragma mark NSURLConnection delegate
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self stopActivity];
-    self.messageLabel.text = error.description;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [self stopActivity];
-    if (messageReceiving) {
-        NSError* error;
-        id response = [NSJSONSerialization JSONObjectWithData:messageReceiving options:0 error:&error];
-        if (response) {
-            // TODO should handle other request
-            NSLog(@"%@", response);
-            self.messageLabel.text = [[response objectAtIndex:(random() % [response count])] objectForKey:@"label"];
-        }
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    if (messageReceiving) {
-        [messageReceiving appendData:data];
-    } else {
-        messageReceiving = [[NSMutableData alloc] initWithData:data];
-    }
-}
-
--(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event 
+{
     if (motion == UIEventSubtypeMotionShake) {
-        [self fetchAnotherMessage];
+        [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
     }
 }
 
@@ -120,7 +91,7 @@
     float blockSize = self.view.bounds.size.width / NB_BLOCKS;
     
     float rectX = floorf(blockSize * posX);
-    float rectY = posY; //origin y will be re-calculate after views are generated
+    //float rectY = posY; //origin y will be re-calculate after views are generated
     float rectWidth = ceilf([label sizeForBlocksForView:self.view]);
     float rectHeight = 1; //arbitrary set to 1
     
@@ -128,7 +99,7 @@
     
     UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, posY, rectWidth, rectHeight)] autorelease];
     uiLabel.backgroundColor = [UIColor colorWithHue:label.hue saturation:0.55 brightness:0.9 alpha:1.0];
-    uiLabel.text = label;
+    uiLabel.text = [label capitalizedString];
     uiLabel.font = SOSFONT;
     uiLabel.textAlignment = UITextAlignmentCenter;
     uiLabel.userInteractionEnabled = YES;
@@ -145,7 +116,7 @@
     NSLog(@"Bounds width: %.2f and Frame width: %.2f", self.view.bounds.size.width, self.view.frame.size.width);
     
     float rectX = floorf(blockSize * posX);
-    float rectY = posY; //origin y will be re-calculate after views are generated
+    //float rectY = posY; //origin y will be re-calculate after views are generated
     float rectWidth = blockSize * nb;
     float rectHeight = 1; //arbitrary set to 1
     
@@ -166,15 +137,15 @@
     int x = 0;
     int y = 0;
     while (workingCategories.count > 0) {
-        NSString* category = [workingCategories objectAtIndex:0];
-        int blockSize = [category blocksCount:self.view];
+        NSDictionary* category = [workingCategories objectAtIndex:0];
+        int blockSize = [[category objectForKey:@"name"] blocksCount:self.view];
         if ((NB_BLOCKS - x < blockSize)) {
             [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];
             x = 0;
             y += 1;
         }
         
-        [self addSOSCategory:category inPosX:x andPosY:y];
+        [self addSOSCategory:[category objectForKey:@"name"] inPosX:x andPosY:y];
         
         x += blockSize;
         if (x >= NB_BLOCKS) {
@@ -222,32 +193,34 @@
     [detail release];
 }
 
+#pragma mark NSMessageHandlerDelegate
+
+- (void)startActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
+{
+    [self.activityIndicator startAnimating];
+    NSLog(@"Start activity !!!");
+}
+
+- (void)stopActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
+{
+    [self.activityIndicator stopAnimating];
+    NSLog(@"Stop activity !!!");
+}
+
+- (void)messageHandler:(SMMessagesHandler *)messageHandler didFinishWithJSon:(id)result
+{
+    if ([result objectForKey:@"count"] > 0) {
+        self.categories = [[NSMutableArray alloc] initWithArray:[result objectForKey:@"items"]];
+        [self refreshCategories];
+    }
+}
+
 #pragma mark Custom methods
 
--(void)startActivity {
-    [self.activityIndicator startAnimating];
-}
-
--(void)stopActivity {
-    [self.activityIndicator stopAnimating];
-}
-
--(void)fetchAnotherMessage {
-    [self startActivity];
-    
-    NSURL* url = [[NSURL alloc] initWithString:@"http://kervern.me/v1/categories"];
-    NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
-    messageReceiving = nil;
-    
-    self.currentConnection = [NSURLConnection connectionWithRequest:request delegate:self];
-    
-    [request release];
-    [url release];
-}
 - (void)dealloc {
     [categories release];
     [activityIndicator release];
-    [messageLabel release];
+    [messageHandler release];
     [super dealloc];
 }
 @end
