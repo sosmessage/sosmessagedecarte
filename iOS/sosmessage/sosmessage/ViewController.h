@@ -10,7 +10,6 @@
 
 @interface ViewController : UIViewController<SMMessageDelegate>
 
-@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (retain, nonatomic) NSMutableArray* categories;
 @property (retain, nonatomic) SMMessagesHandler* messageHandler;
 

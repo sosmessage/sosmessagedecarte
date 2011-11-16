@@ -9,18 +9,32 @@
 #import "SMDetailViewController.h"
 #import <CoreText/CoreText.h>
 
+@interface SMDetailViewController () {
+
+}
+@property (retain, nonatomic) NSDictionary* category;
+@property (retain, nonatomic) SMMessagesHandler* messageHandler;
+
+@end
+
 @implementation SMDetailViewController
 @synthesize titleImage;
 @synthesize messageText;
+@synthesize category;
+@synthesize messageHandler;
 
 float baseHue;
-NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque commodo aliquam semper. Donec volutpat, metus in vulputate mattis, massa massa porttitor nisl, non aliquam nibh elit a enim. Duis ac enim turpis, ut blandit leo. Quisque vulputate blandit dapibus. Suspendisse pretium, felis vel aliquam vestibulum, magna elit eleifend dolor, molestie fermentum lectus massa ut elit. Cras eget neque mauris, ut consequat augue. Donec vel facilisis eros.";
 
-- (id)initWithHue:(float)hue category:(NSDictionary*)category {
+- (id)initWithCategory:(NSDictionary*)aCategory {
     self = [super initWithNibName:@"SMDetailViewController" bundle:nil];
     if (self) {
-        baseHue = hue;
-        self.view.backgroundColor = [UIColor colorWithHue:hue saturation:0.15 brightness:0.9 alpha:1];
+        self.category = aCategory;
+        baseHue = [[self.category objectForKey:@"name"] hue];
+        self.view.backgroundColor = [UIColor colorWithHue:baseHue saturation:0.15 brightness:0.9 alpha:1];
+
+        id iMessageHandler = [[SMMessagesHandler alloc] initWithDelegate:self];
+        self.messageHandler = iMessageHandler;
+        [iMessageHandler release];
     }
     return self;
 }
@@ -46,6 +60,8 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     
     [self renderTitle];
     [self fetchAMessage];
+ 
+    [messageText addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     
     [super viewWillAppear:animated];
 }
@@ -53,8 +69,16 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 -(void)viewWillDisappear:(BOOL)animated {
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+ 
+    [messageText removeObserver:self forKeyPath:@"contentSize"];
     
     [super viewWillDisappear:animated];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self becomeFirstResponder];
 }
 
 - (void)viewDidLoad
@@ -67,6 +91,8 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 {
     [self setTitleImage:nil];
     [self setMessageText:nil];
+    [self setCategory:nil];
+    [self setMessageHandler:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -78,9 +104,31 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     return YES;
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    UITextView *tv = object;
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+}
+
+
+-(BOOL)canBecomeFirstResponder 
+{
+    return YES;
+}
+
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event 
+{
+    if (motion == UIEventSubtypeMotionShake) {
+        [self fetchAMessage];
+    }
+}
+
 - (void)dealloc {
     [titleImage release];
     [messageText release];
+    [category release];
+    [messageHandler release];
     [super dealloc];
 }
 
@@ -100,7 +148,8 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, self.titleImage.bounds);
     
-    NSString *header = @"sosmessagedecarte\ndevisite";
+    NSString* header = [NSString stringWithFormat:@"%@%@",@"sosmessagedecarte\nde", [[self.category objectForKey:@"name"] lowercaseString]];
+    NSLog(@"Header: %@", [header lowercaseString]);
     NSInteger _stringLength=[header length];
     
     CFStringRef string =  (CFStringRef) header;
@@ -115,7 +164,7 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
     CFAttributedStringSetAttribute(attrString, CFRangeMake(10, 2),kCTForegroundColorAttributeName, _black);
     CFAttributedStringSetAttribute(attrString, CFRangeMake(12, 5),kCTForegroundColorAttributeName, _hue);
     CFAttributedStringSetAttribute(attrString, CFRangeMake(18, 2),kCTForegroundColorAttributeName, _black);
-    CFAttributedStringSetAttribute(attrString, CFRangeMake(20, 6),kCTForegroundColorAttributeName, _hue);
+    CFAttributedStringSetAttribute(attrString, CFRangeMake(20, _stringLength - 20),kCTForegroundColorAttributeName, _hue);
     
     CTFontRef font = CTFontCreateWithName((CFStringRef)@"Helvetica", 20, nil);
     CFAttributedStringSetAttribute(attrString,CFRangeMake(0, _stringLength),kCTFontAttributeName,font);
@@ -145,7 +194,26 @@ NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit
 }
 
 -(void)fetchAMessage {
-    self.messageText.text = tmpMessage;
+    [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/category/%@/message",SM_URL,[self.category objectForKey:@"id"]]];
+}
+
+#pragma mark NSMessageHandlerDelegate
+
+- (void)startActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
+{
+    NSLog(@"Start activity !!!");
+}
+
+- (void)stopActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
+{
+    NSLog(@"Stop activity !!!");
+}
+
+- (void)messageHandler:(SMMessagesHandler *)messageHandler didFinishWithJSon:(id)result
+{
+    if (self.messageText) {
+        self.messageText.text = [result objectForKey:@"text"];
+    }
 }
 
 @end

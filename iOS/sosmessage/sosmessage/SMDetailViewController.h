@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SOSMessageConstant.h"
 
 @interface SMDetailViewController : UIViewController {
     
 }
+
 @property (retain, nonatomic) IBOutlet UIImageView *titleImage;
 @property (retain, nonatomic) IBOutlet UITextView *messageText;
 
-- (id)initWithHue:(float)hue category:(NSDictionary*)category;
+- (id)initWithCategory:(NSDictionary*)aCategory;
 - (IBAction)dismissButtonPressed:(id)sender;
 - (void)fetchAMessage;
 - (void)renderTitle;

@@ -10,7 +10,6 @@
 #import "SMDetailViewController.h"
 
 @implementation ViewController
-@synthesize activityIndicator;
 @synthesize categories;
 @synthesize messageHandler;
 
@@ -37,7 +36,6 @@ static char sosMessageKey;
 
 - (void)viewDidUnload
 {
-    [self setActivityIndicator:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -73,18 +71,6 @@ static char sosMessageKey;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
-}
-
--(BOOL)canBecomeFirstResponder 
-{
-    return YES;
-}
-
--(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event 
-{
-    if (motion == UIEventSubtypeMotionShake) {
-        [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
-    }
 }
 
 #pragma mark Category handling
@@ -195,7 +181,7 @@ static char sosMessageKey;
     [uilabel.backgroundColor getHue:&hue saturation:nil brightness:nil alpha:nil];
     
     NSLog(@"Hue color: %.3f", hue);
-    SMDetailViewController* detail = [[SMDetailViewController alloc] initWithHue:hue category:category];
+    SMDetailViewController* detail = [[SMDetailViewController alloc] initWithCategory:category];
     detail.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:detail animated:true];
     [detail release];
@@ -205,20 +191,18 @@ static char sosMessageKey;
 
 - (void)startActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
 {
-    [self.activityIndicator startAnimating];
     NSLog(@"Start activity !!!");
 }
 
 - (void)stopActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
 {
-    [self.activityIndicator stopAnimating];
     NSLog(@"Stop activity !!!");
 }
 
 - (void)messageHandler:(SMMessagesHandler *)messageHandler didFinishWithJSon:(id)result
 {
     if ([result objectForKey:@"count"] > 0) {
-        self.categories = [[NSMutableArray alloc] initWithArray:[result objectForKey:@"items"]];
+        self.categories = [[[NSMutableArray alloc] initWithArray:[result objectForKey:@"items"]] autorelease];
         [self refreshCategories];
     }
 }
@@ -227,7 +211,6 @@ static char sosMessageKey;
 
 - (void)dealloc {
     [categories release];
-    [activityIndicator release];
     [messageHandler release];
     [super dealloc];
 }
