@@ -191,12 +191,13 @@ static char sosMessageKey;
 
 - (void)startActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
 {
-    NSLog(@"Start activity !!!");
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:TRUE];
+    hud.labelText = @"sosmessage";
 }
 
 - (void)stopActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
 {
-    NSLog(@"Stop activity !!!");
+    [MBProgressHUD hideHUDForView:self.view animated:true];
 }
 
 - (void)messageHandler:(SMMessagesHandler *)messageHandler didFinishWithJSon:(id)result
