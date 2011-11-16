@@ -20,6 +20,7 @@
 		51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */; };
 		51A5CE0D1466768A00B274B3 /* SMDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */; };
 		51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A5CE131466E24200B274B3 /* CoreText.framework */; };
+		51F1A70814746B710092F9F8 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F1A70714746B710092F9F8 /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMDetailViewController.m; sourceTree = "<group>"; };
 		51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMDetailViewController.xib; sourceTree = "<group>"; };
 		51A5CE131466E24200B274B3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		51F1A70614746B710092F9F8 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		51F1A70714746B710092F9F8 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,7 @@
 				510CB93F1471B4A80039C8A0 /* SMMessagesHandler.h */,
 				510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */,
 				51A5CE0F146677F200B274B3 /* Nibs */,
+				51F1A70514746AF90092F9F8 /* LoadingHUD */,
 				516515CF145DEA4000CF6C45 /* Supporting Files */,
 			);
 			path = sosmessage;
@@ -138,6 +142,15 @@
 				51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */,
 			);
 			name = Nibs;
+			sourceTree = "<group>";
+		};
+		51F1A70514746AF90092F9F8 /* LoadingHUD */ = {
+			isa = PBXGroup;
+			children = (
+				51F1A70614746B710092F9F8 /* MBProgressHUD.h */,
+				51F1A70714746B710092F9F8 /* MBProgressHUD.m */,
+			);
+			name = LoadingHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +222,7 @@
 				51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */,
 				51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */,
 				510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */,
+				51F1A70814746B710092F9F8 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
