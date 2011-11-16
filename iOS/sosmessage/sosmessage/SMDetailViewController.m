@@ -16,10 +16,9 @@
 float baseHue;
 NSString* tmpMessage = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque commodo aliquam semper. Donec volutpat, metus in vulputate mattis, massa massa porttitor nisl, non aliquam nibh elit a enim. Duis ac enim turpis, ut blandit leo. Quisque vulputate blandit dapibus. Suspendisse pretium, felis vel aliquam vestibulum, magna elit eleifend dolor, molestie fermentum lectus massa ut elit. Cras eget neque mauris, ut consequat augue. Donec vel facilisis eros.";
 
-- (id)initWithHue:(float)hue category:(NSString*)category {
+- (id)initWithHue:(float)hue category:(NSDictionary*)category {
     self = [super initWithNibName:@"SMDetailViewController" bundle:nil];
     if (self) {
-        NSLog(@"Hue parameter: %.3f", hue);
         baseHue = hue;
         self.view.backgroundColor = [UIColor colorWithHue:hue saturation:0.15 brightness:0.9 alpha:1];
     }

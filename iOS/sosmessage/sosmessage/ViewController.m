@@ -14,6 +14,8 @@
 @synthesize categories;
 @synthesize messageHandler;
 
+static char sosMessageKey;
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -29,6 +31,8 @@
     id iMessageHandler = [[SMMessagesHandler alloc] initWithDelegate:self];
     self.messageHandler = iMessageHandler;
     [iMessageHandler release];
+    
+    [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
 }
 
 - (void)viewDidUnload
@@ -45,8 +49,6 @@
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategories) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
-    [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -87,8 +89,9 @@
 
 #pragma mark Category handling
 
-- (void)addSOSCategory:(NSString*)label inPosX:(int)posX andPosY:(int)posY {
+- (void)addSOSCategory:(NSDictionary*)category inPosX:(int)posX andPosY:(int)posY {
     float blockSize = self.view.bounds.size.width / NB_BLOCKS;
+    NSString* label = [category objectForKey:@"name"];
     
     float rectX = floorf(blockSize * posX);
     //float rectY = posY; //origin y will be re-calculate after views are generated
@@ -104,6 +107,8 @@
     uiLabel.textAlignment = UITextAlignmentCenter;
     uiLabel.userInteractionEnabled = YES;
     
+    objc_setAssociatedObject(uiLabel, &sosMessageKey, category, 0);
+
     UITapGestureRecognizer *categoryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCategoryTapping:)];
     [uiLabel addGestureRecognizer:categoryTap];
     [categoryTap release];
@@ -145,7 +150,7 @@
             y += 1;
         }
         
-        [self addSOSCategory:[category objectForKey:@"name"] inPosX:x andPosY:y];
+        [self addSOSCategory:category inPosX:x andPosY:y];
         
         x += blockSize;
         if (x >= NB_BLOCKS) {
@@ -181,13 +186,16 @@
 }
 
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender {
-    UILabel* category = (UILabel*)sender.view;
+    UILabel* uilabel = (UILabel*)sender.view;
+    NSDictionary* category = (NSDictionary*)objc_getAssociatedObject(uilabel, &sosMessageKey);
+    
+    NSLog(@"Category added: %@", category);
     
     CGFloat hue;
-    [category.backgroundColor getHue:&hue saturation:nil brightness:nil alpha:nil];
+    [uilabel.backgroundColor getHue:&hue saturation:nil brightness:nil alpha:nil];
     
     NSLog(@"Hue color: %.3f", hue);
-    SMDetailViewController* detail = [[SMDetailViewController alloc] initWithHue:hue category:category.text];
+    SMDetailViewController* detail = [[SMDetailViewController alloc] initWithHue:hue category:category];
     detail.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:detail animated:true];
     [detail release];
