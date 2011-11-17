@@ -8,10 +8,10 @@ import com.mongodb.casbah.MongoConnection
 import net.liftweb.json.JsonAST._
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json.Printer._
+import net.liftweb.json.JsonParser._
 import com.mongodb.casbah.commons.MongoDBObject
 import org.bson.types.ObjectId
 import com.mongodb.casbah.Imports._
-import com.mongodb.casbah.Implicits._
 import java.util.Date
 
 class SosMessage extends unfiltered.filter.Plan {
@@ -38,7 +38,8 @@ class SosMessage extends unfiltered.filter.Plan {
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
       val messageOrder = MongoDBObject("createdAt" -> -1)
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
-      val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[JValue]())((l, a) =>
+      val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
+      val messages = messagesCollection.find(q, keys).sort(messageOrder).foldLeft(List[JValue]())((l, a) =>
         messageToJSON(a) :: l
       ).reverse
       val json = ("count", messages.size) ~ ("items", messages)
@@ -46,12 +47,34 @@ class SosMessage extends unfiltered.filter.Plan {
 
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
-      val count = messagesCollection.find(q).count
-      val skip = random.nextInt(count)
+      val count = messagesCollection.find(q, MongoDBObject("_id")).count
+      val skip = random.nextInt(if (count <= 0) 1 else count)
 
-      val message = messagesCollection.find(q).limit(-1).skip(skip).next()
-      val json = messageToJSON(message)
-      JsonContent ~> ResponseString(pretty(render(json)))
+      val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
+      val messages = messagesCollection.find(q, keys).limit(-1).skip(skip)
+      if (!messages.isEmpty) {
+        val message = messages.next()
+
+        val r = """
+        function(doc, out) {
+          for (var prop in doc.ratings) {
+            out.count++;
+            out.total += doc.ratings[prop];
+          }
+        }
+        """
+        val f = """
+        function(out) {
+          out.avg = out.total / out.count;
+        }
+        """
+        val rating = messagesCollection.group(MongoDBObject("ratings" -> 1),
+          MongoDBObject("_id" -> message.get("_id")), MongoDBObject("count" -> 0, "total" -> 0), r, f)
+        val json = messageToJSON(message, Some(parse(rating.mkString)))
+        JsonContent ~> ResponseString(pretty(render(json)))
+      } else {
+        NoContent
+      }
 
     case req @ POST(Path(Seg("api" :: "v1" :: "category" :: categoryId :: "message" :: Nil))) =>
       categoriesCollection.findOne(MongoDBObject("_id" -> new ObjectId(categoryId))).map { category =>
@@ -66,6 +89,14 @@ class SosMessage extends unfiltered.filter.Plan {
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
       }
+      NoContent
+
+    case req @ POST(Path(Seg("api" :: "v1" :: "message" :: messageId :: "rate" :: Nil))) =>
+      val Params(form) = req
+      val uid = form("uid")(0)
+      val rating = if(form("rating")(0).toInt > 5) 5 else form("rating")(0).toInt
+      val key = "ratings." + uid.replaceAll ("\\.", "-")
+      messagesCollection.update(MongoDBObject("_id" -> new ObjectId(messageId)), $set (key -> rating), false, false)
       NoContent
 
 //    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "randomMessage" :: Nil))) =>
@@ -84,13 +115,19 @@ class SosMessage extends unfiltered.filter.Plan {
 //      }
   }
 
-  private def messageToJSON(o: DBObject) = {
-    ("id", o.get("_id").toString) ~
+  private def messageToJSON(message: DBObject, rating: Option[JValue] = None) = {
+    val json = ("id", message.get("_id").toString) ~
     ("type", "message") ~
-    ("category", o.get("category").toString) ~
-    ("categoryId", o.get("categoryId").toString) ~
-    ("text", o.get("text").toString) ~
-    ("createdAt", o.get("createdAt").toString)
+    ("category", message.get("category").toString) ~
+    ("categoryId", message.get("categoryId").toString) ~
+    ("text", message.get("text").toString) ~
+    ("createdAt", message.get("createdAt").toString)
+
+    rating match {
+      case None => json ~ ("rating" -> 0) ~ ("ratingCount" -> 0)
+      case Some(r) =>
+        json ~ ("rating" -> rating \ "avg") ~ ("ratingCount" -> rating \ "count")
+    }
   }
 
   private def categoryToJSON(o: DBObject) = {

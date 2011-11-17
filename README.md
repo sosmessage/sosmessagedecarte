@@ -27,11 +27,21 @@ The administration interface is done using [Play 2.0](http://www.playframework.o
 
 The Web services used by the mobile applications are exposed through [Unfiltered](https://github.com/unfiltered/unfiltered).
 
-### Administration
-
-#### Install mongoDB
+### MongoDB
 
 To install it on your system, see [here](http://www.mongodb.org/display/DOCS/Quickstart).
+
+#### Casbah
+
+We are using the non released version 3.0.0-SNAPSHOT due to some bugs fixed in this version.
+
+Before running the Administration or API app, you need to install on you local repository the 3.0.0-SNAPSHOT version of Casbah.
+
+	$ git clone git://github.com/mongodb/casbah.git
+	$ cd casbah
+	$ sbt publish-local
+
+### Administration
 
 #### Install Play 2.0
 
