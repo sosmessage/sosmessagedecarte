@@ -1,5 +1,6 @@
 package controllers
 
+import _root_.net.liftweb.json.JsonParser._
 import play.api._
 import data._
 import play.api.mvc._
@@ -45,8 +46,31 @@ object Messages extends Controller {
     val q = MongoDBObject("categoryId" -> new ObjectId(selectedCategoryId), "state" -> "approved")
     val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
-    ).reverse
+    ).map(addRating(_))reverse
+
     Ok(views.html.messages.index(categories, selectedCategoryId, messages, messageForm))
+  }
+
+  def addRating(message: DBObject) = {
+    val r = """
+    function(doc, out) {
+      for (var prop in doc.ratings) {
+        out.count++;
+        out.total += doc.ratings[prop];
+      }
+    }
+    """
+    val f = """
+    function(out) {
+      out.avg = out.total / out.count;
+    }
+    """
+    val rating = messagesCollection.group(MongoDBObject("ratings" -> 1),
+      MongoDBObject("_id" -> message.get("_id")), MongoDBObject("count" -> 0, "total" -> 0), r, f)
+    val j = parse(rating.mkString)
+    message.put("rating", j \ "avg" values)
+    message.put("ratingCount", (j \ "count" values).asInstanceOf[Double].toInt)
+    message
   }
 
   def save(selectedCategoryId: String) = Action { implicit request =>

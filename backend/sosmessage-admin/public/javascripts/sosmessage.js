@@ -51,4 +51,23 @@ $(document).ready(function() {
       window.location.href = $(this).attr("sosmessage-redirect-url");
     });
   });
+
+  // initialize the ratings
+  $('[data-rating-start]').each(function() {
+    var ratingCount = $(this).attr("data-rating-count")
+    if (ratingCount > 0) {
+      $(this).raty({
+        path: "/admin/assets/images/",
+        half: true,
+        readOnly:  true,
+        start: $(this).attr("data-rating-start")
+      });
+    } else {
+      $(this).raty({
+        path: "/admin/assets/images/",
+        readOnly:  true
+      });
+    }
+  });
+
 });

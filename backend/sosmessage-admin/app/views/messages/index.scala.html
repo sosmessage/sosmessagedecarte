@@ -45,6 +45,7 @@
           <tr>
             <th>Text</th>
             <th>Created At</th>
+            <th>Rating</th>
             <th class="delete-message-col"></th>
           </tr>
         </thead>
@@ -56,11 +57,15 @@
 @message.get("text")
                 </pre>
               </td>
-              <td>
+               <td>
                 @{
                   val df = java.text.DateFormat.getDateTimeInstance
                   df.format(message.get("createdAt"))
                 }
+              </td>
+              <td>
+                <div data-rating-start="@message.get("rating")"
+                  data-rating-count="@message.get("ratingCount")"></div> (@message.get("ratingCount") ratings)
               </td>
               <td class="delete-message-col">
                 <form action="@routes.Messages.delete(selectedCategoryId, message.get("_id").toString)" method="POST"
