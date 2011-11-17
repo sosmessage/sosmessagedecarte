@@ -38,7 +38,8 @@ class SosMessage extends unfiltered.filter.Plan {
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
       val messageOrder = MongoDBObject("createdAt" -> -1)
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
-      val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[JValue]())((l, a) =>
+      val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
+      val messages = messagesCollection.find(q, keys).sort(messageOrder).foldLeft(List[JValue]())((l, a) =>
         messageToJSON(a) :: l
       ).reverse
       val json = ("count", messages.size) ~ ("items", messages)
@@ -46,10 +47,11 @@ class SosMessage extends unfiltered.filter.Plan {
 
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
-      val count = messagesCollection.find(q).count
+      val count = messagesCollection.find(q, MongoDBObject("_id")).count
       val skip = random.nextInt(if (count <= 0) 1 else count)
 
-      val messages = messagesCollection.find(q).limit(-1).skip(skip)
+      val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
+      val messages = messagesCollection.find(q, keys).limit(-1).skip(skip)
       if (!messages.isEmpty) {
         val message = messages.next()
 
