@@ -12,11 +12,6 @@
 @implementation NSString (SOSMessage)
 float sizeInBlocks;
 
--(float)sizeForBlocksForView:(UIView*)view {
-    float blockSize = view.bounds.size.width / NB_BLOCKS;
-    return [self blocksCount:view] * blockSize;
-}
-
 -(float)blocksCount:(UIView*)view {
     float widthWithFont = [self sizeWithFont:SOSFONT].width;
     //NSLog(@"Width with font for %@ : %.2f", self, widthWithFont);

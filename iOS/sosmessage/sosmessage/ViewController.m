@@ -75,18 +75,24 @@ static char sosMessageKey;
 
 #pragma mark Category handling
 
-- (void)addSOSCategory:(NSDictionary*)category inPosX:(int)posX andPosY:(int)posY {
+-(UILabel*)buildUILabelForBlock:(int)nbBlocks inPosX:(int)posX andPosY:(int)posY {
     float blockSize = self.view.bounds.size.width / NB_BLOCKS;
-    NSString* label = [category objectForKey:CATEGORY_NAME];
-    
+
     float rectX = floorf(blockSize * posX);
     //float rectY = posY; //origin y will be re-calculate after views are generated
-    float rectWidth = ceilf([label sizeForBlocksForView:self.view]);
+    float rectWidth = ceilf(blockSize * nbBlocks);
     float rectHeight = 1; //arbitrary set to 1
     
     //NSLog(@"Place label (%@) at (%.2f;%.2f) with size (%.2f;%.2f)", label, rectX, rectY, rectWidth, rectHeight);
     
-    UILabel* uiLabel = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, posY, rectWidth, rectHeight)] autorelease];
+    UILabel* uiLabel = [[UILabel alloc] initWithFrame:CGRectMake(rectX, posY, rectWidth, rectHeight)];
+    return [uiLabel autorelease];
+}
+
+- (void)addSOSCategory:(NSDictionary*)category inPosX:(int)posX andPosY:(int)posY {
+    NSString* label = [category objectForKey:CATEGORY_NAME];
+    UILabel* uiLabel = [self buildUILabelForBlock:[label blocksCount:self.view] inPosX:posX andPosY:posY];
+                        
     uiLabel.backgroundColor = [UIColor colorWithHue:label.hue saturation:0.55 brightness:0.9 alpha:1.0];
     uiLabel.text = [label capitalizedString];
     uiLabel.font = SOSFONT;
@@ -103,16 +109,8 @@ static char sosMessageKey;
 }
 
 - (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY {
-    float blockSize = self.view.bounds.size.width / NB_BLOCKS;
     NSLog(@"Bounds width: %.2f and Frame width: %.2f", self.view.bounds.size.width, self.view.frame.size.width);
-    
-    float rectX = floorf(blockSize * posX);
-    //float rectY = posY; //origin y will be re-calculate after views are generated
-    float rectWidth = blockSize * nb;
-    float rectHeight = 1; //arbitrary set to 1
-    
-    //NSLog(@"Fill %d blocks at (%.2f;%.2f) with size (%.2f;%.2f)", nb, rectX, rectY, rectWidth, rectHeight);
-    UILabel* emptyBlocks = [[[UILabel alloc] initWithFrame:CGRectMake(rectX, posY, rectWidth, rectHeight)] autorelease];
+    UILabel* emptyBlocks = [self buildUILabelForBlock:nb inPosX:posX andPosY:posY];
     
     float hue = (rand()%24) / 24.0;
     emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];

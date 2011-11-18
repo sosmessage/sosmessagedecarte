@@ -14,7 +14,6 @@
 
 @property (readonly) float hue;
 
--(float)sizeForBlocksForView:(UIView*)view;
 -(float)blocksCount:(UIView*)view;
 
 @end
