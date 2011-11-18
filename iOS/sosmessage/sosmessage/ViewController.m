@@ -77,7 +77,7 @@ static char sosMessageKey;
 
 - (void)addSOSCategory:(NSDictionary*)category inPosX:(int)posX andPosY:(int)posY {
     float blockSize = self.view.bounds.size.width / NB_BLOCKS;
-    NSString* label = [category objectForKey:@"name"];
+    NSString* label = [category objectForKey:CATEGORY_NAME];
     
     float rectX = floorf(blockSize * posX);
     //float rectY = posY; //origin y will be re-calculate after views are generated
@@ -129,7 +129,7 @@ static char sosMessageKey;
     int y = 0;
     while (workingCategories.count > 0) {
         NSDictionary* category = [workingCategories objectAtIndex:0];
-        int blockSize = [[category objectForKey:@"name"] blocksCount:self.view];
+        int blockSize = [[category objectForKey:CATEGORY_NAME] blocksCount:self.view];
         if ((NB_BLOCKS - x < blockSize)) {
             [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];
             x = 0;
@@ -202,8 +202,8 @@ static char sosMessageKey;
 
 - (void)messageHandler:(SMMessagesHandler *)messageHandler didFinishWithJSon:(id)result
 {
-    if ([result objectForKey:@"count"] > 0) {
-        self.categories = [[[NSMutableArray alloc] initWithArray:[result objectForKey:@"items"]] autorelease];
+    if ([result objectForKey:CATEGORIES_COUNT] > 0) {
+        self.categories = [[[NSMutableArray alloc] initWithArray:[result objectForKey:CATEGORIES_ITEMS]] autorelease];
         [self refreshCategories];
     }
 }

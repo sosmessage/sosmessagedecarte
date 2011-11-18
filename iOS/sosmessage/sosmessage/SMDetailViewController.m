@@ -29,7 +29,7 @@ float baseHue;
     self = [super initWithNibName:@"SMDetailViewController" bundle:nil];
     if (self) {
         self.category = aCategory;
-        baseHue = [[self.category objectForKey:@"name"] hue];
+        baseHue = [[self.category objectForKey:CATEGORY_NAME] hue];
         self.view.backgroundColor = [UIColor colorWithHue:baseHue saturation:0.15 brightness:0.9 alpha:1];
 
         id iMessageHandler = [[SMMessagesHandler alloc] initWithDelegate:self];
@@ -148,7 +148,7 @@ float baseHue;
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, self.titleImage.bounds);
     
-    NSString* header = [NSString stringWithFormat:@"%@%@",@"sosmessagedecarte\nde", [[self.category objectForKey:@"name"] lowercaseString]];
+    NSString* header = [NSString stringWithFormat:@"%@%@",@"sosmessagedecarte\nde", [[self.category objectForKey:CATEGORY_NAME] lowercaseString]];
     NSLog(@"Header: %@", [header lowercaseString]);
     NSInteger _stringLength=[header length];
     
@@ -194,7 +194,7 @@ float baseHue;
 }
 
 -(void)fetchAMessage {
-    [self.messageHandler requestRandomMessageForCategory:[self.category objectForKey:@"id"]];
+    [self.messageHandler requestRandomMessageForCategory:[self.category objectForKey:CATEGORY_ID]];
 }
 
 #pragma mark NSMessageHandlerDelegate
@@ -213,7 +213,7 @@ float baseHue;
 - (void)messageHandler:(SMMessagesHandler *)messageHandler didFinishWithJSon:(id)result
 {
     if (self.messageText) {
-        self.messageText.text = [result objectForKey:@"text"];
+        self.messageText.text = [result objectForKey:MESSAGE_TEXT];
     }
 }
 
