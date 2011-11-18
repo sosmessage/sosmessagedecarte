@@ -17,6 +17,9 @@
 - (id)initWithDelegate:(id)delegate;
 - (void)requestUrl:(NSString*)url;
 
+- (void)requestCategories;
+- (void)requestRandomMessageForCategory:(NSString*)aCategoryId;
+
 @end
 
 @protocol SMMessageDelegate

@@ -31,7 +31,7 @@ static char sosMessageKey;
     self.messageHandler = iMessageHandler;
     [iMessageHandler release];
     
-    [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
+    [self.messageHandler requestCategories];
 }
 
 - (void)viewDidUnload

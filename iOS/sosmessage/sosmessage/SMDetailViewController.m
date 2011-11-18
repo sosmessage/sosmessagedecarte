@@ -194,7 +194,7 @@ float baseHue;
 }
 
 -(void)fetchAMessage {
-    [self.messageHandler requestUrl:[NSString stringWithFormat:@"%@/api/v1/category/%@/message",SM_URL,[self.category objectForKey:@"id"]]];
+    [self.messageHandler requestRandomMessageForCategory:[self.category objectForKey:@"id"]];
 }
 
 #pragma mark NSMessageHandlerDelegate

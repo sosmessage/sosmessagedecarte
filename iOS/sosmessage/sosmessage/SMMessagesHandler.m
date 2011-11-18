@@ -64,6 +64,8 @@ bool receiving = false;
     }
 }
 
+#pragma mark Requesting ....
+
 - (void)requestUrl:(NSString*)url {
     if (receiving && currentConnection) {
         [currentConnection cancel];
@@ -80,6 +82,15 @@ bool receiving = false;
     [nsUrl release];
 }
 
+- (void)requestCategories {
+    [self requestUrl:[NSString stringWithFormat:@"%@/api/v1/categories", SM_URL]];
+}
+
+- (void)requestRandomMessageForCategory:(NSString*)aCategoryId {
+    [self requestUrl:[NSString stringWithFormat:@"%@/api/v1/category/%@/message", SM_URL, aCategoryId]];
+}
+
+#pragma mark -
 #pragma mark NSURLConnection methods
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     [self resetData];
