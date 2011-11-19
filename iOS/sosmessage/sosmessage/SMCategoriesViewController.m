@@ -6,10 +6,10 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "SMDetailViewController.h"
+#import "SMCategoriesViewController.h"
+#import "SMMessageViewController.h"
 
-@implementation ViewController
+@implementation SMCategoriesViewController
 @synthesize categories;
 @synthesize messageHandler;
 
@@ -179,7 +179,7 @@ static char sosMessageKey;
     [uilabel.backgroundColor getHue:&hue saturation:nil brightness:nil alpha:nil];
     
     NSLog(@"Hue color: %.3f", hue);
-    SMDetailViewController* detail = [[SMDetailViewController alloc] initWithCategory:category];
+    SMMessageViewController* detail = [[SMMessageViewController alloc] initWithCategory:category];
     detail.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:detail animated:true];
     [detail release];

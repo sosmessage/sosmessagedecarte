@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SOSMessageConstant.h"
 
-@interface SMDetailViewController : UIViewController {
+@interface SMMessageViewController : UIViewController {
     
 }
 

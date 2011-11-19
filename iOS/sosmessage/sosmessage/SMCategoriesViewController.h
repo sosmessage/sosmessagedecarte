@@ -8,7 +8,7 @@
 
 #import "SOSMessageConstant.h"
 
-@interface ViewController : UIViewController<SMMessageDelegate>
+@interface SMCategoriesViewController : UIViewController<SMMessageDelegate>
 
 @property (retain, nonatomic) NSMutableArray* categories;
 @property (retain, nonatomic) SMMessagesHandler* messageHandler;

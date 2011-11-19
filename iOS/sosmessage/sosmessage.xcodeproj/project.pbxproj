@@ -14,11 +14,11 @@
 		516515D3145DEA4000CF6C45 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 516515D1145DEA4000CF6C45 /* InfoPlist.strings */; };
 		516515D5145DEA4000CF6C45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515D4145DEA4000CF6C45 /* main.m */; };
 		516515D9145DEA4100CF6C45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515D8145DEA4100CF6C45 /* AppDelegate.m */; };
-		516515DC145DEA4100CF6C45 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515DB145DEA4100CF6C45 /* ViewController.m */; };
-		516515DF145DEA4100CF6C45 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515DD145DEA4100CF6C45 /* ViewController.xib */; };
+		516515DC145DEA4100CF6C45 /* SMCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */; };
+		516515DF145DEA4100CF6C45 /* SMCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515DD145DEA4100CF6C45 /* SMCategoriesViewController.xib */; };
 		51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE051465221400B274B3 /* NSString+SOSMessage.m */; };
-		51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */; };
-		51A5CE0D1466768A00B274B3 /* SMDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */; };
+		51A5CE0C1466768A00B274B3 /* SMMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE0A1466768A00B274B3 /* SMMessageViewController.m */; };
+		51A5CE0D1466768A00B274B3 /* SMMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A5CE0B1466768A00B274B3 /* SMMessageViewController.xib */; };
 		51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A5CE131466E24200B274B3 /* CoreText.framework */; };
 		51F1A70814746B710092F9F8 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F1A70714746B710092F9F8 /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
@@ -37,15 +37,15 @@
 		516515D6145DEA4100CF6C45 /* sosmessage-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sosmessage-Prefix.pch"; sourceTree = "<group>"; };
 		516515D7145DEA4100CF6C45 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		516515D8145DEA4100CF6C45 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		516515DA145DEA4100CF6C45 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		516515DB145DEA4100CF6C45 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		516515DE145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		516515DA145DEA4100CF6C45 /* SMCategoriesViewController.h */ = {isa = PBXFileReference; path = SMCategoriesViewController.h; sourceTree = "<group>"; };
+		516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMCategoriesViewController.m; sourceTree = "<group>"; };
+		516515DE145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMCategoriesViewController.xib; sourceTree = "<group>"; };
 		51A5CE041465221400B274B3 /* NSString+SOSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SOSMessage.h"; sourceTree = "<group>"; };
 		51A5CE051465221400B274B3 /* NSString+SOSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SOSMessage.m"; sourceTree = "<group>"; };
 		51A5CE081465227C00B274B3 /* SOSMessageConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSMessageConstant.h; sourceTree = "<group>"; };
-		51A5CE091466768900B274B3 /* SMDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMDetailViewController.h; sourceTree = "<group>"; };
-		51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMDetailViewController.m; sourceTree = "<group>"; };
-		51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMDetailViewController.xib; sourceTree = "<group>"; };
+		51A5CE091466768900B274B3 /* SMMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SMMessageViewController.h; sourceTree = "<group>"; };
+		51A5CE0A1466768A00B274B3 /* SMMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMMessageViewController.m; sourceTree = "<group>"; };
+		51A5CE0B1466768A00B274B3 /* SMMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMMessageViewController.xib; sourceTree = "<group>"; };
 		51A5CE131466E24200B274B3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		51F1A70614746B710092F9F8 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		51F1A70714746B710092F9F8 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -102,10 +102,10 @@
 				51A5CE0E146677DE00B274B3 /* Category */,
 				516515D7145DEA4100CF6C45 /* AppDelegate.h */,
 				516515D8145DEA4100CF6C45 /* AppDelegate.m */,
-				516515DA145DEA4100CF6C45 /* ViewController.h */,
-				516515DB145DEA4100CF6C45 /* ViewController.m */,
-				51A5CE091466768900B274B3 /* SMDetailViewController.h */,
-				51A5CE0A1466768A00B274B3 /* SMDetailViewController.m */,
+				516515DA145DEA4100CF6C45 /* SMCategoriesViewController.h */,
+				516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */,
+				51A5CE091466768900B274B3 /* SMMessageViewController.h */,
+				51A5CE0A1466768A00B274B3 /* SMMessageViewController.m */,
 				510CB93F1471B4A80039C8A0 /* SMMessagesHandler.h */,
 				510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */,
 				51A5CE0F146677F200B274B3 /* Nibs */,
@@ -138,8 +138,8 @@
 		51A5CE0F146677F200B274B3 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				516515DD145DEA4100CF6C45 /* ViewController.xib */,
-				51A5CE0B1466768A00B274B3 /* SMDetailViewController.xib */,
+				516515DD145DEA4100CF6C45 /* SMCategoriesViewController.xib */,
+				51A5CE0B1466768A00B274B3 /* SMMessageViewController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -204,8 +204,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				516515D3145DEA4000CF6C45 /* InfoPlist.strings in Resources */,
-				516515DF145DEA4100CF6C45 /* ViewController.xib in Resources */,
-				51A5CE0D1466768A00B274B3 /* SMDetailViewController.xib in Resources */,
+				516515DF145DEA4100CF6C45 /* SMCategoriesViewController.xib in Resources */,
+				51A5CE0D1466768A00B274B3 /* SMMessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,9 +218,9 @@
 			files = (
 				516515D5145DEA4000CF6C45 /* main.m in Sources */,
 				516515D9145DEA4100CF6C45 /* AppDelegate.m in Sources */,
-				516515DC145DEA4100CF6C45 /* ViewController.m in Sources */,
+				516515DC145DEA4100CF6C45 /* SMCategoriesViewController.m in Sources */,
 				51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */,
-				51A5CE0C1466768A00B274B3 /* SMDetailViewController.m in Sources */,
+				51A5CE0C1466768A00B274B3 /* SMMessageViewController.m in Sources */,
 				510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */,
 				51F1A70814746B710092F9F8 /* MBProgressHUD.m in Sources */,
 			);
@@ -237,12 +237,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		516515DD145DEA4100CF6C45 /* ViewController.xib */ = {
+		516515DD145DEA4100CF6C45 /* SMCategoriesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				516515DE145DEA4100CF6C45 /* en */,
 			);
-			name = ViewController.xib;
+			name = SMCategoriesViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

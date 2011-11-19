@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class ViewController;
+@class SMCategoriesViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) SMCategoriesViewController *viewController;
 
 - (int)deviceSpecificNumberOfBlocks;
 - (UIFont*)deviceSpecificSOSFont;

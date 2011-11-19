@@ -6,10 +6,10 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "SMDetailViewController.h"
+#import "SMMessageViewController.h"
 #import <CoreText/CoreText.h>
 
-@interface SMDetailViewController () {
+@interface SMMessageViewController () {
 
 }
 @property (retain, nonatomic) NSDictionary* category;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation SMDetailViewController
+@implementation SMMessageViewController
 @synthesize titleImage;
 @synthesize messageText;
 @synthesize category;
