@@ -61,7 +61,8 @@
           <tr>
             <th>Text</th>
             <th>Category</th>
-            <th>Created At</th>
+            <th>Created at</th>
+            <th>Modified at</th>
             <th class="delete-message-col"></th>
           </tr>
         </thead>
@@ -80,6 +81,12 @@
                 @{
                   val df = java.text.DateFormat.getDateTimeInstance
                   df.format(message.get("createdAt"))
+                }
+              </td>
+              <td>
+                @{
+                  val df = java.text.DateFormat.getDateTimeInstance
+                  df.format(message.get("modifiedAt"))
                 }
               </td>
               <td class="actions-col">

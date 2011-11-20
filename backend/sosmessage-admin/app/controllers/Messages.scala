@@ -99,6 +99,7 @@ object Messages extends Controller {
             "messageAdded"
         }
         builder += "createdAt" -> new Date()
+        builder += "modifiedAt" -> new Date()
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
 
@@ -135,7 +136,7 @@ object Messages extends Controller {
       v => {
         val newCategoryId = v._1
         val q = MongoDBObject("_id" -> new ObjectId(messageId))
-        val o = $set ("categoryId" -> new ObjectId(newCategoryId), "text" -> v._2)
+        val o = $set ("categoryId" -> new ObjectId(newCategoryId), "text" -> v._2, "modifiedAt" -> new Date())
         messagesCollection.update(q, o, false, false)
         Redirect(routes.Messages.index(newCategoryId)).flashing("actionDone" -> "messageUpdated")
       }

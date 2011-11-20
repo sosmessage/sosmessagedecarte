@@ -41,6 +41,7 @@ object Categories extends Controller {
         val builder = MongoDBObject.newBuilder
         builder += "name" -> v
         builder += "createdAt" -> new Date()
+        builder += "modifiedAt" -> new Date()
         categoriesCollection += builder.result
 
         Redirect(routes.Categories.index).flashing("actionDone" -> "categoryAdded")
@@ -69,7 +70,8 @@ object Categories extends Controller {
       },
       v => {
         val q = MongoDBObject("_id" -> new ObjectId(id))
-        categoriesCollection.update(q, $set ("name" -> v), false, false)
+        val o = $set ("name" -> v, "modifiedAt" -> new Date())
+        categoriesCollection.update(q, o, false, false)
         Redirect(routes.Categories.index).flashing("actionDone" -> "categoryUpdated")
       }
     )
