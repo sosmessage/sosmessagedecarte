@@ -62,7 +62,11 @@ object Messages extends Controller {
     """
     val f = """
     function(out) {
-      out.avg = out.total / out.count;
+      if (out.count == 0) {
+        out.avg = 0;
+      } else {
+        out.avg = out.total / out.count;
+      }
     }
     """
     val rating = messagesCollection.group(MongoDBObject("ratings" -> 1),
@@ -76,7 +80,6 @@ object Messages extends Controller {
   def save(selectedCategoryId: String) = Action { implicit request =>
     messageForm.bindFromRequest().fold(
       f => {
-        println("bad: " + f)
         Redirect(routes.Messages.index(selectedCategoryId))
       },
       v => {
@@ -96,6 +99,7 @@ object Messages extends Controller {
             "messageAdded"
         }
         builder += "createdAt" -> new Date()
+        builder += "modifiedAt" -> new Date()
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
 
@@ -109,6 +113,34 @@ object Messages extends Controller {
     val o = MongoDBObject("_id" -> oid)
     messagesCollection.remove(o)
     Redirect(routes.Messages.index(selectedCategoryId)).flashing("actionDone" -> "messageDeleted")
+  }
+
+  def edit(categoryId: String, messageId: String) = Action { implicit request =>
+    val categoryOrder = MongoDBObject("name" -> 1)
+    val categories = categoriesCollection.find().sort(categoryOrder).foldLeft(List[DBObject]())((l, a) =>
+      a :: l
+    ).reverse
+    val q = MongoDBObject("_id" -> new ObjectId(messageId))
+    messagesCollection.findOne(q).map { message =>
+      Ok(views.html.messages.edit(categories, categoryId, messageId, messageForm.fill(
+        (message.get("categoryId").toString, message.get("text").toString, None)
+      )))
+    }.getOrElse(NotFound)
+  }
+
+  def update(categoryId: String, messageId: String) = Action { implicit request =>
+    messageForm.bindFromRequest.fold(
+      f => {
+        Redirect(routes.Messages.index(categoryId))
+      },
+      v => {
+        val newCategoryId = v._1
+        val q = MongoDBObject("_id" -> new ObjectId(messageId))
+        val o = $set ("categoryId" -> new ObjectId(newCategoryId), "text" -> v._2, "modifiedAt" -> new Date())
+        messagesCollection.update(q, o, false, false)
+        Redirect(routes.Messages.index(newCategoryId)).flashing("actionDone" -> "messageUpdated")
+      }
+    )
   }
 
 }

@@ -45,8 +45,10 @@
                <a class="close" href="#">x</a>
                <p>
                  @if(message == "categoryAdded") { New category <strong>added</strong>! }
+                 @if(message == "categoryUpdated") { Category <strong>updated</strong>! }
                  @if(message == "categoryDeleted") { Category <strong>deleted</strong>! }
                  @if(message == "messageAdded") { New message <strong>added</strong>! }
+                 @if(message == "messageUpdated") { Message <strong>updated</strong>! }
                  @if(message == "messageWaiting") { New message <strong>waiting for approval</strong>! }
                  @if(message == "messageDeleted") { Message <strong>deleted</strong>! }
                  @if(message == "messageApproved") { Message <strong>approved</strong>! }
