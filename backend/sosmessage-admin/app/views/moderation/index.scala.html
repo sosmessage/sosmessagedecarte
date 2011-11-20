@@ -19,11 +19,11 @@
         </form>
         <form action="@routes.Moderation.rejectAll("waiting")" method="POST"
           style="margin-bottom:0">
-          <button class="btn primary main-add-button reject-all-waiting" type="submit">Reject all</button>
+          <button class="btn main-add-button reject-all-waiting" type="submit">Reject all</button>
         </form>
         <form action="@routes.Moderation.approveAll("waiting")" method="POST"
           style="margin-bottom:0">
-          <button class="btn primary main-add-button approve-all-waiting" type="submit">Approve all</button>
+          <button class="btn success main-add-button approve-all-waiting" type="submit">Approve all</button>
         </form>
       </div>
     <div style="clear: both;"></div>
@@ -53,6 +53,8 @@
       </li>
     </ul>
 
+    <div style="clear:both;"></div>
+
     <div class="messages-container">
       <table class="zebra-striped">
         <thead>
@@ -80,25 +82,25 @@
                   df.format(message.get("createdAt"))
                 }
               </td>
-              <td class="moderate-message-col">
+              <td class="actions-col">
                 @if(selectedTab == "waiting") {
-                  <form action="@routes.Moderation.approve(message.get("_id").toString, selectedTab)" method="POST"
-                    style="margin-bottom:0">
-                    <button class="btn small primary approve-button" type="submit">Approve</button>
-                  </form>
                   <form action="@routes.Moderation.reject(message.get("_id").toString, selectedTab)" method="POST"
                     style="margin-bottom:0">
-                    <button class="btn small danger reject-button" type="submit">Reject</button>
+                    <button class="btn small reject-button" type="submit">Reject</button>
+                  </form>
+                  <form action="@routes.Moderation.approve(message.get("_id").toString, selectedTab)" method="POST"
+                    style="margin-bottom:0">
+                    <button class="btn small success approve-button" type="submit">Approve</button>
                   </form>
                 }
                 @if(selectedTab == "rejected") {
-                  <form action="@routes.Moderation.approve(message.get("_id").toString, selectedTab)" method="POST"
-                    style="margin-bottom:0">
-                    <button class="btn small primary approve-button" type="submit">Approve</button>
-                  </form>
                   <form action="@routes.Moderation.delete(message.get("_id").toString, selectedTab)" method="POST"
                     style="margin-bottom:0">
                     <button class="btn small danger delete-message" type="submit">Delete</button>
+                  </form>
+                  <form action="@routes.Moderation.approve(message.get("_id").toString, selectedTab)" method="POST"
+                    style="margin-bottom:0">
+                    <button class="btn small success approve-button" type="submit">Approve</button>
                   </form>
                 }
               </td>

@@ -39,6 +39,8 @@
          data-keyboard="true">Add message</a>
     </p>
 
+    <div style="clear:both;"></div>
+
     <div class="messages-container">
       <table class="zebra-striped">
         <thead>
@@ -67,11 +69,12 @@
                 <div data-rating-start="@message.get("rating")"
                   data-rating-count="@message.get("ratingCount")"></div> (@message.get("ratingCount") ratings)
               </td>
-              <td class="delete-message-col">
+              <td class="actions-col">
                 <form action="@routes.Messages.delete(selectedCategoryId, message.get("_id").toString)" method="POST"
                   style="margin-bottom:0">
                   <button class="btn small danger delete-message" type="submit">Delete</button>
                 </form>
+                <a href="@routes.Messages.edit(selectedCategoryId, message.get("_id").toString)" class="btn small">Edit</a>
               </td>
             </tr>
           }
@@ -103,7 +106,7 @@
                 @newMessageForm.forField("text") { field =>
                   <label for="@field.name">Text</label>
                   <div class="input">
-                    <textarea class="xxlarge" id="@field.name" name="@field.name" value="@field.value" rows="6"></textarea>
+                    <textarea class="xxlarge" id="@field.name" name="@field.name" rows="6">@field.value</textarea>
                   </div>
                 }
               </div>
@@ -111,7 +114,7 @@
                 @newMessageForm.forField("approved") { field =>
                   <label for="@field.name">Approved</label>
                   <div class="input">
-                    <input type="checkbox" checked="checked" class="xxlarge" id="@field.name" name="@field.name"></textarea>
+                    <input type="checkbox" checked="checked" class="xxlarge" id="@field.name" name="@field.name" />
                   </div>
                 }
               </div>

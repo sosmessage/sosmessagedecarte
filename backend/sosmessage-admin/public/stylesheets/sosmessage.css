@@ -11,7 +11,7 @@ section {
 }
 
 .main-add-button {
-    margin-right: 5px;
+    margin-right: 14px;
     float: right;
 }
 
@@ -34,21 +34,13 @@ section {
   margin: -240px 0 0 -300px;
 }
 
-.delete-message-col, .delete-category-col {
-  width: 100px;
+.actions-col {
+  width: 150px;
   text-align: center;
 }
 
-.moderate-message-col {
-  width: 120px;
-  text-align: center;
-}
-
-.approve-button {
-  float: left;
-}
-
-.reject-button {
+.actions-col a, .actions-col button {
+  margin-right: 5px;
   float: right;
 }
 
