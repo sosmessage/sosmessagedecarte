@@ -8,6 +8,7 @@ import com.mongodb.casbah.MongoConnection
 import org.bson.types.ObjectId
 import java.util.Date
 import com.mongodb.DBObject
+import com.mongodb.casbah.Imports._
 
 object Categories extends Controller {
 
@@ -40,6 +41,7 @@ object Categories extends Controller {
         val builder = MongoDBObject.newBuilder
         builder += "name" -> v
         builder += "createdAt" -> new Date()
+        builder += "modifiedAt" -> new Date()
         categoriesCollection += builder.result
 
         Redirect(routes.Categories.index).flashing("actionDone" -> "categoryAdded")
@@ -52,6 +54,27 @@ object Categories extends Controller {
     val o = MongoDBObject("_id" -> oid)
     categoriesCollection.remove(o)
     Redirect(routes.Categories.index).flashing("actionDone" -> "categoryDeleted")
+  }
+
+  def edit(id: String) = Action { implicit request =>
+    val q = MongoDBObject("_id" -> new ObjectId(id))
+    categoriesCollection.findOne(q).map { category =>
+      Ok(views.html.categories.edit(id, categoryForm.fill(category.get("name").toString)))
+    }.getOrElse(NotFound)
+  }
+
+  def update(id: String) = Action { implicit request =>
+    categoryForm.bindFromRequest.fold(
+      f => {
+        Redirect(routes.Categories.index)
+      },
+      v => {
+        val q = MongoDBObject("_id" -> new ObjectId(id))
+        val o = $set ("name" -> v, "modifiedAt" -> new Date())
+        categoriesCollection.update(q, o, false, false)
+        Redirect(routes.Categories.index).flashing("actionDone" -> "categoryUpdated")
+      }
+    )
   }
 
 }

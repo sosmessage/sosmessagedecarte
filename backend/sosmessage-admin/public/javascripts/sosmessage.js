@@ -54,7 +54,7 @@ $(document).ready(function() {
 
   // initialize the ratings
   $('[data-rating-start]').each(function() {
-    var ratingCount = $(this).attr("data-rating-count")
+    var ratingCount = $(this).attr("data-rating-count");
     if (ratingCount > 0) {
       $(this).raty({
         path: "/admin/assets/images/",

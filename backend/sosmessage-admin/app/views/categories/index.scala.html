@@ -19,11 +19,14 @@
          data-keyboard="true">Add category</a>
       </p>
 
+      <div style="clear:both;"></div>
+
       <table class="zebra-striped">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Created At</th>
+            <th>Created at</th>
+            <th>Modified at</th>
             <th class="delete-message-col"></th>
           </tr>
         </thead>
@@ -39,11 +42,18 @@
                   df.format(category.get("createdAt"))
                 }
               </td>
-              <td class="delete-category-col">
+              <td>
+                @{
+                  val df = java.text.DateFormat.getDateTimeInstance
+                  df.format(category.get("modifiedAt"))
+                }
+              </td>
+              <td class="actions-col">
                 <form action="@routes.Categories.delete(category.get("_id").toString)" method="POST"
                   style="margin-bottom:0">
                   <button class="btn small danger delete-category" type="submit">Delete</button>
                 </form>
+                <a href="@routes.Categories.edit(category.get("_id").toString)" class="btn small">Edit</a>
               </td>
             </tr>
           }

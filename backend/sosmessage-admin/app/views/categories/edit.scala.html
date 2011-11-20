@@ -1,0 +1,35 @@
+@(
+  categoryId: String,
+  categoryForm:play.api.data.Form[String]
+)(implicit flash: play.api.mvc.Flash)
+
+@import helper._
+
+@main(selectedTab = "categories", actionDone = flash.get("actionDone")) {
+
+  <section id="category">
+
+    <div class="page-header">
+      <h1>Edit Category</h1>
+    </div>
+
+    <form action="@routes.Categories.update(categoryId)" method="POST" class="form-stacked" accept-charset="UTF-8">
+      <fieldset>
+        <div class="clearfix">
+          @categoryForm.forField("name") { field =>
+            <label for="@field.name">Name</label>
+            <div class="input">
+              <input class="xlarge" id="@field.name" name="@field.name" type="text" value="@field.value" />
+            </div>
+          }
+        </div>
+      </fieldset>
+      <div class="actions">
+        <button class="btn primary" type="submit">Save</button>
+        <a href="@routes.Categories.index()" class="btn">Cancel</a>
+      </div>
+    </form>
+
+  </section>
+
+}
