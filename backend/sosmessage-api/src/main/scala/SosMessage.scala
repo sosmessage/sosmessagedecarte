@@ -47,7 +47,7 @@ class SosMessage extends unfiltered.filter.Plan {
 
     case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
-      val count = messagesCollection.find(q, MongoDBObject("_id")).count
+      val count = messagesCollection.find(q, MongoDBObject("_id" -> 1)).count
       val skip = random.nextInt(if (count <= 0) 1 else count)
 
       val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
