@@ -10,6 +10,7 @@
 #import "SMMessageViewController.h"
 
 @implementation SMCategoriesViewController
+@synthesize infoButton;
 @synthesize categories;
 @synthesize messageHandler;
 
@@ -36,6 +37,7 @@ static char sosMessageKey;
 
 - (void)viewDidUnload
 {
+    [self setInfoButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -105,7 +107,7 @@ static char sosMessageKey;
     [uiLabel addGestureRecognizer:categoryTap];
     [categoryTap release];
     
-    [self.view addSubview:uiLabel];
+    [self.view insertSubview:uiLabel belowSubview:self.infoButton];
 }
 
 - (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY {
@@ -115,7 +117,7 @@ static char sosMessageKey;
     float hue = (rand()%24) / 24.0;
     emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];
     
-    [self.view addSubview:emptyBlocks];
+    [self.view insertSubview:emptyBlocks belowSubview:self.infoButton];
 }
 
 - (void)refreshCategories {
@@ -185,6 +187,10 @@ static char sosMessageKey;
     [detail release];
 }
 
+- (IBAction)aboutPressed:(id)sender {
+    NSLog(@"Button pressed");
+}
+
 #pragma mark NSMessageHandlerDelegate
 
 - (void)startActivityFromMessageHandler:(SMMessagesHandler *)messageHandler
@@ -211,6 +217,7 @@ static char sosMessageKey;
 - (void)dealloc {
     [categories release];
     [messageHandler release];
+    [infoButton release];
     [super dealloc];
 }
 @end

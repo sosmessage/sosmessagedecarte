@@ -10,6 +10,8 @@
 
 @interface SMCategoriesViewController : UIViewController<SMMessageDelegate>
 
+@property (retain, nonatomic) IBOutlet UIButton *infoButton;
+
 @property (retain, nonatomic) NSMutableArray* categories;
 @property (retain, nonatomic) SMMessagesHandler* messageHandler;
 
@@ -20,5 +22,7 @@
 - (void)refreshCategories;
 - (void)removeCategoriesLabel;
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
+
+- (IBAction)aboutPressed:(id)sender;
 
 @end
