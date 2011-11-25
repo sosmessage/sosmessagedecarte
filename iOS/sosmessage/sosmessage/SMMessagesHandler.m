@@ -13,6 +13,8 @@
     id delegate;
 }
 
++ (void)showUIAlert;
+
 - (void)resetData;
 - (void)startWorking;
 - (void)stopWorking;
@@ -90,6 +92,12 @@ bool receiving = false;
     [self requestUrl:[NSString stringWithFormat:@"%@/api/v1/category/%@/message", SM_URL, aCategoryId]];
 }
 
++(void)showUIAlert {
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Erreur de connexion" message:@"Un probleme est survenu lors de la connexion au serveur de sosmessage" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    [alert show];
+    [alert release];    
+}
+
 #pragma mark -
 #pragma mark NSURLConnection methods
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -99,9 +107,7 @@ bool receiving = false;
     if ([self.delegate respondsToSelector:@selector(messageHandler:didFail:)]) {
         [self.delegate messageHandler:self didFail:error];
     } else {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Erreur de connexion" message:@"Un probleme est survenu lors de la connexion au serveur de sosmessage" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];
+        [SMMessagesHandler showUIAlert];
     }
 }
 
@@ -115,6 +121,12 @@ bool receiving = false;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     [self stopWorking];
+    
+    if (!data) {
+        [SMMessagesHandler showUIAlert];
+        NSLog(@"Unable to fetch data ...");
+        return;
+    }
     
     NSError* error;
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
