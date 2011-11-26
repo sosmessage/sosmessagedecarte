@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */; };
+		513FBA3D1480F4ED00E69AC1 /* SMAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 513FBA3B1480F4ED00E69AC1 /* SMAboutViewController.m */; };
+		513FBA3E1480F4ED00E69AC1 /* SMAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 513FBA3C1480F4ED00E69AC1 /* SMAboutViewController.xib */; };
 		516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515C8145DEA4000CF6C45 /* UIKit.framework */; };
 		516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CA145DEA4000CF6C45 /* Foundation.framework */; };
 		516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CC145DEA4000CF6C45 /* CoreGraphics.framework */; };
@@ -27,6 +29,9 @@
 		510CB93D1471A6520039C8A0 /* SMUrlBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMUrlBase.h; sourceTree = "<group>"; };
 		510CB93F1471B4A80039C8A0 /* SMMessagesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMMessagesHandler.h; sourceTree = "<group>"; };
 		510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMMessagesHandler.m; sourceTree = "<group>"; };
+		513FBA3A1480F4ED00E69AC1 /* SMAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAboutViewController.h; sourceTree = "<group>"; };
+		513FBA3B1480F4ED00E69AC1 /* SMAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMAboutViewController.m; sourceTree = "<group>"; };
+		513FBA3C1480F4ED00E69AC1 /* SMAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMAboutViewController.xib; sourceTree = "<group>"; };
 		516515C4145DEA4000CF6C45 /* sosmessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sosmessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		516515C8145DEA4000CF6C45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		516515CA145DEA4000CF6C45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -37,13 +42,13 @@
 		516515D6145DEA4100CF6C45 /* sosmessage-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sosmessage-Prefix.pch"; sourceTree = "<group>"; };
 		516515D7145DEA4100CF6C45 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		516515D8145DEA4100CF6C45 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		516515DA145DEA4100CF6C45 /* SMCategoriesViewController.h */ = {isa = PBXFileReference; path = SMCategoriesViewController.h; sourceTree = "<group>"; };
+		516515DA145DEA4100CF6C45 /* SMCategoriesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCategoriesViewController.h; sourceTree = "<group>"; };
 		516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMCategoriesViewController.m; sourceTree = "<group>"; };
 		516515DE145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMCategoriesViewController.xib; sourceTree = "<group>"; };
 		51A5CE041465221400B274B3 /* NSString+SOSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SOSMessage.h"; sourceTree = "<group>"; };
 		51A5CE051465221400B274B3 /* NSString+SOSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SOSMessage.m"; sourceTree = "<group>"; };
 		51A5CE081465227C00B274B3 /* SOSMessageConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSMessageConstant.h; sourceTree = "<group>"; };
-		51A5CE091466768900B274B3 /* SMMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SMMessageViewController.h; sourceTree = "<group>"; };
+		51A5CE091466768900B274B3 /* SMMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMMessageViewController.h; sourceTree = "<group>"; };
 		51A5CE0A1466768A00B274B3 /* SMMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMMessageViewController.m; sourceTree = "<group>"; };
 		51A5CE0B1466768A00B274B3 /* SMMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMMessageViewController.xib; sourceTree = "<group>"; };
 		51A5CE131466E24200B274B3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -108,6 +113,8 @@
 				51A5CE0A1466768A00B274B3 /* SMMessageViewController.m */,
 				510CB93F1471B4A80039C8A0 /* SMMessagesHandler.h */,
 				510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */,
+				513FBA3A1480F4ED00E69AC1 /* SMAboutViewController.h */,
+				513FBA3B1480F4ED00E69AC1 /* SMAboutViewController.m */,
 				51A5CE0F146677F200B274B3 /* Nibs */,
 				51F1A70514746AF90092F9F8 /* LoadingHUD */,
 				516515CF145DEA4000CF6C45 /* Supporting Files */,
@@ -140,6 +147,7 @@
 			children = (
 				516515DD145DEA4100CF6C45 /* SMCategoriesViewController.xib */,
 				51A5CE0B1466768A00B274B3 /* SMMessageViewController.xib */,
+				513FBA3C1480F4ED00E69AC1 /* SMAboutViewController.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 				516515D3145DEA4000CF6C45 /* InfoPlist.strings in Resources */,
 				516515DF145DEA4100CF6C45 /* SMCategoriesViewController.xib in Resources */,
 				51A5CE0D1466768A00B274B3 /* SMMessageViewController.xib in Resources */,
+				513FBA3E1480F4ED00E69AC1 /* SMAboutViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +232,7 @@
 				51A5CE0C1466768A00B274B3 /* SMMessageViewController.m in Sources */,
 				510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */,
 				51F1A70814746B710092F9F8 /* MBProgressHUD.m in Sources */,
+				513FBA3D1480F4ED00E69AC1 /* SMAboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

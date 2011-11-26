@@ -8,6 +8,7 @@
 
 #import "SMCategoriesViewController.h"
 #import "SMMessageViewController.h"
+#import "SMAboutViewController.h"
 
 @implementation SMCategoriesViewController
 @synthesize infoButton;
@@ -188,7 +189,10 @@ static char sosMessageKey;
 }
 
 - (IBAction)aboutPressed:(id)sender {
-    NSLog(@"Button pressed");
+    SMAboutViewController* about = [[SMAboutViewController alloc] initWithNibName:@"SMAboutViewController" bundle:nil];
+    about.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:about animated:true];
+    [about release];
 }
 
 #pragma mark NSMessageHandlerDelegate

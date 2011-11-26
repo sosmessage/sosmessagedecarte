@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define SM_URL @"http://www.dummyurl.fr"
+#define SM_ABOUT @"http://www.dummyurl.fr/about"
 
 @protocol SMUrlBase <NSObject>
 
