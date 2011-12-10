@@ -65,7 +65,11 @@ class SosMessage extends unfiltered.filter.Plan {
         """
         val f = """
         function(out) {
-          out.avg = out.total / out.count;
+          if (out.total == 0 || out.count == 0) {
+            out.avg = 0;
+          } else {
+            out.avg = out.total / out.count;
+          }
         }
         """
         val rating = messagesCollection.group(MongoDBObject("ratings" -> 1),
