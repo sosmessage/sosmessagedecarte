@@ -4,6 +4,7 @@ import scala.util.Random
 
 import unfiltered.request._
 import unfiltered.response._
+import unfiltered.netty._
 import com.mongodb.casbah.MongoConnection
 import net.liftweb.json.JsonAST._
 import net.liftweb.json.JsonDSL._
@@ -11,10 +12,10 @@ import net.liftweb.json.Printer._
 import net.liftweb.json.JsonParser._
 import com.mongodb.casbah.commons.MongoDBObject
 import org.bson.types.ObjectId
-import com.mongodb.casbah.Imports._
+import com.mongodb.casbah._
 import java.util.Date
 
-class SosMessage extends unfiltered.filter.Plan {
+object SosMessage extends async.Plan with ServerErrorResponse {
 
   val DataBaseName = "sosmessage"
   val MessagesCollectionName = "messages"
@@ -27,15 +28,15 @@ class SosMessage extends unfiltered.filter.Plan {
   val random = new Random()
 
   def intent = {
-    case GET(Path("/api/v1/categories")) =>
+    case req @ GET(Path("/api/v1/categories")) =>
       val categoryOrder = MongoDBObject("name" -> 1)
       val categories = categoriesCollection.find().sort(categoryOrder).foldLeft(List[JValue]())((l, a) =>
         categoryToJSON(a) :: l
       ).reverse
       val json = ("count", categories.size) ~ ("items", categories)
-      JsonContent ~> ResponseString(pretty(render(json)))
+      req.respond(JsonContent ~> ResponseString(pretty(render(json))))
 
-    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
+    case req @ GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
       val messageOrder = MongoDBObject("createdAt" -> -1)
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
       val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
@@ -43,9 +44,9 @@ class SosMessage extends unfiltered.filter.Plan {
         messageToJSON(a) :: l
       ).reverse
       val json = ("count", messages.size) ~ ("items", messages)
-      JsonContent ~> ResponseString(pretty(render(json)))
+      req.respond(JsonContent ~> ResponseString(pretty(render(json))))
 
-    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
+    case req @ GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
       val count = messagesCollection.find(q, MongoDBObject("_id" -> 1)).count
       val skip = random.nextInt(if (count <= 0) 1 else count)
@@ -75,9 +76,9 @@ class SosMessage extends unfiltered.filter.Plan {
         val rating = messagesCollection.group(MongoDBObject("ratings" -> 1),
           MongoDBObject("_id" -> message.get("_id")), MongoDBObject("count" -> 0, "total" -> 0), r, f)
         val json = messageToJSON(message, Some(parse(rating.mkString)))
-        JsonContent ~> ResponseString(pretty(render(json)))
+        req.respond(JsonContent ~> ResponseString(pretty(render(json))))
       } else {
-        NoContent
+        req.respond(NoContent)
       }
 
     case req @ POST(Path(Seg("api" :: "v1" :: "category" :: categoryId :: "message" :: Nil))) =>
@@ -93,7 +94,7 @@ class SosMessage extends unfiltered.filter.Plan {
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
       }
-      NoContent
+      req.respond(NoContent)
 
     case req @ POST(Path(Seg("api" :: "v1" :: "message" :: messageId :: "rate" :: Nil))) =>
       val Params(form) = req
@@ -101,7 +102,7 @@ class SosMessage extends unfiltered.filter.Plan {
       val rating = if(form("rating")(0).toInt > 5) 5 else form("rating")(0).toInt
       val key = "ratings." + uid.replaceAll ("\\.", "-")
       messagesCollection.update(MongoDBObject("_id" -> new ObjectId(messageId)), $set (key -> rating), false, false)
-      NoContent
+      req.respond(NoContent)
 
 //    case GET(Path(Seg("api" :: "v1" :: "category" :: id :: "randomMessage" :: Nil))) =>
 //      val random = scala.math.random
@@ -145,6 +146,6 @@ class SosMessage extends unfiltered.filter.Plan {
 
 object AppServer {
   def main(args: Array[String]) {
-    unfiltered.jetty.Http(3000).filter(new SosMessage).run
+    unfiltered.netty.Http(3000).handler(SosMessage).run
   }
 }
