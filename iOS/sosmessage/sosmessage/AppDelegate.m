@@ -91,12 +91,20 @@
     }
 }
 
+-(void)logAvaiableFonts {
+    for (NSString* familyName in [UIFont familyNames]) {
+        for (NSString* fontName in [UIFont fontNamesForFamilyName:familyName]) {
+            NSLog(@"Available font: %@", fontName);
+        }
+    }
+}
+
 - (UIFont *)deviceSpecificSOSFont {
     int fontSize = 36;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        fontSize = 24;
+        fontSize = 34;
     }
-    return [UIFont systemFontOfSize:fontSize];
+    return [UIFont fontWithName:@"PhontPhreak'sHandwriting" size:fontSize];;
 }
 
 @end

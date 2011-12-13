@@ -214,6 +214,7 @@ float baseHue;
 {
     if (self.messageText) {
         self.messageText.text = [result objectForKey:MESSAGE_TEXT];
+        self.messageText.textColor = [UIColor colorWithHue:baseHue saturation:1.0 brightness:0.3 alpha:1.0];
     }
 }
 

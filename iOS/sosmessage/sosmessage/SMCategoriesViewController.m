@@ -94,13 +94,16 @@ static char sosMessageKey;
 
 - (void)addSOSCategory:(NSDictionary*)category inPosX:(int)posX andPosY:(int)posY {
     NSString* label = [category objectForKey:CATEGORY_NAME];
+    
     UILabel* uiLabel = [self buildUILabelForBlock:[label blocksCount:self.view] inPosX:posX andPosY:posY];
                         
     uiLabel.backgroundColor = [UIColor colorWithHue:label.hue saturation:0.55 brightness:0.9 alpha:1.0];
     uiLabel.text = [label capitalizedString];
     uiLabel.font = SOSFONT;
+    uiLabel.textColor = [UIColor colorWithHue:label.hue saturation:1.0 brightness:0.3 alpha:1.0];
     uiLabel.textAlignment = UITextAlignmentCenter;
     uiLabel.userInteractionEnabled = YES;
+    uiLabel.alpha = 0.90;
     
     objc_setAssociatedObject(uiLabel, &sosMessageKey, category, 0);
 
@@ -109,6 +112,12 @@ static char sosMessageKey;
     [categoryTap release];
     
     [self.view insertSubview:uiLabel belowSubview:self.infoButton];
+    
+    
+    UIImageView* enveloppe = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"enveloppe.png"]];
+    enveloppe.frame = uiLabel.frame;
+    [self.view insertSubview:enveloppe belowSubview:uiLabel];
+    [enveloppe release];
 }
 
 - (void)fillEmptyBlocks:(int)nb fromPosX:(int)posX andPosY:(int)posY {
@@ -158,8 +167,16 @@ static char sosMessageKey;
     }
     float fitHeight =  self.view.bounds.size.height / (y + 1);
     for (UIView* subView in self.view.subviews) {
-        if ([subView isKindOfClass:[UILabel class]] && subView.tag == 0) {
-            subView.frame = CGRectMake(subView.frame.origin.x, subView.frame.origin.y * fitHeight, subView.frame.size.width, fitHeight);
+        if (subView.tag != 0) {
+            continue;
+        }
+        
+        if ([subView isKindOfClass:[UILabel class]]) {
+            subView.frame = CGRectMake(subView.frame.origin.x, floorf(subView.frame.origin.y * fitHeight), subView.frame.size.width, fitHeight);
+        } else if ([subView isKindOfClass:[UIImageView class]]) {
+            UIImage* img = [(UIImageView*)subView image];
+            float imgRation = img.size.height / img.size.width;
+            subView.frame = CGRectMake(subView.frame.origin.x, floorf(subView.frame.origin.y * fitHeight), subView.frame.size.width, imgRation * subView.frame.size.width);
         }
     }
 }
