@@ -10,6 +10,8 @@
 		510CB9411471B4A80039C8A0 /* SMMessagesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 510CB9401471B4A80039C8A0 /* SMMessagesHandler.m */; };
 		513FBA3D1480F4ED00E69AC1 /* SMAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 513FBA3B1480F4ED00E69AC1 /* SMAboutViewController.m */; };
 		513FBA3E1480F4ED00E69AC1 /* SMAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 513FBA3C1480F4ED00E69AC1 /* SMAboutViewController.xib */; };
+		514CDA3114974239008A3115 /* secoue-moi.png in Resources */ = {isa = PBXBuildFile; fileRef = 514CDA3014974239008A3115 /* secoue-moi.png */; };
+		514CDA3414975450008A3115 /* arrow_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 514CDA3314975450008A3115 /* arrow_back.png */; };
 		516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515C8145DEA4000CF6C45 /* UIKit.framework */; };
 		516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CA145DEA4000CF6C45 /* Foundation.framework */; };
 		516515CD145DEA4000CF6C45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516515CC145DEA4000CF6C45 /* CoreGraphics.framework */; };
@@ -32,6 +34,8 @@
 		513FBA3A1480F4ED00E69AC1 /* SMAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMAboutViewController.h; sourceTree = "<group>"; };
 		513FBA3B1480F4ED00E69AC1 /* SMAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMAboutViewController.m; sourceTree = "<group>"; };
 		513FBA3C1480F4ED00E69AC1 /* SMAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMAboutViewController.xib; sourceTree = "<group>"; };
+		514CDA3014974239008A3115 /* secoue-moi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "secoue-moi.png"; sourceTree = "<group>"; };
+		514CDA3314975450008A3115 /* arrow_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_back.png; sourceTree = "<group>"; };
 		516515C4145DEA4000CF6C45 /* sosmessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sosmessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		516515C8145DEA4000CF6C45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		516515CA145DEA4000CF6C45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -125,6 +129,8 @@
 		516515CF145DEA4000CF6C45 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				514CDA3314975450008A3115 /* arrow_back.png */,
+				514CDA3014974239008A3115 /* secoue-moi.png */,
 				516515D0145DEA4000CF6C45 /* sosmessage-Info.plist */,
 				516515D1145DEA4000CF6C45 /* InfoPlist.strings */,
 				516515D4145DEA4000CF6C45 /* main.m */,
@@ -215,6 +221,8 @@
 				516515DF145DEA4100CF6C45 /* SMCategoriesViewController.xib in Resources */,
 				51A5CE0D1466768A00B274B3 /* SMMessageViewController.xib in Resources */,
 				513FBA3E1480F4ED00E69AC1 /* SMAboutViewController.xib in Resources */,
+				514CDA3114974239008A3115 /* secoue-moi.png in Resources */,
+				514CDA3414975450008A3115 /* arrow_back.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

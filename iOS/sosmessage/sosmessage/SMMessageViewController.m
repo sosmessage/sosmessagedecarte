@@ -26,7 +26,7 @@
 float baseHue;
 
 - (id)initWithCategory:(NSDictionary*)aCategory {
-    self = [super initWithNibName:@"SMDetailViewController" bundle:nil];
+    self = [super initWithNibName:@"SMMessageViewController" bundle:nil];
     if (self) {
         self.category = aCategory;
         baseHue = [[self.category objectForKey:CATEGORY_NAME] hue];
