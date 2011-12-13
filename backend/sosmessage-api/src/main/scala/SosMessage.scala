@@ -36,7 +36,7 @@ object SosMessage extends async.Plan with ServerErrorResponse {
       val json = ("count", categories.size) ~ ("items", categories)
       req.respond(JsonContent ~> ResponseString(pretty(render(json))))
 
-    case req @ GET(Path(Seg("api" :: "v1" :: "category" :: id :: "messages" :: Nil))) =>
+    case req @ GET(Path(Seg("api" :: "v1" :: "categories" :: id :: "messages" :: Nil))) =>
       val messageOrder = MongoDBObject("createdAt" -> -1)
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
       val keys = MongoDBObject("category" -> 1, "categoryId" -> 1, "text" -> 1, "createdAt" -> 1)
@@ -46,7 +46,7 @@ object SosMessage extends async.Plan with ServerErrorResponse {
       val json = ("count", messages.size) ~ ("items", messages)
       req.respond(JsonContent ~> ResponseString(pretty(render(json))))
 
-    case req @ GET(Path(Seg("api" :: "v1" :: "category" :: id :: "message" :: Nil))) =>
+    case req @ GET(Path(Seg("api" :: "v1" :: "categories" :: id :: "message" :: Nil))) =>
       val q = MongoDBObject("categoryId" -> new ObjectId(id), "state" -> "approved")
       val count = messagesCollection.find(q, MongoDBObject("_id" -> 1)).count
       val skip = random.nextInt(if (count <= 0) 1 else count)
@@ -81,7 +81,7 @@ object SosMessage extends async.Plan with ServerErrorResponse {
         req.respond(NoContent)
       }
 
-    case req @ POST(Path(Seg("api" :: "v1" :: "category" :: categoryId :: "message" :: Nil))) =>
+    case req @ POST(Path(Seg("api" :: "v1" :: "categories" :: categoryId :: "message" :: Nil))) =>
       categoriesCollection.findOne(MongoDBObject("_id" -> new ObjectId(categoryId))).map { category =>
         val Params(form) = req
         val text = form("text")(0)
