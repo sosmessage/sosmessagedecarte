@@ -34,7 +34,7 @@
           @categories.map { category =>
             <tr>
               <td>
-                @category.get("name")
+                <a href="@routes.Messages.index(category.get("_id").toString)">@category.get("name")</a>
               </td>
               <td>
                 @{
