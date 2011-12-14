@@ -10,6 +10,12 @@
 #import "SMMessageViewController.h"
 #import "SMAboutViewController.h"
 
+@interface SMCategoriesViewController () {
+    
+}
+-(BOOL)isSubViewCategoryPart:(UIView*) view;
+@end
+
 @implementation SMCategoriesViewController
 @synthesize infoButton;
 @synthesize categories;
@@ -49,7 +55,7 @@ static char sosMessageKey;
     [super viewWillAppear:animated];
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategories) name:UIDeviceOrientationDidChangeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategories) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -73,7 +79,7 @@ static char sosMessageKey;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return NO;
 }
 
 #pragma mark Category handling
@@ -131,6 +137,7 @@ static char sosMessageKey;
 }
 
 - (void)refreshCategories {
+    NSLog(@"Categories refreshed");
     [self removeCategoriesLabel];
     
     NSMutableArray* workingCategories = [[NSMutableArray alloc] initWithArray:categories];
@@ -165,7 +172,7 @@ static char sosMessageKey;
     if (x == 0) {
         y -= 1;
     }
-    float fitHeight =  self.view.bounds.size.height / (y + 1);
+    float fitHeight =  ceilf(self.view.bounds.size.height / (y + 1));
     for (UIView* subView in self.view.subviews) {
         if (subView.tag != 0) {
             continue;
@@ -181,9 +188,13 @@ static char sosMessageKey;
     }
 }
 
+-(BOOL)isSubViewCategoryPart:(UIView*) view {
+    return ([view isKindOfClass:[UILabel class]] || [view isKindOfClass:[UILabel class]]) && view.tag == 0;
+}
+
 -(void)removeCategoriesLabel {
     for (UIView* subView in self.view.subviews) {
-        if ([subView isKindOfClass:[UILabel class]] && subView.tag == 0) {
+        if ([self isSubViewCategoryPart:subView]) {
             [subView removeFromSuperview];
         }
     }
