@@ -13,8 +13,8 @@ GET       /admin/categories/:categoryId                   controllers.Categories
 POST      /admin/categories/:categoryId                   controllers.Categories.update(categoryId: String)
 
 # Messages
-GET       /admin/messages                                           controllers.Messages.index(categoryId = "none")
-GET       /admin/category/:categoryId/messages                      controllers.Messages.index(categoryId: String)
+GET       /admin/messages                                           controllers.Messages.index(categoryId: Option[String] = None)
+GET       /admin/category/:categoryId/messages                      controllers.Messages.index(categoryId: Option[String])
 POST      /admin/category/:categoryId/messages                      controllers.Messages.save(categoryId: String)
 POST      /admin/category/:categoryId/messages/:messageId/delete    controllers.Messages.delete(categoryId: String, messageId: String)
 GET       /admin/category/:categoryId/messages/:messageId           controllers.Messages.edit(categoryId: String, messageId: String)

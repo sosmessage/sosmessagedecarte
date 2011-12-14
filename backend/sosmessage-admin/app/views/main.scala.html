@@ -29,7 +29,7 @@
           <h3><a href="@routes.Application.index">SOS Message</a></h3>
           <ul class="nav">
             <li @if(selectedTab == "categories") {class="active"}><a href="@routes.Categories.index">Categories</a></li>
-            <li @if(selectedTab == "messages") {class="active"}><a href="@routes.Messages.index("none")">Messages</a></li>
+            <li @if(selectedTab == "messages") {class="active"}><a href="@routes.Messages.index(None)">Messages</a></li>
             <li @if(selectedTab == "moderation") {class="active"}><a href="@routes.Moderation.index("waiting")">Moderation</a></li>
           </ul>
         </div>

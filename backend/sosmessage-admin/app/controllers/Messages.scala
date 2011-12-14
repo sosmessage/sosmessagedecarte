@@ -30,23 +30,19 @@ object Messages extends Controller {
     )
   )
 
-  def index(categoryId: String = "none") = Action { implicit request =>
+  def index(categoryId: Option[String] = None) = Action { implicit request =>
     val categoryOrder = MongoDBObject("name" -> 1)
     val categories = categoriesCollection.find().sort(categoryOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
     ).reverse
 
-    val selectedCategoryId = if (categoryId == "none") {
-      categories(0).get("_id").toString
-    } else {
-      categoryId
-    }
+    val selectedCategoryId = categoryId.getOrElse(categories(0).get("_id").toString)
 
     val messageOrder = MongoDBObject("createdAt" -> -1)
     val q = MongoDBObject("categoryId" -> new ObjectId(selectedCategoryId), "state" -> "approved")
     val messages = messagesCollection.find(q).sort(messageOrder).foldLeft(List[DBObject]())((l, a) =>
       a :: l
-    ).map(addRating(_))reverse
+    ).map(addRating(_)).reverse
 
     Ok(views.html.messages.index(categories, selectedCategoryId, messages, messageForm))
   }
@@ -80,7 +76,7 @@ object Messages extends Controller {
   def save(selectedCategoryId: String) = Action { implicit request =>
     messageForm.bindFromRequest().fold(
       f => {
-        Redirect(routes.Messages.index(selectedCategoryId))
+        Redirect(routes.Messages.index(Some(selectedCategoryId)))
       },
       v => {
         val oid = new ObjectId(v._1)
@@ -103,7 +99,7 @@ object Messages extends Controller {
         builder += "random" -> scala.math.random
         messagesCollection += builder.result
 
-        Redirect(routes.Messages.index(category.get("_id").toString)).flashing("actionDone" -> actionDone)
+        Redirect(routes.Messages.index(Some(category.get("_id").toString))).flashing("actionDone" -> actionDone)
       }
     )
   }
@@ -112,7 +108,7 @@ object Messages extends Controller {
     val oid = new ObjectId(messageId)
     val o = MongoDBObject("_id" -> oid)
     messagesCollection.remove(o)
-    Redirect(routes.Messages.index(selectedCategoryId)).flashing("actionDone" -> "messageDeleted")
+    Redirect(routes.Messages.index(Some(selectedCategoryId))).flashing("actionDone" -> "messageDeleted")
   }
 
   def edit(categoryId: String, messageId: String) = Action { implicit request =>
@@ -131,14 +127,14 @@ object Messages extends Controller {
   def update(categoryId: String, messageId: String) = Action { implicit request =>
     messageForm.bindFromRequest.fold(
       f => {
-        Redirect(routes.Messages.index(categoryId))
+        Redirect(routes.Messages.index(Some(categoryId)))
       },
       v => {
         val newCategoryId = v._1
         val q = MongoDBObject("_id" -> new ObjectId(messageId))
         val o = $set ("categoryId" -> new ObjectId(newCategoryId), "text" -> v._2, "modifiedAt" -> new Date())
         messagesCollection.update(q, o, false, false)
-        Redirect(routes.Messages.index(newCategoryId)).flashing("actionDone" -> "messageUpdated")
+        Redirect(routes.Messages.index(Some(newCategoryId))).flashing("actionDone" -> "messageUpdated")
       }
     )
   }
