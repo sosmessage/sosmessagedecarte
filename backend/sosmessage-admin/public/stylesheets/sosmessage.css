@@ -44,3 +44,6 @@ section {
   float: right;
 }
 
+.messages-count {
+  margin-left: 40px;
+}
