@@ -22,6 +22,7 @@
 		516515DC145DEA4100CF6C45 /* SMCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */; };
 		516515DF145DEA4100CF6C45 /* SMCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515DD145DEA4100CF6C45 /* SMCategoriesViewController.xib */; };
 		518B62011498081D002252B4 /* enveloppe.png in Resources */ = {isa = PBXBuildFile; fileRef = 518B62001498081D002252B4 /* enveloppe.png */; };
+		518B620814988499002252B4 /* reload-message.png in Resources */ = {isa = PBXBuildFile; fileRef = 518B620714988499002252B4 /* reload-message.png */; };
 		51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE051465221400B274B3 /* NSString+SOSMessage.m */; };
 		51A5CE0C1466768A00B274B3 /* SMMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE0A1466768A00B274B3 /* SMMessageViewController.m */; };
 		51A5CE0D1466768A00B274B3 /* SMMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A5CE0B1466768A00B274B3 /* SMMessageViewController.xib */; };
@@ -53,6 +54,7 @@
 		516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMCategoriesViewController.m; sourceTree = "<group>"; };
 		516515DE145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMCategoriesViewController.xib; sourceTree = "<group>"; };
 		518B62001498081D002252B4 /* enveloppe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enveloppe.png; sourceTree = "<group>"; };
+		518B620714988499002252B4 /* reload-message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reload-message.png"; sourceTree = "<group>"; };
 		51A5CE041465221400B274B3 /* NSString+SOSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SOSMessage.h"; sourceTree = "<group>"; };
 		51A5CE051465221400B274B3 /* NSString+SOSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SOSMessage.m"; sourceTree = "<group>"; };
 		51A5CE081465227C00B274B3 /* SOSMessageConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSMessageConstant.h; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		516515CF145DEA4000CF6C45 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				518B620714988499002252B4 /* reload-message.png */,
 				518B62001498081D002252B4 /* enveloppe.png */,
 				514CDA3914975770008A3115 /* PhontPhreaks Handwriting.ttf */,
 				514CDA3314975450008A3115 /* arrow_back.png */,
@@ -231,6 +234,7 @@
 				514CDA3414975450008A3115 /* arrow_back.png in Resources */,
 				514CDA3A14975770008A3115 /* PhontPhreaks Handwriting.ttf in Resources */,
 				518B62011498081D002252B4 /* enveloppe.png in Resources */,
+				518B620814988499002252B4 /* reload-message.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

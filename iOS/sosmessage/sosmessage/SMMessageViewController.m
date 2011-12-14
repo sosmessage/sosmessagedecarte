@@ -138,6 +138,10 @@ float baseHue;
     [self renderTitle];
 }
 
+- (IBAction)reloadButtonPressed:(id)sender {
+    [self fetchAMessage];
+}
+
 - (void)renderTitle {
     UIGraphicsBeginImageContext(self.titleImage.bounds.size);
     CGContextRef context = UIGraphicsGetCurrentContext();

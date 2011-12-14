@@ -21,5 +21,6 @@
 - (void)fetchAMessage;
 - (void)renderTitle;
 - (void)refreshRenders;
+- (IBAction)reloadButtonPressed:(id)sender;
 
 @end
