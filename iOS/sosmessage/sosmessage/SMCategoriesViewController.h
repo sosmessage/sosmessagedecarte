@@ -7,8 +7,9 @@
 //
 
 #import "SOSMessageConstant.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SMCategoriesViewController : UIViewController<SMMessageDelegate>
+@interface SMCategoriesViewController : UIViewController<SMMessageDelegate, MFMailComposeViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UIButton *infoButton;
 
@@ -21,7 +22,6 @@
 
 - (void)refreshCategories;
 - (void)removeCategoriesLabel;
-- (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
 
 - (IBAction)aboutPressed:(id)sender;
 

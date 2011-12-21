@@ -14,6 +14,10 @@
     
 }
 -(BOOL)isSubViewCategoryPart:(UIView*) view;
+-(void)addMailPropositionBlockinPosY:(int)posY;
+
+- (void)handleCategoryTapping:(UIGestureRecognizer *)sender;
+- (void)handleMailPropositionTapping:(UIGestureRecognizer *)sender;
 @end
 
 @implementation SMCategoriesViewController
@@ -131,9 +135,26 @@ static char sosMessageKey;
     UILabel* emptyBlocks = [self buildUILabelForBlock:nb inPosX:posX andPosY:posY];
     
     float hue = (rand()%24) / 24.0;
-    emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1 alpha:1.0];
+    emptyBlocks.backgroundColor = [UIColor colorWithHue:hue saturation:0.05 brightness:0.9 alpha:1.0];
     
     [self.view insertSubview:emptyBlocks belowSubview:self.infoButton];
+}
+
+-(void)addMailPropositionBlockinPosY:(int)posY {
+    NSString* label = @"Proposez vos messages";
+    UILabel* uiLabel = [self buildUILabelForBlock:[label blocksCount:self.view] inPosX:0 andPosY:posY];
+    uiLabel.backgroundColor = [UIColor colorWithHue:label.hue saturation:0.55 brightness:0.9 alpha:1.0];
+    uiLabel.text = [label capitalizedString];
+    uiLabel.font = SOSFONT;
+    uiLabel.textColor = [UIColor colorWithHue:label.hue saturation:1.0 brightness:0.3 alpha:1.0];
+    uiLabel.textAlignment = UITextAlignmentCenter;
+    uiLabel.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *categoryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMailPropositionTapping:)];
+    [uiLabel addGestureRecognizer:categoryTap];
+    [categoryTap release];
+    
+    [self.view insertSubview:uiLabel belowSubview:self.infoButton];
 }
 
 - (void)refreshCategories {
@@ -165,12 +186,19 @@ static char sosMessageKey;
     }
     
     if (x < NB_BLOCKS && x > 0) {
-        [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];        
+        [self fillEmptyBlocks:NB_BLOCKS - x fromPosX:x andPosY:y];
+        y++;
     }
     [workingCategories release];
     
-    if (x == 0) {
-        y -= 1;
+    if ([MFMailComposeViewController canSendMail]) {
+        [self addMailPropositionBlockinPosY:y];
+    }
+    else {
+        /* To be re-enabled by default when the propositions btn will be better handled */
+        if (x == 0) {
+            y -= 1;
+        }
     }
     float fitHeight =  ceilf(self.view.bounds.size.height / (y + 1));
     for (UIView* subView in self.view.subviews) {
@@ -198,6 +226,23 @@ static char sosMessageKey;
             [subView removeFromSuperview];
         }
     }
+}
+
+- (void)handleMailPropositionTapping:(UIGestureRecognizer *)sender {
+    MFMailComposeViewController* mailer = [[MFMailComposeViewController alloc] init];
+    [mailer setSubject:@"[sosmessage] Proposition de message"];
+    NSArray *toRecipients = [NSArray arrayWithObjects:SM_EMAIL, nil];
+    [mailer setToRecipients:toRecipients];
+    
+    mailer.mailComposeDelegate = self;
+    [self presentModalViewController:mailer animated:true];
+    
+    [mailer release];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissModalViewControllerAnimated:true];
 }
 
 - (void)handleCategoryTapping:(UIGestureRecognizer *)sender {

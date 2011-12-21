@@ -10,6 +10,7 @@
 
 #define SM_URL @"http://www.dummyurl.fr"
 #define SM_ABOUT @"http://www.dummyurl.fr/about"
+#define SM_EMAIL @"fake@email.com"
 
 @protocol SMUrlBase <NSObject>
 

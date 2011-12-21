@@ -21,6 +21,7 @@
 		516515D9145DEA4100CF6C45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515D8145DEA4100CF6C45 /* AppDelegate.m */; };
 		516515DC145DEA4100CF6C45 /* SMCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */; };
 		516515DF145DEA4100CF6C45 /* SMCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516515DD145DEA4100CF6C45 /* SMCategoriesViewController.xib */; };
+		51712AE714A1BE7000E366AF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51712AE614A1BE7000E366AF /* MessageUI.framework */; };
 		518B62011498081D002252B4 /* enveloppe.png in Resources */ = {isa = PBXBuildFile; fileRef = 518B62001498081D002252B4 /* enveloppe.png */; };
 		518B620814988499002252B4 /* reload-message.png in Resources */ = {isa = PBXBuildFile; fileRef = 518B620714988499002252B4 /* reload-message.png */; };
 		51A5CE061465221400B274B3 /* NSString+SOSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A5CE051465221400B274B3 /* NSString+SOSMessage.m */; };
@@ -53,6 +54,7 @@
 		516515DA145DEA4100CF6C45 /* SMCategoriesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMCategoriesViewController.h; sourceTree = "<group>"; };
 		516515DB145DEA4100CF6C45 /* SMCategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMCategoriesViewController.m; sourceTree = "<group>"; };
 		516515DE145DEA4100CF6C45 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMCategoriesViewController.xib; sourceTree = "<group>"; };
+		51712AE614A1BE7000E366AF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		518B62001498081D002252B4 /* enveloppe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enveloppe.png; sourceTree = "<group>"; };
 		518B620714988499002252B4 /* reload-message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reload-message.png"; sourceTree = "<group>"; };
 		51A5CE041465221400B274B3 /* NSString+SOSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SOSMessage.h"; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51712AE714A1BE7000E366AF /* MessageUI.framework in Frameworks */,
 				51A5CE141466E24200B274B3 /* CoreText.framework in Frameworks */,
 				516515C9145DEA4000CF6C45 /* UIKit.framework in Frameworks */,
 				516515CB145DEA4000CF6C45 /* Foundation.framework in Frameworks */,
@@ -101,6 +104,7 @@
 		516515C7145DEA4000CF6C45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				51712AE614A1BE7000E366AF /* MessageUI.framework */,
 				51A5CE131466E24200B274B3 /* CoreText.framework */,
 				516515C8145DEA4000CF6C45 /* UIKit.framework */,
 				516515CA145DEA4000CF6C45 /* Foundation.framework */,
