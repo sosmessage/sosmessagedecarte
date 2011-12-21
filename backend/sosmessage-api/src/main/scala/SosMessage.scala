@@ -5,7 +5,6 @@ import scala.util.Random
 import unfiltered.request._
 import unfiltered.response._
 import unfiltered.netty._
-import com.mongodb.casbah.MongoConnection
 import net.liftweb.json.JsonAST._
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json.Printer._
@@ -14,16 +13,18 @@ import com.mongodb.casbah.commons.MongoDBObject
 import org.bson.types.ObjectId
 import com.mongodb.casbah._
 import java.util.Date
+import org.streum.configrity.Configuration
 
-object SosMessage extends async.Plan with ServerErrorResponse {
+class SosMessage(config: Configuration) extends async.Plan with ServerErrorResponse {
 
-  val DataBaseName = "sosmessage"
   val MessagesCollectionName = "messages"
   val CategoriesCollectionName = "categories"
 
-  val mongo = MongoConnection()
-  val messagesCollection = mongo(DataBaseName)(MessagesCollectionName)
-  val categoriesCollection = mongo(DataBaseName)(CategoriesCollectionName)
+  val dataBaseName = config[String]("database.name")
+
+  val mongo = MongoConnection(config[String]("database.host", "127.0.0.1"), config[Int]("database.port", 27017))
+  val messagesCollection = mongo(dataBaseName)(MessagesCollectionName)
+  val categoriesCollection = mongo(dataBaseName)(CategoriesCollectionName)
 
   val random = new Random()
 
@@ -145,7 +146,26 @@ object SosMessage extends async.Plan with ServerErrorResponse {
 
 
 object AppServer {
+
   def main(args: Array[String]) {
-    unfiltered.netty.Http(3000).handler(SosMessage).run
+    val config = getConfig
+    unfiltered.netty.Http(config[Int]("server.port", 3000)).handler(new SosMessage(config)).run
   }
+
+  def getConfig: Configuration = {
+    val defaultConfig = Configuration("database.host" -> "127.0.0.1",
+      "database.port" -> 27017, "database.name" -> "sosmessage", "server.port" -> 3000)
+
+    val systemConfig = Configuration.systemProperties
+    systemConfig.get[String]("sosmessage.configurationFile") match {
+      case None => defaultConfig
+      case Some(filename) =>
+        try {
+          Configuration.load(filename)
+        } catch {
+          case e: Exception => defaultConfig
+        }
+    }
+  }
+
 }

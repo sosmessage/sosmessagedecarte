@@ -80,6 +80,23 @@ You can then launch the server with:
 
 	$ java -jar sosmessage-api_2.9.1-1.0-SNAPSHOT-one-jar.jar
 
+#### Configuration
+
+To change the default configuration, you can define your own configuration file through a system property:
+
+    $ java -Dsosmessage.configurationFile=conf/sosmessage.conf -jar sosmessage-api_2.9.1-1.0-SNAPSHOT-one-jar.jar
+
+A configuration file looks like (those are the default values):
+
+    database {
+      host = 127.0.0.1
+      port = 27017
+      name = sosmessage
+    }
+    server {
+      port = 3000
+    }
+
 #### Logging
 
 Logging is done through [Logback](http://logback.qos.ch/).
