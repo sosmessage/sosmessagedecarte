@@ -13,22 +13,22 @@ GET       /admin/categories/:categoryId                   controllers.Categories
 POST      /admin/categories/:categoryId                   controllers.Categories.update(categoryId: String)
 
 # Messages
-GET       /admin/messages                                           controllers.Messages.index(categoryId: Option[String] = None)
-GET       /admin/category/:categoryId/messages                      controllers.Messages.index(categoryId: Option[String])
-POST      /admin/category/:categoryId/messages                      controllers.Messages.save(categoryId: String)
-POST      /admin/category/:categoryId/messages/:messageId/delete    controllers.Messages.delete(categoryId: String, messageId: String)
-GET       /admin/category/:categoryId/messages/:messageId           controllers.Messages.edit(categoryId: String, messageId: String)
-POST      /admin/category/:categoryId/messages/:messageId           controllers.Messages.update(categoryId: String, messageId: String)
+GET       /admin/messages                                             controllers.Messages.index(categoryId: Option[String] = None)
+GET       /admin/categories/:categoryId/messages                      controllers.Messages.index(categoryId: Option[String])
+POST      /admin/categories/:categoryId/messages                      controllers.Messages.save(categoryId: String)
+POST      /admin/categories/:categoryId/messages/:messageId/delete    controllers.Messages.delete(categoryId: String, messageId: String)
+GET       /admin/categories/:categoryId/messages/:messageId           controllers.Messages.edit(categoryId: String, messageId: String)
+POST      /admin/categories/:categoryId/messages/:messageId           controllers.Messages.update(categoryId: String, messageId: String)
 
 # Moderation
-GET       /admin/moderation                               controllers.Moderation.index(state = "waiting")
-GET       /admin/moderation/:state                        controllers.Moderation.index(state: String)
-POST      /admin/moderation/message/:messageId/approve    controllers.Moderation.approve(messageId: String, selectedTab: String)
-POST      /admin/moderation/message/:messageId/reject     controllers.Moderation.reject(messageId: String, selectedTab: String)
-POST      /admin/moderation/message/:messageId/delete     controllers.Moderation.delete(messageId: String, selectedTab: String)
-POST      /admin/moderation/messages/:state/delete        controllers.Moderation.deleteAll(state: String)
-POST      /admin/moderation/messages/:state/approve       controllers.Moderation.approveAll(state: String)
-POST      /admin/moderation/messages/:state/reject        controllers.Moderation.rejectAll(state: String)
+GET       /admin/moderation                                controllers.Moderation.index(state = "waiting")
+GET       /admin/moderation/:state                         controllers.Moderation.index(state: String)
+POST      /admin/moderation/messages/:messageId/approve    controllers.Moderation.approve(messageId: String, selectedTab: String)
+POST      /admin/moderation/messages/:messageId/reject     controllers.Moderation.reject(messageId: String, selectedTab: String)
+POST      /admin/moderation/messages/:messageId/delete     controllers.Moderation.delete(messageId: String, selectedTab: String)
+POST      /admin/moderation/messages/:state/delete         controllers.Moderation.deleteAll(state: String)
+POST      /admin/moderation/messages/:state/approve        controllers.Moderation.approveAll(state: String)
+POST      /admin/moderation/messages/:state/reject         controllers.Moderation.rejectAll(state: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET       /admin/assets/*file                             controllers.Assets.at(path="/public", file)
