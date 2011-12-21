@@ -70,4 +70,19 @@ $(document).ready(function() {
     }
   });
 
+  $('#new-message-modal').bind('shown', function () {
+    $('#new-message-modal textarea:first').focus();
+  });
+
+  $('#new-category-modal').bind('shown', function () {
+    $('#new-category-modal input[type=text]:first').focus();
+  });
+
+  // focus the first input
+  if ($("form input[type=text]:first").length > 0) {
+    $("form input[type=text]:first").focus();
+  } else {
+    $("form textarea:first").focus();
+  }
+
 });
