@@ -9,12 +9,5 @@ Elle est disponible sur les deux principales plateformes mobiles que sont iPhone
 ![screen android](https://github.com/sosmessage/sosmessagedecarte/raw/master/android/screenshots/mariage.png)
 ![screen android](https://github.com/sosmessage/sosmessagedecarte/raw/master/android/screenshots/merci.png)
 
-TODO 
-
-## iOS
-
-_Warning_: How to use my sosmessage in iOS 
-
-    Open iOS/sosmessage/sosmessage/SMUrlBase.h.sample file
-    Set you server url
-    Save it as SMUrlBase.h
+TODO
+		
